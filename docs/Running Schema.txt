@@ -1,0 +1,5 @@
+How should the project interact with the user?
+Perhaps the most important question of them all!
+
+Current Idea:
+Its a command line application, using command line arguments to define usage

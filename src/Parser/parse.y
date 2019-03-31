@@ -2,6 +2,7 @@
 
   #include <iostream>
   #include "parse.tab.h"
+  //#include "../../"
 
   extern int yyparse();
   extern int yylex();
@@ -53,7 +54,7 @@ commands:
 
 /* Defines a basic expression */
 expression:
-    paren_expression
+    paren_expression {std::cout << "PAREN_EXPRESSION -> EXPRESSION\n";}
     | and_expression {std::cout << "AND -> EXPRESSION\n";}
     | or_expression  {std::cout << "OR -> EXPRESSION\n";}
     | xor_expression {std::cout << "XOR -> EXPRESSION\n";}

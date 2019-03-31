@@ -21,13 +21,12 @@ set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 include_directories("${INCLUDE_DIR}")
 
-# First Library, Getopt!
-# Note the CPP file in Getopt actually already has the folder name, so it gets access to the top level
-# include directory!
+# Getopt
 add_library(Getopt "${SRC_DIR}/getopt/getopt_pp.cpp")
-
 # Expression Functionality
 add_library(Expressions "${SRC_DIR}/expression.cpp")
+# Math Core
+add_library(MathCore "${SRC_DIR}/mathCore.cpp")
 
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
@@ -37,4 +36,5 @@ target_link_libraries(
 	SATSolver	# Main Function
 	Getopt		# Argument Parsing
 	Expressions # Expression Methods
+	mathCore	# Most Real Expression Methods
 )

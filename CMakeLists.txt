@@ -2,9 +2,9 @@
 cmake_minimum_required(VERSION 3.14)
 
 # Project Name and Version Number
-project("SATSolver" CXX
-		VERSION 0.1
-		DESCRIPTION "Solves SAT Problems! What a Beast!")
+project("SATSolver"
+	VERSION 0.1
+	DESCRIPTION "Solves SAT Problems! What a Beast!")
 
 # We are going to use at least 11 features!
 set(CMAKE_CXX_STANDARD 11)

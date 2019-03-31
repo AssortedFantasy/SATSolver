@@ -1,7 +1,6 @@
 # SATSolver
 A SAT Solver coded up in C++, Final Project for CMPUT 275
 
-
 Command Line arguments:
   - 'i' for input
   - 'o' for output
@@ -20,3 +19,7 @@ MathCore will do all the calculations and processing
     - Demorgan's Law
       - Dual, and Negation
     
+Acknowledgements:
+	Creators of GetOptpp
+		Daniel Gutson
+	

@@ -1,11 +1,11 @@
-// Defines what an expression is
-// This needs to be nailed down at some point
+#ifndef _EXPRESSION_H
+#define _EXPRESSION_H
+
+class expression {
 
 
-class Expression {
-  public:
-    Expression l_arg;
-    Expression r_arg;
-    bool negated;
-  private:
-}
+
+};
+
+
+#endif

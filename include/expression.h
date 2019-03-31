@@ -9,6 +9,9 @@
 #define NEGATED (1<<1);
 #define DUAL	(1<<2);
 #define COMPL	(1<<3);
+#define AND	(1<<4);
+#define OR	(1<<5);
+#define XOR	(1<<6);
 
 
 /*

@@ -1,35 +1,42 @@
 %{
 
-  #include <stdio.h>
+  #include <iostream>
+  //#include "parse.tab.h"
 
-  extern "C" {
-    int yyparse(void);
-    int yylex(void);
-    int yywrap() {
-    return 1;
-    }
+  extern int yyparse();
+  extern int yylex();
+  extern FILE *yyin;
+
+  void yyerror(const char* s) {
+      std::cout << "Well that's an error:" << s << std::endl;
+      exit(-1);
   }
-  extern yylval;
 
 
-  main() {
-    yyparse();
+  int main() {
+    std::cout << "Parsed: " << yyparse() << std::endl;
+    return 0;
   }
 %}
 
-%union
-{
- int number;
- char* string;
+%union{
+    int ival;
+    char* sval;
 }
 
-%token <number> LITERAL
-%token <string> VARIABLE
-%token O_BRACE C_BRACE
-%left AND OR XOR XNOR POST_NEG DUAL COMPLEMENT
-%right PRE_NEG
-%start commands
+/* Tokens delcared later will be group first */
+/* Order of operations is: */
+/* Paren -> Negation, Dual, Complement -> AND -> OR, XOR, XNOR -> EQUIV evaluated left to right */
 
+%left XNOR
+%left OR XOR
+%left AND
+%right PRE_NEG
+%left POST_NEG DUAL COMPLEMENT
+%token <ival> LITERAL
+%token <sval> VARIABLE
+%token O_BRACE C_BRACE
+%start commands
 
 
 %%
@@ -52,17 +59,6 @@ expression:
     | LITERAL
 ;
 
-/* Expression used for order of operations, might not be necessary with precedence */
-tightly_bound_expression:
-    paren_expression
-    | and_expression
-    | negated_expression
-    | dualed_expression
-    | complement_expression
-    | VARIABLE
-    | LITERAL
-;
-
 /* expressions closed in parenthesis */
 paren_expression:
     O_BRACE expression C_BRACE
@@ -70,26 +66,17 @@ paren_expression:
 
 and_expression:
     expression AND expression
+    | expression expression
 ;
 
 or_expression:
     expression OR expression
 ;
 
+/* For XNOR, change the negate flag */
 xor_expression:
     expression XOR expression
-;
-
-/* If a LITERAL is negated, invert its value */
-negated_literal:
-    LITERAL POST_NEG  {$1 ^= 1}
-    | PRE_NEG LITERAL   {$2 ^= 1}
-;
-
-
-negated_variable:
-    paren_expression VARIABLE
-    | PRE_NEG VARIABLE
+    expression XNOR expression
 ;
 
 negated_expression:

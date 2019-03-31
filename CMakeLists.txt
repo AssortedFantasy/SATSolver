@@ -1,5 +1,5 @@
 # This is just the version I have installed, not sure what I need
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.10.2)
 
 
 # Project Name and Version Number
@@ -21,5 +21,5 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 
 # This is the executable and its linking and whatnot, currently we have written no libraries
-add_executable(SATSolver "${SRC_DIR}/SATsolver.cpp")
+add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
 target_link_libraries(SATSolver)

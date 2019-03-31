@@ -1,4 +1,4 @@
-#include "../include/expression.h"
+#include "expression.h"
 
 // Globally unique UUID, do not mess with this
 int expression::global_uuid = 0;

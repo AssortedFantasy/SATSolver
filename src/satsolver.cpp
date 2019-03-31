@@ -1,7 +1,10 @@
 #include <iostream>
+#include <daogetrw.h>
 
-int main(){
-	std::cout << "This is my project" << "\n";
-	std::cin.get();
+/*
+	Command Line Interface implementation for the project
+	uses getopt() from 
+*/
+int main(int argc, char* argv[]){
 	return 0;
 }

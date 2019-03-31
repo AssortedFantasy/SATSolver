@@ -25,14 +25,16 @@ include_directories("${INCLUDE_DIR}")
 # Note the CPP file in Getopt actually already has the folder name, so it gets access to the top level
 # include directory!
 add_library(Getopt "${SRC_DIR}/getopt/getopt_pp.cpp")
-#target_include_directories(Getopt PRIVATE "${INCLUDE_DIR}")
+
+# Expression Functionality
+add_library(Expressions "${SRC_DIR}/expression.cpp")
 
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
-#target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 
 # Final Link Stage
 target_link_libraries(
 	SATSolver	# Main Function
 	Getopt		# Argument Parsing
+	Expressions # Expression Methods
 )

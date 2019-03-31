@@ -2,7 +2,6 @@
 	This is the main executable file, main is defined here
 */
 
-
 #include <iostream>
 #include <string>
 #include "..\include\getoptpp\getopt_pp.h"	// Temporary, so Autocomplete works
@@ -71,12 +70,13 @@ int main(int argc, char* argv[]){
 		>> GetOpt::Option('o', "output", output_file_string)
 		>> GetOpt::Option('m', "mode", mode);
 
-	// Debug Parsing
+#ifdef DEBUG_INPUT_PARSE
 	std::cout << "Terminal Mode: " << terminal_flag << "\n"
 		<< "Input File String: " << input_file_string << "\n"
 		<< "Output File String: " << output_file_string << "\n"
 		<< "Mode: " << mode << "\n";
 	std::cin.get();
+#endif // DEBUG_INPUT_PARSE
 
 	return 0;
 }

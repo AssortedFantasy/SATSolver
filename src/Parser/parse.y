@@ -9,6 +9,7 @@
     return 1;
     }
   }
+  extern yylval;
 
 
   main() {
@@ -16,27 +17,28 @@
   }
 %}
 
-
-%token O_BRACE C_BRACE LITERAL VARIABLE
-%left AND OR XOR XNOR POST_NEG DUAL COMPLEMENT
-%right PRE_NEG
-%start commands
-
 %union
 {
  int number;
- char *string;
+ char* string;
 }
+
+%token <number> LITERAL
+%token <string> VARIABLE
+%token O_BRACE C_BRACE VARIABLE
+%left AND OR XOR XNOR POST_NEG DUAL COMPLEMENT
+%right PRE_NEG
+%start commands
 
 
 
 %%
 commands:
-    | commands expression {printf("%s\n",$2);}
+    | commands expression
 ;
 
 expression:
-    | paren_expression
+    paren_expression
     | and_expression
     | or_expression
     | negated_expression
@@ -47,7 +49,7 @@ expression:
 ;
 
 tightly_bound_expression:
-    | paren_expression
+    paren_expression
     | and_expression
     | negated_expression
     | dualed_expression
@@ -61,42 +63,42 @@ paren_expression:
 ;
 
 and_expression:
-    | expression AND expression
+    expression AND expression
 ;
 
 or_expression:
-    | expression OR expression
+    expression OR expression
 ;
 
 xor_expression:
-    | expression XOR expression
+    expression XOR expression
 ;
 
 /* If a LITERAL is negated, invert its value */
 negated_literal:
-    | LITERAL POST_NEG  {$$ ^= 1}
-    | PRE_NEG LITERAL   {$$ ^= 1}
+    LITERAL POST_NEG  {$1 ^= 1}
+    | PRE_NEG LITERAL   {$2 ^= 1}
 ;
 
 
 negated_variable:
-    | paren_expression VARIABLE
+    paren_expression VARIABLE
     | PRE_NEG VARIABLE
 ;
 
 negated_expression:
-    | paren_expression POST_NEG
+    paren_expression POST_NEG
     | PRE_NEG paren_expression
 ;
 
 /* postfix only */
 dualed_expression:
-    | paren_expression DUAL
+    paren_expression DUAL
 ;
 
 /* postfix only */
 complement_expression:
-    | paren_expression COMPLEMENT
+    paren_expression COMPLEMENT
 ;
 %%
 

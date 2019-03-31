@@ -25,7 +25,7 @@
 
 %token <number> LITERAL
 %token <string> VARIABLE
-%token O_BRACE C_BRACE VARIABLE
+%token O_BRACE C_BRACE
 %left AND OR XOR XNOR POST_NEG DUAL COMPLEMENT
 %right PRE_NEG
 %start commands
@@ -33,10 +33,14 @@
 
 
 %%
+
+/* Recursivly parses expressions 1 at a time */
+/* Parses from right to left, as it is more memory efficienct */
 commands:
     | commands expression
 ;
 
+/* Defines a basic expression */
 expression:
     paren_expression
     | and_expression
@@ -48,6 +52,7 @@ expression:
     | LITERAL
 ;
 
+/* Expression used for order of operations, might not be necessary with precedence */
 tightly_bound_expression:
     paren_expression
     | and_expression
@@ -58,8 +63,9 @@ tightly_bound_expression:
     | LITERAL
 ;
 
+/* expressions closed in parenthesis */
 paren_expression:
-    | O_BRACE expression C_BRACE
+    O_BRACE expression C_BRACE
 ;
 
 and_expression:

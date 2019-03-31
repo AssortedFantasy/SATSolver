@@ -1,7 +1,7 @@
 %{
 
   #include <iostream>
-  //#include "parse.tab.h"
+  #include "parse.tab.h"
 
   extern int yyparse();
   extern int yylex();
@@ -15,9 +15,8 @@
 
   int main() {
     int tag;
-    while(tag = yylex()) {
-        std::cout << "Parsed: " << tag << std::endl;
-    }
+    tag = yyparse();
+    std::cout << "Parsed: " << tag << std::endl;
     return 0;
   }
 %}
@@ -33,7 +32,7 @@
 
 %left XNOR
 %left IMPL
-%left OR XOR
+%left XOR OR
 %left AND
 %right PRE_NEG
 %left POST_NEG DUAL
@@ -41,6 +40,7 @@
 %token <sval> VARIABLE
 %token O_BRACE C_BRACE
 %start commands
+//%type <expression> expression
 
 
 %%
@@ -48,53 +48,54 @@
 /* Recursivly parses expressions 1 at a time */
 /* Parses from right to left, as it is more memory efficienct */
 commands:
-    | commands expression
+        | commands expression '\n'{std::cout << "commands ";}
 ;
 
 /* Defines a basic expression */
 expression:
     paren_expression
-    | and_expression
-    | or_expression
-    | negated_expression
-    | dualed_expression
-    | implication_expression
-    | VARIABLE
-    | LITERAL
+    | and_expression {std::cout << "AND -> EXPRESSION\n";}
+    | or_expression  {std::cout << "OR -> EXPRESSION\n";}
+    | xor_expression {std::cout << "XOR -> EXPRESSION\n";}
+    | negated_expression {std::cout << "NEG -> EXPRESSION\n";}
+    | dualed_expression {std::cout << "DUAL -> EXPRESSION\n";}
+    | implication_expression {std::cout << "IMPL -> EXPRESSION\n";}
+    | VARIABLE      {std::cout << "VARIABLE -> EXPRESSION\n";}
+    | LITERAL       {std::cout << "LITERAL -> EXPRESSION\n";}
 ;
 
 /* expressions closed in parenthesis */
 paren_expression:
-    O_BRACE expression C_BRACE
+    O_BRACE expression C_BRACE      {std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";}
 ;
 
 and_expression:
-    expression AND expression
-    | expression expression
+    expression AND expression {std::cout << "EXPRESSION -> AND\n";}
+    /*| expression expression {std::cout << "EXPRESSION -> AND_T\n";} */
 ;
 
 or_expression:
-    expression OR expression
+    expression OR expression {std::cout << "EXPRESSION -> OR\n";}
 ;
 
 /* For XNOR, change the negate flag */
 xor_expression:
-    expression XOR expression
-    expression XNOR expression
+    expression XOR expression       {std::cout << "EXPRESSION -> XOR\n";}
+    | expression XNOR expression    {std::cout << "EXPRESSION -> XNOR\n";}
 ;
 
 implication_expression:
-    expression IMPL expression
+    expression IMPL expression      {std::cout << "EXPRESSION -> IMPL\n";}
 ;
 
 negated_expression:
-    paren_expression POST_NEG
-    | PRE_NEG paren_expression
+    paren_expression POST_NEG       {std::cout << "PAREN_EXPRESSION -> POST_NEG\n";}
+    | PRE_NEG paren_expression      {std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";}
 ;
 
 /* postfix only */
 dualed_expression:
-    paren_expression DUAL
+    paren_expression DUAL           {std::cout << "PAREN_EXPRESSION -> DUAL\n";}
 ;
 
 %%

@@ -15,7 +15,7 @@
 
 [ \t] ;                                   // Catches all whitespace
 [\(\[\{]               return O_BRACE;    // Open Parenthesis
-[\}\]\}]               return C_BRACE;    // Close Parenthesis
+[\}\]\)]               return C_BRACE;    // Close Parenthesis
 [!~¬]                  return PRE_NEG;    // Negation Prefix Operator
 [']                    return POST_NEG;   // Negation Postfix Operator
 (\^d)                  return DUAL;       // Dual Operator
@@ -25,6 +25,6 @@
 [⊕⊻@]|(xor)|(XOR)     return XOR;      // Xor Operator
 [≡=]|(xnor)|(XNOR)     return XNOR;     // Equivalence Operator
 [01]                   {yylval.ival=atoi(yytext); return LITERAL;}  // Literals
-[a-zA-Z][a-zA-Z0-9]*   {yylval.sval=strdup(yytext); return VARIABLE;} // This expression catches variables
-
+[a-zA-Z][0-9]*         {yylval.sval=strdup(yytext); return VARIABLE;} // This expression catches variables
+[$]                    return 0;       // End of File
 %%

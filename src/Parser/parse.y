@@ -14,7 +14,10 @@
 
 
   int main() {
-    std::cout << "Parsed: " << yyparse() << std::endl;
+    int tag;
+    while(tag = yylex()) {
+        std::cout << "Parsed: " << tag << std::endl;
+    }
     return 0;
   }
 %}
@@ -55,7 +58,7 @@ expression:
     | or_expression
     | negated_expression
     | dualed_expression
-    | complement_expression
+    | implication_expression
     | VARIABLE
     | LITERAL
 ;
@@ -78,6 +81,10 @@ or_expression:
 xor_expression:
     expression XOR expression
     expression XNOR expression
+;
+
+implication_expression:
+    expression IMPL expression
 ;
 
 negated_expression:

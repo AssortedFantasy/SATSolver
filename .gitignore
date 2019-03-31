@@ -1,4 +1,5 @@
 # Only a few things to ignore
 /build
+/.vs
 *.exe
 *.out

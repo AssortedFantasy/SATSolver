@@ -19,7 +19,7 @@
 [!~¬]                  return PRE_NEG;    // Negation Prefix Operator
 [']                    return POST_NEG;   // Negation Postfix Operator
 (\^d)                  return DUAL;       // Dual Operator
-(\^c)                  return COMPLEMENT; // Complement Operator
+(->)                   return COMPLEMENT; // Complement Operator
 [\^*·]|(\&)+           return AND;        // AND Operator
 [∨V+]|[\|]+            return OR;       // Or Operator
 [⊕⊻@]|(xor)|(XOR)     return XOR;      // Xor Operator

@@ -29,10 +29,11 @@
 /* Paren -> Negation, Dual, Complement -> AND -> OR, XOR, XNOR -> EQUIV evaluated left to right */
 
 %left XNOR
+%left IMPL
 %left OR XOR
 %left AND
 %right PRE_NEG
-%left POST_NEG DUAL COMPLEMENT
+%left POST_NEG DUAL
 %token <ival> LITERAL
 %token <sval> VARIABLE
 %token O_BRACE C_BRACE
@@ -89,9 +90,5 @@ dualed_expression:
     paren_expression DUAL
 ;
 
-/* postfix only */
-complement_expression:
-    paren_expression COMPLEMENT
-;
 %%
 

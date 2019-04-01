@@ -72,7 +72,7 @@
 /* Parses from right to left, as it is more memory efficienct */
 commands:
         /*| commands expression {std::cout << "commands " << std::endl;} */
-        | expression {result = $1; std::cout << "MADE TO THE END" << std::endl}  /* use this line to set the final result */
+        | expression {result = $1; std::cout << "MADE TO THE END" << std::endl;}  /* use this line to set the final result */
 ;
 
 /* Defines a basic expression */

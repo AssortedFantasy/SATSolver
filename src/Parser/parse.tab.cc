@@ -1273,7 +1273,7 @@ yyreduce:
     {
         case 3:
 #line 75 "parse.y" /* yacc.c:1646  */
-    {result = (yyvsp[0].expr); std::cout << "MADE TO THE END" << std::endl}
+    {result = (yyvsp[0].expr); std::cout << "MADE TO THE END" << std::endl;}
 #line 1278 "parse.tab.c" /* yacc.c:1646  */
     break;
 

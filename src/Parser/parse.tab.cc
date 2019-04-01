@@ -477,7 +477,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    73,    73,    75,    80,    81,    82,    83,    84,    85,
       86,    89,    94,    99,   103,   108,   113,   121,   126,   131,
-     136,   144,   148,   158,   166,   171,   180
+     139,   147,   151,   161,   169,   174,   183
 };
 #endif
 
@@ -1394,78 +1394,81 @@ yyreduce:
 
   case 19:
 #line 131 "parse.y" /* yacc.c:1646  */
-    {std::cout << "EXPRESSION -> AND_T\n";}
-#line 1399 "parse.tab.c" /* yacc.c:1646  */
+    {
+        std::cout << "EXPRESSION -> AND_T\n";
+        (yyval.expr) = mathCore::binary_and((yyvsp[-1].expr), (yyvsp[-1].expr));
+    }
+#line 1402 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 136 "parse.y" /* yacc.c:1646  */
+#line 139 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> OR\n";
         (yyval.expr) = mathCore::binary_or((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1408 "parse.tab.c" /* yacc.c:1646  */
+#line 1411 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 144 "parse.y" /* yacc.c:1646  */
+#line 147 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> XOR\n";
         (yyval.expr) = mathCore::binary_xor((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1417 "parse.tab.c" /* yacc.c:1646  */
+#line 1420 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 148 "parse.y" /* yacc.c:1646  */
+#line 151 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> XNOR\n";
         (yyval.expr) = mathCore::binary_equiv((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1426 "parse.tab.c" /* yacc.c:1646  */
+#line 1429 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 158 "parse.y" /* yacc.c:1646  */
+#line 161 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> IMPL\n";
         (yyval.expr) = mathCore::imply((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1435 "parse.tab.c" /* yacc.c:1646  */
+#line 1438 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 166 "parse.y" /* yacc.c:1646  */
+#line 169 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
         mathCore::negate((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1445 "parse.tab.c" /* yacc.c:1646  */
+#line 1448 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 171 "parse.y" /* yacc.c:1646  */
+#line 174 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
         mathCore::negate((yyvsp[0].expr));
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1455 "parse.tab.c" /* yacc.c:1646  */
+#line 1458 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 180 "parse.y" /* yacc.c:1646  */
+#line 183 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "PAREN_EXPRESSION -> DUAL\n";
         mathCore::dual((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1465 "parse.tab.c" /* yacc.c:1646  */
+#line 1468 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1469 "parse.tab.c" /* yacc.c:1646  */
+#line 1472 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1693,6 +1696,6 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 187 "parse.y" /* yacc.c:1906  */
+#line 190 "parse.y" /* yacc.c:1906  */
 
 

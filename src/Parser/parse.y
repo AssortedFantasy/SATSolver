@@ -128,7 +128,10 @@ and_expression:
         $$ = mathCore::binary_and($1,$3);
     }
     /* This line parses tightly bound AND expressions, be wary of this line */
-    | expression expression {std::cout << "EXPRESSION -> AND_T\n";}
+    | expression expression {
+        std::cout << "EXPRESSION -> AND_T\n";
+        $$ = mathCore::binary_and($1, $1);
+    }
 ;
 
 /* Parses OR Expressions */

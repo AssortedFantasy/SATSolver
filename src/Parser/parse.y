@@ -10,7 +10,7 @@
   extern int yylex();
   extern FILE* yyin;
 
-  void yyerror(const char* s) {
+  void yyerror(expression* exprs, const char* s) {
       std::cout << "Well that's an error:" << s << std::endl;
       exit(-1);
   }

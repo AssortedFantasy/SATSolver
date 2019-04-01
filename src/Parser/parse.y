@@ -69,7 +69,7 @@ expression:
                     }
     | LITERAL       {
                         std::cout << "LITERAL -> EXPRESSION\n";
-                        $$ = mathCore::literal($1);
+                        $$ = mathCore::literal((bool)$1);
                     }
 ;
 
@@ -82,7 +82,7 @@ and_expression:
     expression AND expression {
         std::cout << "EXPRESSION -> AND\n";
         // If the expressions are both of length 1 use binary add
-        mathCore::binary_and($1,$3);
+        $$ = mathCore::binary_and($1,$3);
     }
     /*| expression expression {std::cout << "EXPRESSION -> AND_T\n";}*/
 ;
@@ -90,7 +90,7 @@ and_expression:
 or_expression:
     expression OR expression {
         std::cout << "EXPRESSION -> OR\n";
-        mathCore::binary_or($1,$3);
+        $$ = mathCore::binary_or($1,$3);
     }
 ;
 
@@ -98,29 +98,38 @@ or_expression:
 xor_expression:
     expression XOR expression {
         std::cout << "EXPRESSION -> XOR\n";
-        mathCore::binary_xor($1,$3);
+        $$ = mathCore::binary_xor($1,$3);
     }
     | expression XNOR expression {
         std::cout << "EXPRESSION -> XNOR\n";
-        mathCore::binary_equiv($1,$3);
+        $$ = mathCore::binary_equiv($1,$3);
     }
 ;
 
 implication_expression:
     expression IMPL expression  {
         std::cout << "EXPRESSION -> IMPL\n";
-        mathCore::imply($1,$3);
+        $$ = mathCore::imply($1,$3);
     }
 ;
 
 negated_expression:
-    paren_expression POST_NEG       {std::cout << "PAREN_EXPRESSION -> POST_NEG\n";}
-    | PRE_NEG paren_expression      {std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";}
+    paren_expression POST_NEG   {
+        std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
+        $$ = mathCore::negate($1);
+    }
+    | PRE_NEG paren_expression  {
+        std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
+        $$ = mathCore::negate($2);
+    }
 ;
 
 /* postfix only */
 dualed_expression:
-    paren_expression DUAL           {std::cout << "PAREN_EXPRESSION -> DUAL\n";}
+    paren_expression DUAL   {
+        std::cout << "PAREN_EXPRESSION -> DUAL\n";
+        $$ = mathCore::dual($1);
+    }
 ;
 
 %%

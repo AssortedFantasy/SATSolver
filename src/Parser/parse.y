@@ -1,8 +1,9 @@
 %{
 
   #include <iostream>
+  #include "../../include/expression.h"
   #include "parse.tab.h"
-  //#include "../../"
+  #include "../../include/mathCore.h"
 
   extern int yyparse();
   extern int yylex();
@@ -25,6 +26,7 @@
 %union{
     int ival;
     char* sval;
+    expression* expr;
 }
 
 /* Tokens delcared later will be group first */
@@ -41,7 +43,7 @@
 %token <sval> VARIABLE
 %token O_BRACE C_BRACE
 %start commands
-//%type <expression> expression
+%type <expr> expression
 
 
 %%
@@ -61,8 +63,14 @@ expression:
     | negated_expression {std::cout << "NEG -> EXPRESSION\n";}
     | dualed_expression {std::cout << "DUAL -> EXPRESSION\n";}
     | implication_expression {std::cout << "IMPL -> EXPRESSION\n";}
-    | VARIABLE      {std::cout << "VARIABLE -> EXPRESSION\n";}
-    | LITERAL       {std::cout << "LITERAL -> EXPRESSION\n";}
+    | VARIABLE      {
+                        std::cout << "VARIABLE -> EXPRESSION\n";
+                        $$ = mathCore::variable($1);
+                    }
+    | LITERAL       {
+                        std::cout << "LITERAL -> EXPRESSION\n";
+                        $$ = mathCore::literal($1);
+                    }
 ;
 
 /* expressions closed in parenthesis */
@@ -71,22 +79,38 @@ paren_expression:
 ;
 
 and_expression:
-    expression AND expression {std::cout << "EXPRESSION -> AND\n";}
-    /*| expression expression {std::cout << "EXPRESSION -> AND_T\n";} */
+    expression AND expression {
+        std::cout << "EXPRESSION -> AND\n";
+        // If the expressions are both of length 1 use binary add
+        mathCore::binary_and($1,$3);
+    }
+    /*| expression expression {std::cout << "EXPRESSION -> AND_T\n";}*/
 ;
 
 or_expression:
-    expression OR expression {std::cout << "EXPRESSION -> OR\n";}
+    expression OR expression {
+        std::cout << "EXPRESSION -> OR\n";
+        mathCore::binary_or($1,$3);
+    }
 ;
 
 /* For XNOR, change the negate flag */
 xor_expression:
-    expression XOR expression       {std::cout << "EXPRESSION -> XOR\n";}
-    | expression XNOR expression    {std::cout << "EXPRESSION -> XNOR\n";}
+    expression XOR expression {
+        std::cout << "EXPRESSION -> XOR\n";
+        mathCore::binary_xor($1,$3);
+    }
+    | expression XNOR expression {
+        std::cout << "EXPRESSION -> XNOR\n";
+        mathCore::binary_equiv($1,$3);
+    }
 ;
 
 implication_expression:
-    expression IMPL expression      {std::cout << "EXPRESSION -> IMPL\n";}
+    expression IMPL expression  {
+        std::cout << "EXPRESSION -> IMPL\n";
+        mathCore::imply($1,$3);
+    }
 ;
 
 negated_expression:

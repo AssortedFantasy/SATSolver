@@ -14,3 +14,6 @@ bison:
 
 flex:
 	flex parse.l
+
+compile: bison flex
+	g++ parse.tab.c lex.yy.c -o out

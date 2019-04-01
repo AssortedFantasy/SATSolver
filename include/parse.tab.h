@@ -65,7 +65,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 38 "parse.y" /* yacc.c:1909  */
+#line 39 "parse.y" /* yacc.c:1909  */
 
     int ival;
     char* sval;
@@ -82,6 +82,6 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-int yyparse (void);
+int yyparse (expression* result);
 
 #endif /* !YY_YY_PARSE_TAB_H_INCLUDED  */

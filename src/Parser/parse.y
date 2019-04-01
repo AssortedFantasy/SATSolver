@@ -29,12 +29,13 @@
     }
     int tag;
     expression* result;
-    tag = yyparse();
+    tag = yyparse(result);
     std::cout << "Parsed: " << tag << std::endl;
     return result;
   }
 %}
 
+%parse-param {expression* result}
 %union{
     int ival;
     char* sval;

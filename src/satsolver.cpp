@@ -4,9 +4,8 @@
 
 #include <iostream>
 #include <string>
-#include "..\include\getoptpp\getopt_pp.h"	// Temporary, so Autocomplete works
-// #include "getoptpp\getopt_pp.h"
-// #include "expression.h"
+#include "getoptpp\getopt_pp.h"
+#include "expression.h"
 
 // Python Multi Line block strings don't exist in C unfortunately.
 std::string help_string =

@@ -19,17 +19,25 @@ set(CMAKE_STANDARD_REQUIRED ON)
 # Make sure you add a corresponding target_include_directories for each target! (Mabye?)
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-include_directories("${INCLUDE_DIR}")
+
+# This works badly with the autofill, so lets not do this
+#include_directories("${INCLUDE_DIR}")
 
 # Getopt
 add_library(Getopt "${SRC_DIR}/getopt/getopt_pp.cpp")
+target_include_directories(Getopt PRIVATE "${INCLUDE_DIR}")
+
 # Expression Functionality
 add_library(Expressions "${SRC_DIR}/expression.cpp")
+target_include_directories(Expressions PRIVATE "${INCLUDE_DIR}")
+
 # Math Core
 add_library(MathCore "${SRC_DIR}/mathCore.cpp")
+target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
 
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
+target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 
 # Final Link Stage
 target_link_libraries(

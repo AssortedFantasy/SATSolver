@@ -3,6 +3,7 @@
 
 #include <string>
 #include "expression.h"
+#include "parse.tab.h"
 
 // I/O Functions which main uses
 
@@ -11,6 +12,10 @@
 	returns NULL if an error occurs
 */
 expression* read_exp_from_file(std::string& filename);
+
+// Function used to set yyin in the bison
+// Declaration in parse.y
+expression* parse_expression(char* filename);
 
 /*
 	Writes an expression to a file

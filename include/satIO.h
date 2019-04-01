@@ -2,7 +2,10 @@
 #define _SAT_IO_H
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include "expression.h"
+#include "mathCore.h"
 
 // I/O Functions which main uses
 

@@ -1,9 +1,9 @@
 %{
 
   #include <iostream>
-  #include "../../include/expression.h"
+  #include "expression.h"
   #include "parse.tab.h"
-  #include "../../include/mathCore.h"
+  #include "mathCore.h"
 
   extern int yyparse();
   extern int yylex();

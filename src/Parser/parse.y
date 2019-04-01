@@ -6,11 +6,12 @@
   #include "parse.tab.h"
   #include "mathCore.h"
 
-  extern int yyparse(expression* result);
+  extern int yyparse();
   extern int yylex();
   extern FILE* yyin;
+  expression* result;
 
-  void yyerror(expression* exprs, const char* s) {
+  void yyerror(const char* s) {
       std::cout << "Well that's an error:" << s << std::endl;
       exit(-1);
   }
@@ -28,15 +29,13 @@
         return NULL;
     }
     int tag;
-    expression* result;
     yylex(); // test function call to see if it needs arguments
-    tag = yyparse(result);
+    tag = yyparse();
     std::cout << "Parsed: " << tag << std::endl;
     return result;
   }
 %}
 
-%parse-param {expression* result}
 %union{
     int ival;
     char* sval;

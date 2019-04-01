@@ -40,9 +40,18 @@ set(MATHCORECODE
 add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
 
+# Parser
+set(PARSERCODE
+	"${SRC_DIR}/Parser/lex.yy.c"
+	"${SRC_DIR}/Praser/parse.tab.c"
+)
+add_library(Parser ${PARSERCODE})
+target_include_directories(Parser PRIVATE "${INCLUDE_DIR}")
+
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
 target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
+
 
 # Final Link Stage
 target_link_libraries(
@@ -50,4 +59,5 @@ target_link_libraries(
 	Getopt		# Argument Parsing
 	Expressions # Expression Methods
 	MathCore	# Most Real Expression Methods
+	Parser		# Lexer and Parser
 )

@@ -9,7 +9,7 @@
 
 // Python Multi Line block strings don't exist in C unfortunately.
 std::string help_string =
-"SAT Solver, made by Jehanzeb Mirza and Tharidu Witharana\n"
+"SAT Solver, made by Jehanzeb Mirza and Tharidu Witharana!\n"
 "\n"
 "Options:\n"
 "-h --help :\n"
@@ -24,9 +24,15 @@ std::string help_string =
 "	Flag to terminal\n"
 "	- m --mode <integer between 0 and 2> :\n"
 "	One of a few modes!\n"
-"	0[Default] : Satisfiability\n"
-"	1 : CNF, Transforms to Conjunctive Normal Form\n"
-"	2 : DNF, Transforms to Disjunctive Normal Form\n";
+"0 : Satisfiability[Default]\n"
+"1 : CNF, Transforms to Conjunctive Normal Form\n"
+"2 : DNF, Transforms to Disjunctive Normal Form\n"
+"3 : Idempotent, Expression just comes as expressed internally\n"
+"4 : Negated\n"
+"5 : Dualed\n"
+"6 : Standardized(Comprised Entirely of AND, OR, NOT)\n"
+"7 : NANDIFY(Comprised Entirely of NAND)\n"
+"8 : NORIFY(Comprised Entirely of NOR)\n";
 
 /*
 	Command Line Interface implementation for the project
@@ -45,9 +51,15 @@ std::string help_string =
 			Flag to terminal
 		-m --mode <integer between 0 and 2>:
 			One of a few modes!
-			0 [Default]: Satisfiability
-			1		   : CNF, Transforms to Conjunctive Normal Form
-			2		   : DNF, Transforms to Disjunctive Normal Form
+			0: Satisfiability [Default]
+			1: CNF, Transforms to Conjunctive Normal Form
+			2: DNF, Transforms to Disjunctive Normal Form
+			3: Unchanged, Expression just comes as expressed internally
+			4: Negated
+			5: Dualed
+			6: Standardized (Comprised Entirely of AND, OR, NOT)
+			7: NANDIFY (Comprised Entirely of NAND)
+			8: NORIFY  (Comprised Entirely of NOR )
 */
 int main(int argc, char* argv[]){
 	GetOpt::GetOpt_pp optparser(argc, argv);
@@ -77,5 +89,33 @@ int main(int argc, char* argv[]){
 	std::cin.get();
 #endif // DEBUG_INPUT_PARSE
 
+	// Need Tharidu To Deal with this
+	expression* in_exp = NULL;
+	expression* out_exp = NULL;
+
+	switch (mode) {
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		out_exp = in_exp;
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	default:
+		std::cout << "Invalid Mode! Use -h or --help for more information!\n";
+		return 1;
+	}
 	return 0;
 }

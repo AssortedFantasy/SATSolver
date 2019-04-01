@@ -1,4 +1,4 @@
-#include "../include/mathCore.h"
+#include "mathCore.h"
 
 // Constructs a literal expression
 // The literal expression is literal true!
@@ -68,7 +68,7 @@ void mathCore::dual(expression* a) {
 }
 
 //AND OR XOR EQUIV all have basially the same code
-expression* mathCore::binary_and(const expression* a, const expression* b) {
+expression* mathCore::binary_and(expression* a, expression* b) {
 	expression* exp = new expression;
 	exp->FLAGS = F_AND;
 	exp->contents.reserve(2); // Space for two
@@ -77,7 +77,7 @@ expression* mathCore::binary_and(const expression* a, const expression* b) {
 	return exp;
 }
 
-expression* mathCore::binary_or(const expression* a, const expression* b) {
+expression* mathCore::binary_or(expression* a, expression* b) {
 	expression* exp = new expression;
 	exp->FLAGS = F_OR;
 	exp->contents.reserve(2); // Space for two
@@ -86,7 +86,7 @@ expression* mathCore::binary_or(const expression* a, const expression* b) {
 	return exp;
 }
 
-expression* mathCore::binary_xor(const expression* a, const expression* b) {
+expression* mathCore::binary_xor(expression* a, expression* b) {
 	expression* exp = new expression;
 	exp->FLAGS = F_XOR;
 	exp->contents.reserve(2); // Space for two
@@ -95,7 +95,7 @@ expression* mathCore::binary_xor(const expression* a, const expression* b) {
 	return exp;
 }
 
-expression* mathCore::binary_equiv(const expression* a, const expression* b) {
+expression* mathCore::binary_equiv(expression* a, expression* b) {
 	expression* exp = new expression;
 	exp->FLAGS = F_EQUIV;
 	exp->contents.reserve(2); // Space for two
@@ -134,12 +134,11 @@ expression* mathCore::multi_equiv(const std::vector<expression*>& children) {
 }
 
 // Impication is the same as the binaries, but is exclusivally binary
-expression* mathCore::imply(const expression* a, const expression* b) {
+expression* mathCore::imply(expression* a, expression* b) {
 	expression* exp = new expression;
 	exp->FLAGS = F_IMPLY;
 	exp->contents.reserve(2); // Space for two
-	exp->contents.emplace_back(a);
-	exp->contents.emplace_back(b);
+	exp->contents.push_back(a);
+	exp->contents.push_back(b);
 	return exp;
 }
-

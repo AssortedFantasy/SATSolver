@@ -32,7 +32,12 @@ add_library(Expressions "${SRC_DIR}/expression.cpp")
 target_include_directories(Expressions PRIVATE "${INCLUDE_DIR}")
 
 # Math Core
-add_library(MathCore "${SRC_DIR}/mathCore.cpp")
+# Multiple.cpp files
+set(MATHCORECODE 
+	"${SRC_DIR}/mathCore/mathCoreCompare.cpp"
+	"${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
+)
+add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
 
 # This is the main executable, SATSolver
@@ -44,5 +49,5 @@ target_link_libraries(
 	SATSolver	# Main Function
 	Getopt		# Argument Parsing
 	Expressions # Expression Methods
-	mathCore	# Most Real Expression Methods
+	MathCore	# Most Real Expression Methods
 )

@@ -130,7 +130,7 @@ and_expression:
     /* This line parses tightly bound AND expressions, be wary of this line */
     | expression expression {
         std::cout << "EXPRESSION -> AND_T\n";
-        $$ = mathCore::binary_and($1, $1);
+        $$ = mathCore::binary_and($1, $2);
     }
 ;
 

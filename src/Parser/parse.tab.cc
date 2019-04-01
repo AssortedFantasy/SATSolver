@@ -1396,7 +1396,7 @@ yyreduce:
 #line 131 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> AND_T\n";
-        (yyval.expr) = mathCore::binary_and((yyvsp[-1].expr), (yyvsp[-1].expr));
+        (yyval.expr) = mathCore::binary_and((yyvsp[-1].expr), (yyvsp[0].expr));
     }
 #line 1402 "parse.tab.c" /* yacc.c:1646  */
     break;

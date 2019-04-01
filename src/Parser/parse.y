@@ -118,7 +118,14 @@ expression:
 
 /* expressions closed in parenthesis */
 paren_expression:
-    O_BRACE expression C_BRACE {std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";}
+    O_BRACE expression C_BRACE {
+        std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";
+        $<context>$ = push_context();
+        declare_variable ($2);
+    }
+    O_BRACE C_BRACE {
+        std::cout << "EMPTY EXPRESSION\n";
+    }
 ;
 
 /* Parses AND expressions */

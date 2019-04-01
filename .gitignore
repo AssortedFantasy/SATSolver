@@ -1,5 +1,6 @@
 # Only a few things to ignore
 /build
 /.vs
+/.vscode
 *.exe
 *.out

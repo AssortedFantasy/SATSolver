@@ -23,7 +23,7 @@
   * if the file fails to open, return NULL
   */
   expression* parse_expression(const char* filename) {
-    if( (yyin = fopen(filename, 'r')) == NULL) {
+    if( (yyin = fopen(filename, "r")) == NULL) {
         // The file could not be read
         return NULL;
     }

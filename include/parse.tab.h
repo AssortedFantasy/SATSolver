@@ -65,7 +65,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 39 "parse.y" /* yacc.c:1909  */
+#line 38 "parse.y" /* yacc.c:1909  */
 
     int ival;
     char* sval;

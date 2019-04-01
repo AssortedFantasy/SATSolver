@@ -29,7 +29,6 @@
         return NULL;
     }
     int tag;
-    yylex(); // test function call to see if it needs arguments
     tag = yyparse();
     std::cout << "Parsed: " << tag << std::endl;
     return result;

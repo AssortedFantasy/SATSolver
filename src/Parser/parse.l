@@ -18,7 +18,7 @@
 /* Rules section, uses REGEX */
 %%
 
-[ \t] ;                                   // Catches all whitespace
+[ \t\n] ;                                   // Catches all whitespace
 [\(\[\{]               return O_BRACE;    // Open Parenthesis
 [\}\]\)]               return C_BRACE;    // Close Parenthesis
 [!~¬]                  return PRE_NEG;    // Negation Prefix Operator

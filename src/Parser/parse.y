@@ -37,12 +37,13 @@
 %left IMPL
 %left XOR OR
 %left AND
-%right PRE_NEG
 %left POST_NEG DUAL
+%right PRE_NEG
 %token <ival> LITERAL
 %token <sval> VARIABLE
 %token O_BRACE C_BRACE
 %start commands
+
 %type <expr> expression
 %type <expr> and_expression
 %type <expr> or_expression
@@ -52,12 +53,14 @@
 %type <expr> implication_expression
 %type <expr> paren_expression
 
+
 %%
 
 /* Recursivly parses expressions 1 at a time */
 /* Parses from right to left, as it is more memory efficienct */
 commands:
-        | commands expression '\n'{std::cout << "commands ";}
+        /*| commands expression {std::cout << "commands " << std::endl;} */
+        | expression {/*result = $1;*/}                                /* use this line to set the final result */
 ;
 
 /* Defines a basic expression */
@@ -69,9 +72,31 @@ expression:
     | negated_expression {std::cout << "NEG -> EXPRESSION\n";}
     | dualed_expression {std::cout << "DUAL -> EXPRESSION\n";}
     | implication_expression {std::cout << "IMPL -> EXPRESSION\n";}
+    
+    /* Interpreting Variables and Literals */
+    | VARIABLE POST_NEG {
+                        std::cout << "VARIABLE(NEG) -> EXPRESSION\n";
+                        $$ = mathCore::variable($1);
+                        mathCore::negate($$);
+                    }
+    | PRE_NEG VARIABLE {
+                        std::cout << "(NEG)VARIABLE -> EXPRESSION\n";
+                        $$ = mathCore::variable($1);
+                        mathCore::negate($$);
+                    }
     | VARIABLE      {
                         std::cout << "VARIABLE -> EXPRESSION\n";
                         $$ = mathCore::variable($1);
+                    }
+    | LITERAL POST_NEG {
+                        std::cout << "LITERAL(NEG) -> EXPRESSION\n";
+                        $$ = mathCore::literal((bool)$1);
+                        mathCore::negate($$);
+                    }
+    | PRE_NEG LITERAL {
+                        std::cout << "(NEG)LITERAL -> EXPRESSION\n";
+                        $$ = mathCore::literal((bool)$1);
+                        mathCore::negate($$);
                     }
     | LITERAL       {
                         std::cout << "LITERAL -> EXPRESSION\n";
@@ -81,18 +106,20 @@ expression:
 
 /* expressions closed in parenthesis */
 paren_expression:
-    O_BRACE expression C_BRACE      {std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";}
+    O_BRACE expression C_BRACE {std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";}
 ;
 
+/* Parses AND expressions */
 and_expression:
     expression AND expression {
         std::cout << "EXPRESSION -> AND\n";
-        // If the expressions are both of length 1 use binary add
         $$ = mathCore::binary_and($1,$3);
     }
-    /*| expression expression {std::cout << "EXPRESSION -> AND_T\n";}*/
+    /* This line parses tightly bound AND expressions, be wary of this line */
+    | expression expression {std::cout << "EXPRESSION -> AND_T\n";}
 ;
 
+/* Parses OR Expressions */
 or_expression:
     expression OR expression {
         std::cout << "EXPRESSION -> OR\n";
@@ -100,7 +127,7 @@ or_expression:
     }
 ;
 
-/* For XNOR, change the negate flag */
+/* Parses XOR Expressions */
 xor_expression:
     expression XOR expression {
         std::cout << "EXPRESSION -> XOR\n";
@@ -112,6 +139,9 @@ xor_expression:
     }
 ;
 
+
+
+/* parses implication expressions */
 implication_expression:
     expression IMPL expression  {
         std::cout << "EXPRESSION -> IMPL\n";
@@ -119,6 +149,7 @@ implication_expression:
     }
 ;
 
+/* parses negated expressions, for both post/pre-fix negation */
 negated_expression:
     paren_expression POST_NEG   {
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
@@ -132,7 +163,7 @@ negated_expression:
     }
 ;
 
-/* postfix only */
+/* parses the dual of an expression postfix only */
 dualed_expression:
     paren_expression DUAL   {
         std::cout << "PAREN_EXPRESSION -> DUAL\n";

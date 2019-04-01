@@ -31,7 +31,7 @@
     expression* result;
     tag = yyparse();
     std::cout << "Parsed: " << tag << std::endl;
-    return 0;
+    return result;
   }
 %}
 

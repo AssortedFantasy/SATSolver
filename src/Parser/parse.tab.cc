@@ -62,8 +62,32 @@
 
 
 /* Copy the first part of user declarations.  */
+#line 1 "parse.y" /* yacc.c:339  */
 
-#line 67 "parse.tab.c" /* yacc.c:339  */
+
+  #include <iostream>
+  #include "expression.h"
+  #include "parse.tab.h"
+  #include "mathCore.h"
+
+  extern int yyparse();
+  extern int yylex();
+  extern FILE *yyin;
+
+  void yyerror(const char* s) {
+      std::cout << "Well that's an error:" << s << std::endl;
+      exit(-1);
+  }
+
+
+  int main() {
+    int tag;
+    tag = yyparse();
+    std::cout << "Parsed: " << tag << std::endl;
+    return 0;
+  }
+
+#line 91 "parse.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -118,13 +142,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 2 "parse.y" /* yacc.c:355  */
+#line 26 "parse.y" /* yacc.c:355  */
 
     int ival;
     char* sval;
     expression* expr;
 
-#line 128 "parse.tab.c" /* yacc.c:355  */
+#line 152 "parse.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -140,30 +164,6 @@ int yyparse (void);
 #endif /* !YY_YY_PARSE_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
-#line 8 "parse.y" /* yacc.c:358  */
-
-
-  #include <iostream>
-  #include "parse.tab.h"
-  #include "../../include/mathCore.h"
-  #include "../../include/expression.h"
-
-  extern int yyparse();
-  extern int yylex();
-  extern FILE *yyin;
-
-  void yyerror(const char* s) {
-      std::cout << "Well that's an error:" << s << std::endl;
-      exit(-1);
-  }
-
-
-  int main() {
-    int tag;
-    tag = yyparse();
-    std::cout << "Parsed: " << tag << std::endl;
-    return 0;
-  }
 
 #line 169 "parse.tab.c" /* yacc.c:358  */
 
@@ -463,9 +463,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    54,    54,    55,    60,    61,    62,    63,    64,    65,
-      66,    67,    71,    79,    83,   100,   117,   129,   145,   155,
-     156,   161
+       0,    59,    59,    60,    65,    66,    67,    68,    69,    70,
+      71,    72,    76,    84,    88,    97,   105,   109,   116,   123,
+     128,   137
 };
 #endif
 
@@ -1256,180 +1256,155 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 55 "parse.y" /* yacc.c:1646  */
+#line 60 "parse.y" /* yacc.c:1646  */
     {std::cout << "commands ";}
 #line 1262 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 60 "parse.y" /* yacc.c:1646  */
+#line 65 "parse.y" /* yacc.c:1646  */
     {std::cout << "PAREN_EXPRESSION -> EXPRESSION\n";}
 #line 1268 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 61 "parse.y" /* yacc.c:1646  */
+#line 66 "parse.y" /* yacc.c:1646  */
     {std::cout << "AND -> EXPRESSION\n";}
 #line 1274 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 62 "parse.y" /* yacc.c:1646  */
+#line 67 "parse.y" /* yacc.c:1646  */
     {std::cout << "OR -> EXPRESSION\n";}
 #line 1280 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 63 "parse.y" /* yacc.c:1646  */
+#line 68 "parse.y" /* yacc.c:1646  */
     {std::cout << "XOR -> EXPRESSION\n";}
 #line 1286 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 64 "parse.y" /* yacc.c:1646  */
+#line 69 "parse.y" /* yacc.c:1646  */
     {std::cout << "NEG -> EXPRESSION\n";}
 #line 1292 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 65 "parse.y" /* yacc.c:1646  */
+#line 70 "parse.y" /* yacc.c:1646  */
     {std::cout << "DUAL -> EXPRESSION\n";}
 #line 1298 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 66 "parse.y" /* yacc.c:1646  */
+#line 71 "parse.y" /* yacc.c:1646  */
     {std::cout << "IMPL -> EXPRESSION\n";}
 #line 1304 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 67 "parse.y" /* yacc.c:1646  */
+#line 72 "parse.y" /* yacc.c:1646  */
     {
                         std::cout << "VARIABLE -> EXPRESSION\n";
-                        (yyval.expression) = mathCore::variable((yyvsp[0].sval));
+                        (yyval.expr) = mathCore::variable((yyvsp[0].sval));
                     }
 #line 1313 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 71 "parse.y" /* yacc.c:1646  */
+#line 76 "parse.y" /* yacc.c:1646  */
     {
                         std::cout << "LITERAL -> EXPRESSION\n";
-                        (yyval.expression) = mathCore::literal((yyvsp[0].ival))
+                        (yyval.expr) = mathCore::literal((bool)(yyvsp[0].ival));
                     }
 #line 1322 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 79 "parse.y" /* yacc.c:1646  */
+#line 84 "parse.y" /* yacc.c:1646  */
     {std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";}
 #line 1328 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 83 "parse.y" /* yacc.c:1646  */
+#line 88 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> AND\n";
         // If the expressions are both of length 1 use binary add
-        if(1$->contents->size() == 1 && (yyvsp[0].expression)->contents->size() == 1) {
-            mathCore::binary_add((yyvsp[-2].expression),(yyvsp[0].expression));
-        } else {
-            // If there are more arguments, use a multi_add
-            vector<expr> vect;
-            vect.reserve((yyvsp[-2].expression)->contents->size() + (yyvsp[0].expression)->contents->size());
-            vect.insert(vect.end(), (yyvsp[-2].expression)->contents->begin(), (yyvsp[-2].expression)->contents->end());
-            vect.insert(vect.end(), (yyvsp[0].expression)->contents->begin(), (yyvsp[0].expression)->contents->end());
-        }
+        (yyval.expr) = mathCore::binary_and((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1346 "parse.tab.c" /* yacc.c:1646  */
+#line 1338 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 100 "parse.y" /* yacc.c:1646  */
+#line 97 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> OR\n";
-        // If the expressions are both of length 1
-        if((yyvsp[-2].expression)->contents->size() == 1 && (yyvsp[0].expression)->contents->size() == 1) {
-            mathCore::binary_or((yyvsp[-2].expression),(yyvsp[0].expression));
-        } else {
-            // If there are more arguments, use a multi_or
-            vector<expr> vect;
-            vect.reserve((yyvsp[-2].expression)->contents->size() + (yyvsp[0].expression)->contents->size());
-            vect.insert(vect.end(), (yyvsp[-2].expression)->contents->begin(), (yyvsp[-2].expression)->contents->end());
-            vect.insert(vect.end(), (yyvsp[0].expression)->contents->begin(), (yyvsp[0].expression)->contents->end());
-        }
+        (yyval.expr) = mathCore::binary_or((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1364 "parse.tab.c" /* yacc.c:1646  */
+#line 1347 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 117 "parse.y" /* yacc.c:1646  */
+#line 105 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> XOR\n";
-        if((yyvsp[-2].expression)->contents->size() == 1 && (yyvsp[0].expression)->contents->size() == 1) {
-            mathCore::binary_xor((yyvsp[-2].expression),(yyvsp[0].expression));
-        } else {
-            // If there are more arguments, use a multi_or
-            vector<expr> vect;
-            vect.reserve((yyvsp[-2].expression)->contents->size() + (yyvsp[0].expression)->contents->size());
-            vect.insert(vect.end(), (yyvsp[-2].expression)->contents->begin(), (yyvsp[-2].expression)->contents->end());
-            vect.insert(vect.end(), (yyvsp[0].expression)->contents->begin(), (yyvsp[0].expression)->contents->end());
-        }
+        (yyval.expr) = mathCore::binary_xor((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1381 "parse.tab.c" /* yacc.c:1646  */
+#line 1356 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 129 "parse.y" /* yacc.c:1646  */
+#line 109 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> XNOR\n";
-        if((yyvsp[-2].expression)->contents->size() == 1 && (yyvsp[0].expression)->contents->size() == 1) {
-            mathCore::binary_equiv((yyvsp[-2].expression),(yyvsp[0].expression));
-        } else {
-        // If there are more arguments, use a multi_or
-            vector<expr> vect;
-            vect.reserve((yyvsp[-2].expression)->contents->size() + (yyvsp[0].expression)->contents->size());
-            vect.insert(vect.end(), (yyvsp[-2].expression)->contents->begin(), (yyvsp[-2].expression)->contents->end());
-            vect.insert(vect.end(), (yyvsp[0].expression)->contents->begin(), (yyvsp[0].expression)->contents->end());
-            mathCore::multi_equiv(vect);
-        }
+        (yyval.expr) = mathCore::binary_equiv((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1399 "parse.tab.c" /* yacc.c:1646  */
+#line 1365 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 145 "parse.y" /* yacc.c:1646  */
+#line 116 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "EXPRESSION -> IMPL\n";
-                    vector<expr> vect;
-            vect.reserve((yyvsp[-2].expression)->contents->size() + (yyvsp[0].expression)->contents->size());
-            vect.insert(vect.end(), (yyvsp[-2].expression)->contents->begin(), (yyvsp[-2].expression)->contents->end());
-            vect.insert(vect.end(), (yyvsp[0].expression)->contents->begin(), (yyvsp[0].expression)->contents->end());
+        (yyval.expr) = mathCore::imply((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1411 "parse.tab.c" /* yacc.c:1646  */
+#line 1374 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 155 "parse.y" /* yacc.c:1646  */
-    {std::cout << "PAREN_EXPRESSION -> POST_NEG\n";}
-#line 1417 "parse.tab.c" /* yacc.c:1646  */
+#line 123 "parse.y" /* yacc.c:1646  */
+    {
+        std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
+        mathCore::negate((yyvsp[-1].expr));
+        (yyval.expr) = (yyvsp[-1].expr);
+    }
+#line 1384 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 156 "parse.y" /* yacc.c:1646  */
-    {std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";}
-#line 1423 "parse.tab.c" /* yacc.c:1646  */
+#line 128 "parse.y" /* yacc.c:1646  */
+    {
+        std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
+        mathCore::negate((yyvsp[0].expr));
+        (yyval.expr) = (yyvsp[0].expr);
+    }
+#line 1394 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 161 "parse.y" /* yacc.c:1646  */
-    {std::cout << "PAREN_EXPRESSION -> DUAL\n";}
-#line 1429 "parse.tab.c" /* yacc.c:1646  */
+#line 137 "parse.y" /* yacc.c:1646  */
+    {
+        std::cout << "PAREN_EXPRESSION -> DUAL\n";
+        mathCore::dual((yyvsp[-1].expr));
+        (yyval.expr) = (yyvsp[-1].expr);
+    }
+#line 1404 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1433 "parse.tab.c" /* yacc.c:1646  */
+#line 1408 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1657,6 +1632,6 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 164 "parse.y" /* yacc.c:1906  */
+#line 144 "parse.y" /* yacc.c:1906  */
 
 

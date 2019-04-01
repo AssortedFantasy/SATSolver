@@ -44,7 +44,13 @@
 %token O_BRACE C_BRACE
 %start commands
 %type <expr> expression
-
+%type <expr> and_expression
+%type <expr> or_expression
+%type <expr> xor_expression
+%type <expr> negated_expression
+%type <expr> dualed_expression
+%type <expr> implication_expression
+%type <expr> paren_expression
 
 %%
 
@@ -116,11 +122,13 @@ implication_expression:
 negated_expression:
     paren_expression POST_NEG   {
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
-        $$ = mathCore::negate($1);
+        mathCore::negate($1);
+        $$ = $1;
     }
     | PRE_NEG paren_expression  {
         std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
-        $$ = mathCore::negate($2);
+        mathCore::negate($2);
+        $$ = $2;
     }
 ;
 
@@ -128,7 +136,8 @@ negated_expression:
 dualed_expression:
     paren_expression DUAL   {
         std::cout << "PAREN_EXPRESSION -> DUAL\n";
-        $$ = mathCore::dual($1);
+        mathCore::dual($1);
+        $$ = $1;
     }
 ;
 

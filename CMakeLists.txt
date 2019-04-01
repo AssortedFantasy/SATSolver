@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.10.2)
 project(
 	"SATSolver"
 	VERSION 0.1
-	LANGUAGES CXX
+	LANGUAGES CXX C
 	DESCRIPTION "Solves SAT Problems! What a Beast!"
 )
 
@@ -42,8 +42,8 @@ target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
 
 # Parser
 set(PARSERCODE
-	"${SRC_DIR}/Parser/lex.yy.c"
-	"${SRC_DIR}/Praser/parse.tab.c"
+	"${SRC_DIR}/Parser/lex.yy.cc"
+	"${SRC_DIR}/Parser/parse.tab.cc"
 )
 add_library(Parser ${PARSERCODE})
 target_include_directories(Parser PRIVATE "${INCLUDE_DIR}")

@@ -2,7 +2,8 @@
 
 /*TODO: THARIDU Write this*/
 expression* read_exp_from_file(std::string& filename){
-	return NULL;
+	expression* input_expression = parse_expression(filename.c_str);
+	return input_expression;
 }
 
 

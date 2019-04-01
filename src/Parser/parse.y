@@ -6,7 +6,7 @@
   #include "parse.tab.h"
   #include "mathCore.h"
 
-  extern int yyparse();
+  extern int yyparse(expression* result);
   extern int yylex();
   extern FILE* yyin;
 
@@ -29,6 +29,7 @@
     }
     int tag;
     expression* result;
+    yylex(); // test function call to see if it needs arguments
     tag = yyparse(result);
     std::cout << "Parsed: " << tag << std::endl;
     return result;

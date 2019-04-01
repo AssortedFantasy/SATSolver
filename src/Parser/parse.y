@@ -81,7 +81,7 @@ expression:
                     }
     | PRE_NEG VARIABLE {
                         std::cout << "(NEG)VARIABLE -> EXPRESSION\n";
-                        $$ = mathCore::variable($1);
+                        $$ = mathCore::variable($2);
                         mathCore::negate($$);
                     }
     | VARIABLE      {
@@ -95,7 +95,7 @@ expression:
                     }
     | PRE_NEG LITERAL {
                         std::cout << "(NEG)LITERAL -> EXPRESSION\n";
-                        $$ = mathCore::literal((bool)$1);
+                        $$ = mathCore::literal((bool)$2);
                         mathCore::negate($$);
                     }
     | LITERAL       {

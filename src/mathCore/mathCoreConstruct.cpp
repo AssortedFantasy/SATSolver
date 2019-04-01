@@ -57,11 +57,11 @@ void mathCore::negate(expression* a){
 
 // Dual an Expression
 void mathCore::dual(expression* a) {
-	if (a->FLAGS & F_LIT) {
+	if (mathCore::is_literal(a)) {
 		// Dual of a Literal is its negation
 		mathCore::negate(a);
 	}
-	else if (!(a->FLAGS & F_VAR)){
+	else if (!mathCore::is_var(a)){
 		// If its not a varible you flip its dual
 		a->FLAGS ^= F_DUAL;
 	}

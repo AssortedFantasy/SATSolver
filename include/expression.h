@@ -41,8 +41,9 @@ private:
 
 	static unsigned int global_uuid;
 
-	int uuid = 0;
 	int FLAGS = 0;
+	int uuid = 0;
+
 	std::vector<expression*> contents;
 
 	// Only mathCore can interact with these directly

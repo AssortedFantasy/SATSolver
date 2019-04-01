@@ -36,6 +36,7 @@ target_include_directories(Expressions PRIVATE "${INCLUDE_DIR}")
 set(MATHCORECODE 
 	"${SRC_DIR}/mathCore/mathCoreCompare.cpp"
 	"${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
+	"${SRC_DIR}/mathCore/mathCoreStream.cpp"
 )
 add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
@@ -48,6 +49,10 @@ set(PARSERCODE
 add_library(Parser ${PARSERCODE})
 target_include_directories(Parser PRIVATE "${INCLUDE_DIR}")
 
+# SATIO
+add_library(SATIO "${SRC_DIR}/satIO.cpp")
+target_include_directories(SATIO PRIVATE "${INCLUDE_DIR}")
+
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
 target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
@@ -56,6 +61,7 @@ target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 # Final Link Stage
 target_link_libraries(
 	SATSolver	# Main Function
+	SATIO		# File Input OutPut
 	Getopt		# Argument Parsing
 	Expressions # Expression Methods
 	MathCore	# Most Real Expression Methods

@@ -1,22 +1,34 @@
 %{
 
   #include <iostream>
+  #include <cstdio>
   #include "expression.h"
   #include "parse.tab.h"
   #include "mathCore.h"
 
   extern int yyparse();
   extern int yylex();
-  extern FILE *yyin;
+  extern FILE* yyin;
 
   void yyerror(const char* s) {
       std::cout << "Well that's an error:" << s << std::endl;
       exit(-1);
   }
 
-
-  int main() {
+  /* 
+  * Function to get an expression from a file
+  * Takes a file name as an argument and attempts to open it
+  * if the file is successfully opened, it attemps to read from it
+  * a pointer to the resulting expression is returned
+  * if the file fails to open, return NULL
+  */
+  expression* parse_expression(char* filename) {
+    if( (yyin = fopen(filename, 'r')) == NULL) {
+        // The file could not be read
+        return NULL;
+    }
     int tag;
+    expression* result;
     tag = yyparse();
     std::cout << "Parsed: " << tag << std::endl;
     return 0;
@@ -60,7 +72,7 @@
 /* Parses from right to left, as it is more memory efficienct */
 commands:
         /*| commands expression {std::cout << "commands " << std::endl;} */
-        | expression {/*result = $1;*/}                                /* use this line to set the final result */
+        | expression {result = $1;}  /* use this line to set the final result */
 ;
 
 /* Defines a basic expression */

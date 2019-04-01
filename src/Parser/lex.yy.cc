@@ -403,8 +403,9 @@ char *yytext;
   #include "parse.tab.h"
   #include "expression.h"
   #include "mathCore.h"
+#define YY_NEVER_INTERACTIVE 1
 /* Rules section, uses REGEX */
-#line 408 "lex.yy.c"
+#line 409 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -566,10 +567,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 18 "parse.l"
+#line 19 "parse.l"
 
 
-#line 573 "lex.yy.c"
+#line 574 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -654,80 +655,80 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 20 "parse.l"
+#line 21 "parse.l"
 ;                                   // Catches all whitespace
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 21 "parse.l"
+#line 22 "parse.l"
 return O_BRACE;    // Open Parenthesis
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "parse.l"
+#line 23 "parse.l"
 return C_BRACE;    // Close Parenthesis
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 23 "parse.l"
+#line 24 "parse.l"
 return PRE_NEG;    // Negation Prefix Operator
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 24 "parse.l"
+#line 25 "parse.l"
 return POST_NEG;   // Negation Postfix Operator
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "parse.l"
+#line 26 "parse.l"
 return DUAL;       // Dual Operator
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 26 "parse.l"
+#line 27 "parse.l"
 return IMPL;       // Implication Operator
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 27 "parse.l"
+#line 28 "parse.l"
 return AND;        // AND Operator
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 28 "parse.l"
+#line 29 "parse.l"
 return OR;       // Or Operator
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 29 "parse.l"
+#line 30 "parse.l"
 return XOR;      // Xor Operator
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 30 "parse.l"
+#line 31 "parse.l"
 return XNOR;     // Equivalence Operator
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 31 "parse.l"
+#line 32 "parse.l"
 {yylval.ival=atoi(yytext); return LITERAL;}  // Literals
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 32 "parse.l"
+#line 33 "parse.l"
 {yylval.sval=strdup(yytext); return VARIABLE;} // This expression catches variables
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 33 "parse.l"
+#line 34 "parse.l"
 return 0;       // End of File
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 34 "parse.l"
+#line 35 "parse.l"
 ECHO;
 	YY_BREAK
-#line 731 "lex.yy.c"
+#line 732 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1617,4 +1618,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 34 "parse.l"
+#line 35 "parse.l"

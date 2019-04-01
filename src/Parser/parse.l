@@ -12,6 +12,7 @@
   #include "mathCore.h"
 %}
 
+%option never-interactive
 %option noyywrap
 
 /* Rules section, uses REGEX */

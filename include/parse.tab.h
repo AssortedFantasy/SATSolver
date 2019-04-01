@@ -50,9 +50,9 @@ extern int yydebug;
     XOR = 260,
     OR = 261,
     AND = 262,
-    PRE_NEG = 263,
-    POST_NEG = 264,
-    DUAL = 265,
+    POST_NEG = 263,
+    DUAL = 264,
+    PRE_NEG = 265,
     LITERAL = 266,
     VARIABLE = 267,
     O_BRACE = 268,
@@ -65,7 +65,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 26 "parse.y" /* yacc.c:1909  */
+#line 38 "parse.y" /* yacc.c:1909  */
 
     int ival;
     char* sval;

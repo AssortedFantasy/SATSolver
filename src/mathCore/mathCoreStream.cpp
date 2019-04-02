@@ -40,7 +40,7 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 		// AND OR XOR IMPLY EQUIV all need to recursively call down!
 		if (mathCore::is_and(a)) {
 
-			for (int i = 0; i + 2 < a->contents.size(); i++) { // Iterate through except the last
+			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
 				mathCore::string_streamify(OutStream, a->contents.at(i));
 				OutStream << "*";
 			}
@@ -49,7 +49,7 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 		}
 		else if (mathCore::is_or(a)) {
 
-			for (int i = 0; i + 2 < a->contents.size(); i++) { // Iterate through except the last
+			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
 				mathCore::string_streamify(OutStream, a->contents.at(i));
 				OutStream << "+";
 			}
@@ -58,7 +58,7 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 		}
 		else if (mathCore::is_xor(a)) {
 
-			for (int i = 0; i + 2 < a->contents.size(); i++) { // Iterate through except the last
+			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
 				mathCore::string_streamify(OutStream, a->contents.at(i));
 				OutStream << "@";
 			}
@@ -72,7 +72,7 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 			mathCore::string_streamify(OutStream, a->contents.back());
 		}
 		else if (mathCore::is_equiv(a)) {
-			for (int i = 0; i + 2 < a->contents.size(); i++) { // Iterate through except the last
+			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
 				mathCore::string_streamify(OutStream, a->contents.at(i));
 				OutStream << "=";
 			}

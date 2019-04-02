@@ -10,6 +10,9 @@ project(
 	DESCRIPTION "Solves SAT Problems! What a Beast!"
 )
 
+# debug ones
+add_compile_definitions(DEBUG_INPUT_PARSE)
+
 
 # We are going to use at least 11 features!
 set(CMAKE_CXX_STANDARD 11)

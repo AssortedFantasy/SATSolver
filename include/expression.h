@@ -34,7 +34,7 @@ class expression{
 public:
 	~expression();	// You can delete contructors given to you
 private:
-	expression();	// But you may not construct an expression yourself
+	//expression();	// But you may not construct an expression yourself
 
 	static std::unordered_map<unsigned int, std::string> uuid_to_string;	// For printing
 	static std::unordered_map<std::string, unsigned int> string_to_uuid; // For constructing

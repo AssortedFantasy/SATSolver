@@ -6,6 +6,7 @@
 #include <string>
 #include "getoptpp\getopt_pp.h"
 #include "expression.h"
+#include "satIO.h"
 
 // Python Multi Line block strings don't exist in C unfortunately.
 std::string help_string =
@@ -90,8 +91,13 @@ int main(int argc, char* argv[]){
 #endif // DEBUG_INPUT_PARSE
 
 	// Need Tharidu To Deal with this
-	expression* in_exp = NULL;
+	expression* in_exp = read_exp_from_file(input_file_string);
 	expression* out_exp = NULL;
+	
+	if (in_exp == NULL) {
+		std::cout << "Had problems reading input expression!\n";
+		return 1;
+	}
 
 	switch (mode) {
 	case 0:
@@ -117,5 +123,12 @@ int main(int argc, char* argv[]){
 		std::cout << "Invalid Mode! Use -h or --help for more information!\n";
 		return 1;
 	}
+
+	if (out_exp == NULL) {
+		std::cout << "Had problems creating output expression!\n";
+		return 1;
+	}
+
+	write_exp_to_file(out_exp, output_file_string, terminal_flag);
 	return 0;
 }

@@ -18,7 +18,7 @@ expression* read_exp_from_file(std::string& filename);
 
 // Function used to set yyin in the bison
 // Declaration in parse.y
-expression* parse_expression(char* filename);
+expression* parse_expression(const char* filename);
 
 /*
 	Writes an expression to a file

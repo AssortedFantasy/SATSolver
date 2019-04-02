@@ -46,8 +46,6 @@ public:
 	// MATH CORE COMPARE METHODS
 
 	// Flag Checking
-	static bool is_literal_true(expression* a);
-	static bool is_literal_false(expression* a);
 	static bool is_literal(expression* a);
 	static bool is_var(expression* a);
 	static bool is_negated(expression* a);

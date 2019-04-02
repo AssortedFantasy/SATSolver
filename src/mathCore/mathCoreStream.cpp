@@ -36,49 +36,35 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 			// BAD Things are happening
 			throw;
 		}
+		std::string operand_symbol = "!MISSING!";
 
 		// AND OR XOR IMPLY EQUIV all need to recursively call down!
 		if (mathCore::is_and(a)) {
-
-			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
-				mathCore::string_streamify(OutStream, a->contents.at(i));
-				OutStream << "*";
-			}
-			mathCore::string_streamify(OutStream, a->contents.back());
-		
+			operand_symbol = "*";
 		}
 		else if (mathCore::is_or(a)) {
-
-			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
-				mathCore::string_streamify(OutStream, a->contents.at(i));
-				OutStream << "+";
-			}
-			mathCore::string_streamify(OutStream, a->contents.back());
-
+			operand_symbol = "+";
 		}
 		else if (mathCore::is_xor(a)) {
-
-			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
-				mathCore::string_streamify(OutStream, a->contents.at(i));
-				OutStream << "@";
-			}
-			mathCore::string_streamify(OutStream, a->contents.back());
-
+			operand_symbol = "@";
 		}
 		else if (mathCore::is_imply(a)) {
-			// MUST HAVE TWO!
-			mathCore::string_streamify(OutStream, a->contents.front());
-			OutStream << "->";
-			mathCore::string_streamify(OutStream, a->contents.back());
+			operand_symbol = "->";
 		}
 		else if (mathCore::is_equiv(a)) {
-			for (int i = 0; i + 1 < a->contents.size(); i++) { // Iterate through except the last
-				mathCore::string_streamify(OutStream, a->contents.at(i));
-				OutStream << "=";
-			}
-			mathCore::string_streamify(OutStream, a->contents.back());
+			operand_symbol = "=";
 		}
 
+		// Now actually do the streamifying
+		auto it = a->contents.begin();
+		if (it != a->contents.end()) {
+			mathCore::string_streamify(OutStream, *it); // Streamify the first element
+
+			for (it++; it != a->contents.end(); it++) {
+				OutStream << operand_symbol;	       // Streamify every other element
+				mathCore::string_streamify(OutStream, *it);
+			}
+		}
 
 		// Handle Parenthesis at end
 		if (mathCore::is_dualed(a)) {

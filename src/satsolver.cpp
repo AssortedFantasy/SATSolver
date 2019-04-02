@@ -7,6 +7,7 @@
 #include "getoptpp\getopt_pp.h"
 #include "expression.h"
 #include "satIO.h"
+#include "satform.h"
 
 // Python Multi Line block strings don't exist in C unfortunately.
 std::string help_string =
@@ -107,6 +108,7 @@ int main(int argc, char* argv[]){
 	case 2:
 		break;
 	case 3:
+		reduce_associative(in_exp);
 		out_exp = in_exp;
 		break;
 	case 4:

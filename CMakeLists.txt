@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10.2)
 # Project Name and Version Number
 project(
 	"SATSolver"
-	VERSION 0.1
+	VERSION 0.6
 	LANGUAGES CXX C
 	DESCRIPTION "Solves SAT Problems! What a Beast!"
 )
@@ -14,7 +14,7 @@ project(
 add_compile_definitions(DEBUG_INPUT_PARSE)
 
 
-# We are going to use at least 11 features!
+# We are going to use 11 features!
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_STANDARD_REQUIRED ON)
 
@@ -40,6 +40,7 @@ set(MATHCORECODE
 	"${SRC_DIR}/mathCore/mathCoreCompare.cpp"
 	"${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
 	"${SRC_DIR}/mathCore/mathCoreStream.cpp"
+	"${SRC_DIR}/mathCore/mathCoreSimplify.cpp"
 )
 add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
@@ -56,6 +57,11 @@ target_include_directories(Parser PRIVATE "${INCLUDE_DIR}")
 add_library(SATIO "${SRC_DIR}/satIO.cpp")
 target_include_directories(SATIO PRIVATE "${INCLUDE_DIR}")
 
+# SATFORM
+add_library(SATFORM "${SRC_DIR}/satform.cpp")
+target_include_directories(SATFORM PRIVATE "${INCLUDE_DIR}")
+
+
 # This is the main executable, SATSolver
 add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
 target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
@@ -65,6 +71,7 @@ target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 target_link_libraries(
 	SATSolver	# Main Function
 	SATIO		# File Input OutPut
+	SATFORM		# Modifying the Expression Trees
 	Getopt		# Argument Parsing
 	Expressions # Expression Methods
 	MathCore	# Most Real Expression Methods

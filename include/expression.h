@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <set>
 
 // Flags!
 #define F_LIT     (1<<0)
@@ -17,11 +18,20 @@
 #define F_EQUIV	  (1<<8)
 
 class mathCore; // Predeclaration of mathCore friend
+class expression;
+
+// This struct compares UUID's, allowing expressions to exist in multisets 
+struct compareUUID {
+	bool operator()(expression* a, expression* b);
+};
+
 /*
 	Expressions are our main class through which everything interacts.
 
-	It is completely black boxed, as expressions are there own internal data representation.
+	It is completely black boxed, as expressions are their own internal data representation.
 	Only MathCore gets to do anything here
+
+	Everything is stored in a multiset
 
 	Some Important Invariants:
 	Literal True is F_LIT
@@ -34,7 +44,7 @@ class expression{
 public:
 	~expression();	// You can delete contructors given to you
 private:
-	//expression();	// But you may not construct an expression yourself
+	expression();	// But you may not construct an expression yourself
 
 	static std::unordered_map<unsigned int, std::string> uuid_to_string;	// For printing
 	static std::unordered_map<std::string, unsigned int> string_to_uuid; // For constructing
@@ -44,9 +54,13 @@ private:
 	int FLAGS = 0;
 	int uuid = 0;
 
-	std::vector<expression*> contents;
+	std::multiset<expression*, compareUUID>contents;
+	// vectors are too slow for operations we would like to use
+	//std::vector<expression*> contents;
 
 	// Only mathCore can interact with these directly
+	// compareUUID is just needed internally
 	friend mathCore;
+	friend compareUUID;
 };
 #endif

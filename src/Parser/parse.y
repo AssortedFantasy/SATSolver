@@ -172,7 +172,11 @@ implication_expression:
 
 /* parses negated expressions, for both post/pre-fix negation */
 negated_expression:
-    paren_expression POST_NEG   {
+    PRE_NEG paren_expression POST_NEG {
+        std::cout << "DOUBLE_NEG PAREN_EXPRESSION -> PAREN_EXPRESSION\n";
+        $$ = $2;
+    }
+    | paren_expression POST_NEG   {
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
         mathCore::negate($1);
         $$ = $1;

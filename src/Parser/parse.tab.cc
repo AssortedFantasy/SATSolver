@@ -426,9 +426,9 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  27
+#define YYNRULES  28
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  36
+#define YYNSTATES  37
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -477,7 +477,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    73,    73,    75,    80,    81,    82,    83,    84,    85,
       86,    89,    94,    99,   103,   108,   113,   121,   125,   132,
-     137,   145,   153,   157,   167,   175,   180,   189
+     137,   145,   153,   157,   167,   175,   179,   184,   193
 };
 #endif
 
@@ -519,9 +519,9 @@ static const yytype_uint16 yytoknum[] =
 static const yytype_int8 yypact[] =
 {
       54,   -10,     3,    25,     7,    10,    24,    60,   -11,   -11,
-     -11,   -11,   -11,   -11,   -11,   -11,   -11,   -11,   -11,   -11,
+     -11,   -11,   -11,   -11,   -11,   -11,    35,   -11,   -11,   -11,
        2,   -11,    54,    54,    54,    54,    54,    24,   -11,   -11,
-     -11,    34,    43,    50,    50,    54
+     -11,   -11,    34,    43,    50,    50,    54
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -530,9 +530,9 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        2,     0,    16,    13,     0,     0,     3,     4,     5,     6,
-       7,    10,     8,     9,    15,    12,    26,    14,    11,    18,
-       0,     1,     0,     0,     0,     0,     0,    20,    25,    27,
-      17,    23,    24,    22,    21,    19
+       7,    10,     8,     9,    15,    12,    27,    14,    11,    18,
+       0,     1,     0,     0,     0,     0,     0,    20,    26,    28,
+      25,    17,    23,    24,    22,    21,    19
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -553,10 +553,10 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_uint8 yytable[] =
 {
        6,    14,    15,     4,    20,    22,    23,    24,    25,    26,
-      21,    17,     1,     2,     3,     4,    30,     1,     2,     3,
-       4,    19,    31,    32,    33,    34,    35,    22,    23,    24,
+      21,    17,     1,     2,     3,     4,    31,     1,     2,     3,
+       4,    19,    32,    33,    34,    35,    36,    22,    23,    24,
       25,    26,    16,    18,     1,     2,     3,     4,    23,    24,
-      25,    26,     0,     0,     1,     2,     3,     4,    24,    25,
+      25,    26,     0,    30,     1,     2,     3,     4,    24,    25,
       26,     0,     0,     1,     2,     3,     4,    26,     0,     0,
        1,     2,     3,     4,     1,     2,     3,     4,    28,    29
 };
@@ -567,7 +567,7 @@ static const yytype_int8 yycheck[] =
        0,     8,    10,    11,    12,    13,    14,    10,    11,    12,
       13,    14,    22,    23,    24,    25,    26,     3,     4,     5,
        6,     7,     1,     8,    10,    11,    12,    13,     4,     5,
-       6,     7,    -1,    -1,    10,    11,    12,    13,     5,     6,
+       6,     7,    -1,     8,    10,    11,    12,    13,     5,     6,
        7,    -1,    -1,    10,    11,    12,    13,     7,    -1,    -1,
       10,    11,    12,    13,    10,    11,    12,    13,     8,     9
 };
@@ -579,7 +579,7 @@ static const yytype_uint8 yystos[] =
        0,    10,    11,    12,    13,    16,    17,    18,    19,    20,
       21,    22,    23,    24,    11,    12,    18,     8,     8,    14,
       17,     0,     3,     4,     5,     6,     7,    17,     8,     9,
-      14,    17,    17,    17,    17,    17
+       8,    14,    17,    17,    17,    17,    17
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -587,7 +587,7 @@ static const yytype_uint8 yyr1[] =
 {
        0,    15,    16,    16,    17,    17,    17,    17,    17,    17,
       17,    17,    17,    17,    17,    17,    17,    18,    18,    19,
-      19,    20,    21,    21,    22,    23,    23,    24
+      19,    20,    21,    21,    22,    23,    23,    23,    24
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -595,7 +595,7 @@ static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     1,     1,     1,     1,     1,     1,     1,
        1,     2,     2,     1,     2,     2,     1,     3,     2,     3,
-       2,     3,     3,     3,     3,     2,     2,     2
+       2,     3,     3,     3,     3,     3,     2,     2,     2
 };
 
 
@@ -1451,35 +1451,44 @@ yyreduce:
   case 25:
 #line 175 "parse.y" /* yacc.c:1646  */
     {
+        std::cout << "DOUBLE_NEG PAREN_EXPRESSION -> PAREN_EXPRESSION\n";
+        (yyval.expr) = (yyvsp[-1].expr);
+    }
+#line 1458 "parse.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 26:
+#line 179 "parse.y" /* yacc.c:1646  */
+    {
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
         mathCore::negate((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1459 "parse.tab.c" /* yacc.c:1646  */
+#line 1468 "parse.tab.c" /* yacc.c:1646  */
     break;
 
-  case 26:
-#line 180 "parse.y" /* yacc.c:1646  */
+  case 27:
+#line 184 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
         mathCore::negate((yyvsp[0].expr));
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1469 "parse.tab.c" /* yacc.c:1646  */
+#line 1478 "parse.tab.c" /* yacc.c:1646  */
     break;
 
-  case 27:
-#line 189 "parse.y" /* yacc.c:1646  */
+  case 28:
+#line 193 "parse.y" /* yacc.c:1646  */
     {
         std::cout << "PAREN_EXPRESSION -> DUAL\n";
         mathCore::dual((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1479 "parse.tab.c" /* yacc.c:1646  */
+#line 1488 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1483 "parse.tab.c" /* yacc.c:1646  */
+#line 1492 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1707,6 +1716,6 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 196 "parse.y" /* yacc.c:1906  */
+#line 200 "parse.y" /* yacc.c:1906  */
 
 

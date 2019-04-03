@@ -67,13 +67,16 @@ add_executable(SATSolver "${SRC_DIR}/satsolver.cpp")
 target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 
 
-# Final Link Stage
+# Final Linking, GCC is very picky so you have to be careful with ordering
 target_link_libraries(
-	SATSolver	# Main Function
-	SATIO		# File Input OutPut
-	SATFORM		# Modifying the Expression Trees
-	Getopt		# Argument Parsing
-	Expressions # Expression Methods
-	MathCore	# Most Real Expression Methods
-	Parser		# Lexer and Parser
+	SATSolver	# Main Function						ALL
+
+	SATIO		# File Input OutPut					Parser and MathCore
+	SATFORM		# Modifying the Expression Trees	MathCore
+	
+
+	Parser		# Lexer and Parser					Both MathCore and Expressions
+	MathCore	# Most Real Expression Methods		Expressions
+	Expressions # Expression Methods				NO DEPENDENCIES
+	Getopt		# Argument Parsing					NO DEPENDENCIES
 )

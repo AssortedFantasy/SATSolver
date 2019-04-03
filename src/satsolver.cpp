@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <string>
-#include "getoptpp\getopt_pp.h"
+#include "getoptpp/getopt_pp.h"
 #include "expression.h"
 #include "satIO.h"
 #include "satform.h"

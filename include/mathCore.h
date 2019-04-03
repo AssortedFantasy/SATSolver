@@ -72,7 +72,7 @@ private:
 	static void string_streamify(std::stringstream& OutStream, expression* a);
 
 	// Simplifcation Generics
-	static void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*));
+	static void combine_generics(expression * a, bool(*typeFunction)(expression*));
 };
 
 #endif

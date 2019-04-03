@@ -14,7 +14,3 @@ expression::~expression(){
 
 // Empty Constructor, needed because its private
 expression::expression() {};
-
-bool compareUUID::operator()(expression* a, expression* b) {
-	return (a->uuid) < (b->uuid);
-}

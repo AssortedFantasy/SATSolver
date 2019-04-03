@@ -46,17 +46,18 @@ extern int yydebug;
   enum yytokentype
   {
     XNOR = 258,
-    IMPL = 259,
-    XOR = 260,
-    OR = 261,
-    AND = 262,
-    POST_NEG = 263,
-    DUAL = 264,
-    PRE_NEG = 265,
-    LITERAL = 266,
-    VARIABLE = 267,
-    O_BRACE = 268,
-    C_BRACE = 269
+    FWD_IMPL = 259,
+    BCK_IMPL = 260,
+    XOR = 261,
+    OR = 262,
+    AND = 263,
+    POST_NEG = 264,
+    DUAL = 265,
+    PRE_NEG = 266,
+    LITERAL = 267,
+    VARIABLE = 268,
+    O_BRACE = 269,
+    C_BRACE = 270
   };
 #endif
 
@@ -71,7 +72,7 @@ union YYSTYPE
     char* sval;
     expression* expr;
 
-#line 75 "parse.tab.h" /* yacc.c:1909  */
+#line 76 "parse.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

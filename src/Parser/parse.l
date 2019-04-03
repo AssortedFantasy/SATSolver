@@ -27,7 +27,8 @@
 [!~¬]                  return PRE_NEG;    // Negation Prefix Operator
 [']                    return POST_NEG;   // Negation Postfix Operator
 (\^d)                  return DUAL;       // Dual Operator
-(->)                   return IMPL;       // Implication Operator
+(->)|(=>)              return FWD_IMPL;   // Forward Implication Operator
+(<-)|(<=)              return BCK_IMPL;   // Forward Implication Operator
 [\^*·]|(\&)+           return AND;        // AND Operator
 [∨V+]|[\|]+            return OR;       // Or Operator
 [⊕⊻@]|(xor)|(XOR)     return XOR;      // Xor Operator

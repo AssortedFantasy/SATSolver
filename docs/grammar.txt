@@ -2,7 +2,7 @@ Parenthesis:    {}, (), []
 Pre-Negation:   !, ~, ¬
 Post-Negation:  '
 Dual:           ^d
-Implication:    ->
+Implication:    ->, =>, <=, <-
 And:            ^,*,·, &, &&, etc.
 Or:             ∨,V,+,|, ||, etc.
 Xor:            ⊕,⊻,@,xor,XOR
@@ -11,13 +11,19 @@ True:           1
 False:          0
 End of File:    $
 
-All variables Must contain 1 and only 1 letter. The variables are case insensitive, and can be followed by a string of any length
+All variables Must contain 1 and only 1 letter. The variables are case sensitive, and can be followed immediately by a string of any length of numbers
 
 The end of file operator can be inserted at any point in the file. No input after this operator will be considered.
 
 Any whitespace, tab characters, and newlines will be discarded
 
 A sequence of '&' of any length will be considered a single 'And' expression
+A sequence of '|' of any length will be considered a single 'Or' expression
 
-Double Negatives of the same type will be removed in lexing
-Double Negatives of different types will be removed in parsing
+Double Negatives of the same type will be processed in lexing
+Double Negatives of different types will be processed in parsing
+
+Unambiguously, equivalence, and implication and back implication are left to right.
+a = b = c  is (a=b)=c and not (a=b) & (a=c) & (b=c)
+a -> b -> c is  (a -> b)-> c and not (a -> b) & ( b-> c)
+a <- b <- c is  (a <- b) <- c and not (a <- b) & (b <- c)

@@ -43,9 +43,9 @@ void mathCore::combine_generics(expression * a, bool (*typeFunction)(expression*
 			iter = a->contents.erase(iter);
 		}
 		else {
-			iter++;
 			// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
 			if (iter != a->contents.end()) {
+				iter++;
 				if (((*iter)->uuid) > 0) {
 					iter = a->contents.end();
 				}

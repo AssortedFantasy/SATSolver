@@ -64,9 +64,4 @@ private:
 	friend compareUUID;
 };
 
-// Compare UUID
-bool compareUUID::operator()(expression* a, expression* b) {
-	return (a->uuid) < (b->uuid);
-}
-
 #endif

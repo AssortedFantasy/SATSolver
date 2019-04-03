@@ -17,10 +17,10 @@ std::string help_string =
 "-h --help :\n"
 "Displays a help message and exits the program.\n"
 "- i --input 'Filename' :\n"
-"Input File, use quotes for using spaces(not proven ? )\n"
+"Input File, use quotes for using spaces\n"
 "Defaults to input.txt\n"
 "- o --output 'Filename' :\n"
-"Output File, use quotes for using spaces(not proven ? )\n"
+"Output File, use quotes for using spaces\n"
 "Defaults to output.txt\n"
 "- t --terminal :\n"
 "Flag to terminal\n"
@@ -45,10 +45,10 @@ std::string help_string =
 		-h --help:
 			Displays a help message and exits the program.
 		-i --input "Filename":
-			Input File, use quotes for using spaces (not proven?)
+			Input File, use quotes for using spaces
 			Defaults to input.txt
 		-o --output "Filename":
-			Output File, use quotes for using spaces (not proven?)
+			Output File, use quotes for using spaces
 			Defaults to output.txt
 		-t --terminal:
 			Flag to terminal

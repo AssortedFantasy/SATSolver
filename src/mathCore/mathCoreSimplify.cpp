@@ -26,36 +26,36 @@ void mathCore::combine_generics(expression * a, bool (*typeFunction)(expression*
 
 	// Then if any of our children happen to be and statements
 	// we merge them into ourselves, which is a feature from C++17!
-	auto iter = a->contents.begin();
 
-	while (iter != a->contents.end()) {
-		if ((*typeFunction)(*iter)) {
+	if ((*typeFunction)(a)) {
+		auto iter = a->contents.begin();
+		while (iter != a->contents.end()) {
+			if ((*typeFunction)(*iter)) {
 
-			/*
-			MSVC Does not support this, thats really sad, so we have to build our own merge function!
-			a->contents.merge(child->contents);
-			*/
-			mergeMultiSet(temp_set, (*iter)->contents);
-			(*iter)->contents.clear(); // Clearing first before deleting it to prevent recursive deletion
-			delete (*iter);
+				/*
+				MSVC Does not support this, thats really sad, so we have to build our own merge function!
+				a->contents.merge(child->contents);
+				*/
+				mergeMultiSet(temp_set, (*iter)->contents);
+				(*iter)->contents.clear(); // Clearing first before deleting it to prevent recursive deletion
+				delete (*iter);
 
-			// Erase returns the next iter, since deleting things invalidates it
-			iter = a->contents.erase(iter);
-		}
-		else {
-			// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
-			if (iter != a->contents.end()) {
+				// Erase returns the next iter, since deleting things invalidates it
+				iter = a->contents.erase(iter);
+			}
+			else {
 				iter++;
-				if (((*iter)->uuid) > 0) {
-					iter = a->contents.end();
+				// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
+				if (iter != a->contents.end()) {
+					if (((*iter)->uuid) > 0) {
+						iter = a->contents.end();
+					}
 				}
 			}
 		}
+		// Finally merge everything we just found into the parent
+		mergeMultiSet(a->contents, temp_set);
 	}
-
-	// Finally merge everything we just found into the parent
-	mergeMultiSet(a->contents, temp_set);
-
 };
 
 

@@ -2,7 +2,7 @@
 
 // Globally unique UUID, do not mess with this
 // Also globally unique maps going back and forth!
-unsigned int expression::global_uuid = 0;
+unsigned int expression::global_uuid = 1;
 std::unordered_map<unsigned int, std::string> expression::uuid_to_string;
 std::unordered_map<std::string, unsigned int> expression::string_to_uuid;
 

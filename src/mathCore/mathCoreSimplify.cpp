@@ -17,6 +17,8 @@ void mergeMultiSet(std::multiset<expression*, compareUUID>& dest,
 	all others call this
 */
 void mathCore::combine_generics(expression * a, bool (*typeFunction)(expression*)) {
+	std::multiset<expression*, compareUUID> temp_set; // Temporary Storage for new elements
+
 	// First Call combine_ands on our children
 	for (auto child : a->contents) {
 		mathCore::combine_generics(child, typeFunction);
@@ -27,14 +29,14 @@ void mathCore::combine_generics(expression * a, bool (*typeFunction)(expression*
 	auto iter = a->contents.begin();
 
 	while (iter != a->contents.end()) {
-		if (typeFunction(*iter)) {
+		if ((*typeFunction)(*iter)) {
 
 			/*
 			MSVC Does not support this, thats really sad, so we have to build our own merge function!
 			a->contents.merge(child->contents);
 			*/
-			mergeMultiSet(a->contents, (*iter)->contents);
-			(*iter)->contents.clear();
+			mergeMultiSet(temp_set, (*iter)->contents);
+			(*iter)->contents.clear(); // Clearing first before deleting it to prevent recursive deletion
 			delete (*iter);
 
 			// Erase returns the next iter, since deleting things invalidates it
@@ -48,6 +50,10 @@ void mathCore::combine_generics(expression * a, bool (*typeFunction)(expression*
 			}
 		}
 	}
+
+	// Finally merge everything we just found into the parent
+	mergeMultiSet(a->contents, temp_set);
+
 };
 
 

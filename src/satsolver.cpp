@@ -108,7 +108,9 @@ int main(int argc, char* argv[]){
 	case 2:
 		break;
 	case 3:
+		write_exp_to_file(in_exp, output_file_string, terminal_flag);
 		reduce_associative(in_exp);
+		write_exp_to_file(in_exp, output_file_string, terminal_flag);
 		out_exp = in_exp;
 		break;
 	case 4:
@@ -132,5 +134,7 @@ int main(int argc, char* argv[]){
 	}
 
 	write_exp_to_file(out_exp, output_file_string, terminal_flag);
+
+	std::cin.get();
 	return 0;
 }

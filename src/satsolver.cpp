@@ -15,26 +15,27 @@ std::string help_string =
 "\n"
 "Options:\n"
 "-h --help :\n"
-"	Displays a help message and exits the program.\n"
-"	- i --input 'Filename' :\n"
-"	Input File, use quotes for using spaces(not proven ? )\n"
-"	Defaults to input.txt\n"
-"	- o --output 'Filename' :\n"
-"	Output File, use quotes for using spaces(not proven ? )\n"
-"	Defaults to output.txt\n"
-"	- t --terminal :\n"
-"	Flag to terminal\n"
-"	- m --mode <integer between 0 and 2> :\n"
-"	One of a few modes!\n"
+"Displays a help message and exits the program.\n"
+"- i --input 'Filename' :\n"
+"Input File, use quotes for using spaces(not proven ? )\n"
+"Defaults to input.txt\n"
+"- o --output 'Filename' :\n"
+"Output File, use quotes for using spaces(not proven ? )\n"
+"Defaults to output.txt\n"
+"- t --terminal :\n"
+"Flag to terminal\n"
+"- m --mode <integer between 0 and 2> :\n"
+"One of a few modes!\n"
 "0 : Satisfiability[Default]\n"
 "1 : CNF, Transforms to Conjunctive Normal Form\n"
 "2 : DNF, Transforms to Disjunctive Normal Form\n"
-"3 : Idempotent, Expression just comes as expressed internally\n"
-"4 : Negated\n"
-"5 : Dualed\n"
-"6 : Standardized(Comprised Entirely of AND, OR, NOT)\n"
-"7 : NANDIFY(Comprised Entirely of NAND)\n"
-"8 : NORIFY(Comprised Entirely of NOR)\n";
+"3 : Unchanged, Expression just comes as expressed internally\n"
+"4 : Unchanged, But the expressions are flattened to reduce parentheses\n"
+"5 : Negated\n"
+"6 : Dualed\n"
+"7 : Standardized(Comprised Entirely of AND, OR, NOT)\n"
+"8 : NANDIFY(Comprised Entirely of NAND)\n"
+"9 : NORIFY(Comprised Entirely of NOR)\n";
 
 /*
 	Command Line Interface implementation for the project
@@ -53,15 +54,16 @@ std::string help_string =
 			Flag to terminal
 		-m --mode <integer between 0 and 2>:
 			One of a few modes!
-			0: Satisfiability [Default]
-			1: CNF, Transforms to Conjunctive Normal Form
-			2: DNF, Transforms to Disjunctive Normal Form
-			3: Unchanged, Expression just comes as expressed internally
-			4: Negated
-			5: Dualed
-			6: Standardized (Comprised Entirely of AND, OR, NOT)
-			7: NANDIFY (Comprised Entirely of NAND)
-			8: NORIFY  (Comprised Entirely of NOR )
+			"0 : Satisfiability[Default]
+		1 : CNF, Transforms to Conjunctive Normal Form
+		2 : DNF, Transforms to Disjunctive Normal Form
+		3 : Unchanged, Expression just comes as expressed internally
+		4 : Unchanged, But the expressions are flattened to reduce parentheses
+		5 : Negated
+		6 : Dualed
+		7 : Standardized(Comprised Entirely of AND, OR, NOT)
+		8 : NANDIFY(Comprised Entirely of NAND)
+		9 : NORIFY(Comprised Entirely of NOR)
 */
 int main(int argc, char* argv[]){
 	GetOpt::GetOpt_pp optparser(argc, argv);
@@ -91,7 +93,7 @@ int main(int argc, char* argv[]){
 	std::cin.get();
 #endif // DEBUG_INPUT_PARSE
 
-	// Need Tharidu To Deal with this
+	// Read in from the input file
 	expression* in_exp = read_exp_from_file(input_file_string);
 	expression* out_exp = NULL;
 	
@@ -100,6 +102,10 @@ int main(int argc, char* argv[]){
 		return 1;
 	}
 
+	/*
+		Convert the input expression into an output expression,
+		These are all implemented in satform
+	*/
 	switch (mode) {
 	case 0:
 		break;
@@ -108,12 +114,11 @@ int main(int argc, char* argv[]){
 	case 2:
 		break;
 	case 3:
-		write_exp_to_file(in_exp, output_file_string, terminal_flag);
 		reduce_associative(in_exp);
-		write_exp_to_file(in_exp, output_file_string, terminal_flag);
 		out_exp = in_exp;
 		break;
 	case 4:
+		out_exp = in_exp;
 		break;
 	case 5:
 		break;
@@ -122,6 +127,8 @@ int main(int argc, char* argv[]){
 	case 7:
 		break;
 	case 8:
+		break;
+	case 9:
 		break;
 	default:
 		std::cout << "Invalid Mode! Use -h or --help for more information!\n";

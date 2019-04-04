@@ -108,7 +108,10 @@ void mathCore::standardize(expression* a) {
 		// We might still be dualed or negated so we call ourself again
 		mathCore::standardize(a);
 	}
-	// STILL NEED EQUIVALENCE!
+	else if (mathCore::is_equiv(a)) {
+		mathCore::equiv_standarizer(a);
+		mathCore::standardize(a);
+	}
 };
 
 
@@ -212,6 +215,73 @@ void mathCore::xor_standardizer(expression* a) {
 		// Finally insert these last two into the XOR!
 		a->contents.insert(binary_and(first, secondNew));
 		a->contents.insert(binary_and(firstNew, second));
+
+		// Now we are an OR expression!
+		mathCore::trans_or(a);
+	}
+}
+
+
+// This is the exact dual of the function above!
+void mathCore::equiv_standarizer(expression* a) {
+	if (mathCore::is_equiv(a)) {
+		// Just by the number of variables you can grasp how much more complicated this is!
+		std::multiset<expression*, compareUUID>tempStore;
+		std::multiset<expression*, compareUUID>::iterator iter, hintOther;
+		expression *first, *second, *firstNew, *secondNew, *lastFirstNew, *lastSecondNew;
+
+		// Keep going until there are at most two things in the tree!
+		while (a->contents.size() > 2) {
+			// Clear the tempStore, Start at the beginning!
+			tempStore.clear();
+			iter = a->contents.begin();
+			hintOther = tempStore.begin();	// Hints to make this crazy slow thing faster!
+
+											// This runs until we are at the end of the expression!
+			while (iter != a->contents.end()) {
+
+				first = *iter;
+				iter = a->contents.erase(iter); // Remove it from contents, go forward!
+				if (iter == a->contents.end()) { // If we have no other pair just insert first into the tempStore and continue!
+					tempStore.insert(hintOther, first);
+				}
+				else {
+					second = *iter;		// Pair of first!
+					iter = a->contents.erase(iter);	// Keep moving forward!
+
+													// Construct ~a*~b + a*b !
+					firstNew = mathCore::copy(first);
+					secondNew = mathCore::copy(second);
+					mathCore::negate(first);
+					mathCore::negate(second);
+
+					// Hints keep this faster!
+					hintOther = tempStore.insert(hintOther,
+						// AND OR of AND's!
+						mathCore::binary_or(binary_and(first, second), binary_and(firstNew, secondNew)));
+				}
+
+			}
+			// Now Merge tempStore into a, and continue all over again!
+			mergeMultiSet(a->contents, tempStore);
+		}
+
+		// Now the EQUIV has exactly 2 elements!
+		iter = a->contents.begin();
+		first = *iter;
+		iter = a->contents.erase(iter);
+		second = *iter;
+		iter = a->contents.erase(iter);
+		// Remove them and construct the new things which go into the EQUIV!
+
+		firstNew = mathCore::copy(first);
+		secondNew = mathCore::copy(second);
+		mathCore::negate(first);
+		mathCore::negate(second);
+
+		// Finally insert these last two into the EQUIV!
+		a->contents.insert(binary_and(first, second));
+		a->contents.insert(binary_and(firstNew, secondNew));
 
 		// Now we are an OR expression!
 		mathCore::trans_or(a);

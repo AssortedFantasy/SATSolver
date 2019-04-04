@@ -257,3 +257,5 @@ expression* mathCore::copy(expression * a) {
 	}
 	return exp;
 }
+
+expression* mathCore::global_literal = mathCore::literal_true();

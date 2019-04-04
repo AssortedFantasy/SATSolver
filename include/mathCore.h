@@ -124,6 +124,8 @@ private:
 
 	// Simplifcation Generics
 	static void combine_generics(expression * a, bool(*typeFunction)(expression*));
+
+	static expression* global_literal;
 };
 
 #endif

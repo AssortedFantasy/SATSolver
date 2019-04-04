@@ -19,34 +19,33 @@ void mergeMultiSet(std::multiset<expression*, compareUUID>& dest,
 */
 void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*)) {
 	std::multiset<expression*, compareUUID> temp_set; // Temporary Storage for new elements
-	// Then if any of our children happen to be and statements
+
+
+	// If our children are the same typefunction as ourselves
 	// we merge them into ourselves, which is a feature from C++17!
 
 	if ((*typeFunction)(a)) {
 		auto iter = a->contents.begin();
 		while (iter != a->contents.end()) {
-			// If the function is negated or dualed, we can't pull them up into ourselves!
-			if (!(mathCore::is_negated(a) || mathCore::is_dualed)) {
-				if ((*typeFunction)(*iter)) {
+			// They need to be the same type as us and also not be negated or dualed!
+			if ((*typeFunction)(*iter) && !(mathCore::is_negated(*iter) || mathCore::is_dualed(*iter))) {
+				/*
+				MSVC Does not support this, thats really sad, so we have to build our own merge function!
+				a->contents.merge(child->contents);
+				*/
+				mergeMultiSet(temp_set, (*iter)->contents);
+				(*iter)->contents.clear(); // Clearing first before deleting it to prevent recursive deletion
+				delete (*iter);
 
-					/*
-					MSVC Does not support this, thats really sad, so we have to build our own merge function!
-					a->contents.merge(child->contents);
-					*/
-					mergeMultiSet(temp_set, (*iter)->contents);
-					(*iter)->contents.clear(); // Clearing first before deleting it to prevent recursive deletion
-					delete (*iter);
-
-					// Erase returns the next iter, since deleting things invalidates it
-					iter = a->contents.erase(iter);
-				}
-				else {
-					iter++;
-					// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
-					if (iter != a->contents.end()) {
-						if (mathCore::is_var(*iter) || mathCore::is_literal) {
-							iter = a->contents.end();
-						}
+				// Erase returns the next iter, since deleting things invalidates it
+				iter = a->contents.erase(iter);
+			}
+			else {
+				iter++;
+				// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
+				if (iter != a->contents.end()) {
+					if (mathCore::is_var(*iter) || mathCore::is_literal) {
+						iter = a->contents.end();
 					}
 				}
 			}

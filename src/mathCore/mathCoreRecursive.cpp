@@ -6,7 +6,7 @@ void mathCore::recursive_standardize(expression* a) {
 	mathCore::standardize(a);
 	// This has to be done after!
 	for (auto child : a->contents) {
-		mathCore::standardize(a);
+		mathCore::recursive_standardize(child);
 	}
 }
 
@@ -16,28 +16,28 @@ void mathCore::recursive_standardize(expression* a) {
 */
 void mathCore::recursive_combine_and(expression* a) {
 	for (auto child : a->contents) {
-		mathCore::combine_and(a);
+		mathCore::recursive_combine_and(child);
 	}
 	mathCore::combine_and(a);
 }
 
 void mathCore::recursive_combine_or(expression* a) {
 	for (auto child : a->contents) {
-		mathCore::combine_or(a);
+		mathCore::recursive_combine_or(child);
 	}
 	mathCore::combine_or(a);
 }
 
 void mathCore::recursive_combine_xor(expression* a) {
 	for (auto child : a->contents) {
-		mathCore::combine_xor(a);
+		mathCore::recursive_combine_xor(child);
 	}
 	mathCore::combine_xor(a);
 }
 
 void mathCore::recursive_combine_equiv(expression* a) {
 	for (auto child : a->contents) {
-		mathCore::combine_equiv(a);
+		mathCore::recursive_combine_equiv(child);
 	}
 	mathCore::combine_equiv(a);
 }

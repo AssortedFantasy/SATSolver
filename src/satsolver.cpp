@@ -125,6 +125,8 @@ int main(int argc, char* argv[]){
 	case 6:
 		break;
 	case 7:
+		standard_form(in_exp);
+		out_exp = in_exp;
 		break;
 	case 8:
 		break;

@@ -56,17 +56,9 @@ public:
 	static expression* copy(expression * a);
 
 
-
-
 	// MATH CORE STREAM METHODS
 	// As strings!
 	static std::string as_string(expression* a);
-
-
-
-
-
-
 
 	// MATH CORE COMPARE METHODS
 
@@ -87,6 +79,9 @@ public:
 	// of variables and or literals!
 	static bool is_product(expression* a);
 	static bool is_sum(expression *a);
+
+	static bool is_CNF(expression* a);
+	static bool is_DNF(expression* a);
 
 
 	// MATH CORE SIMPLIFY METHODS
@@ -124,6 +119,10 @@ public:
 
 	static void recursive_standardize(expression* a);
 	static void recursive_idempotent(expression * a);
+
+	// Evaluate a Variable
+	void evaluate(expression * a, expSet& evaluationSet);
+
 
 private:
 	static void clear_type_flag(expression * a);

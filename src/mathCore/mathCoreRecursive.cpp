@@ -51,4 +51,30 @@ void mathCore::recursive_idempotent(expression* a) {
 }
 
 
-void mathCore::evaluate(expression*a, )
+/*
+	Evaluates things
+	Passing in an evaluation multiset, which contains variables!
+*/
+void mathCore::evaluate(expression*a, expSet& evaluationSet) {
+	// This is by nature a recursive call!
+	for (auto child : a->contents) {
+		evaluate(child, evaluationSet);
+	}
+	expSet::iterator iter;
+
+	if (mathCore::is_var(a)) {
+		if (evaluationSet.end() == (iter = evaluationSet.find(a))) {
+			return;
+		}
+		else {
+			if (is_negated(*iter)) {
+				trans_false(a);
+			}
+			else {
+				trans_true(a);
+			}
+		}
+	}
+};
+
+

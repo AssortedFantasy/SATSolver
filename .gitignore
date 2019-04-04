@@ -2,5 +2,7 @@
 /build
 /.vs
 /.vscode
+/*.dir
+/x64
 *.exe
 *.out

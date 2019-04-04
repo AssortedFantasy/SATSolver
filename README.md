@@ -2,7 +2,7 @@
 A SAT Solver coded up in C++, Final Project for CMPUT 275 Winter 2019
 
 The program will read in boolean algebra expressions and test to see if the problem is satisfiable.
-There
+There are several components to this program: the SATSolver, the SATSimplifier, and the Boolea
 
 
 Command Line arguments:

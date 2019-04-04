@@ -447,4 +447,5 @@ void mathCore::idempotent_law(expression* a) {
 			}
 		}
 	}
+	mathCore::empty_expression(a);
 }

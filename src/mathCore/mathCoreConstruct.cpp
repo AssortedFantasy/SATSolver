@@ -72,6 +72,14 @@ expression* mathCore::varFromUUID(unsigned int uuid) {
 	return exp;
 }
 
+
+// Delete all the children from a expression!
+void mathCore::delete_children(expression* a) {
+	for (auto child : a->contents) {
+		delete child;
+	}
+}
+
 // Negate an Expression
 void mathCore::negate(expression* a){
 	a->FLAGS ^= F_NEG;

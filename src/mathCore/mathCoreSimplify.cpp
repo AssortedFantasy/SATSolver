@@ -287,3 +287,112 @@ void mathCore::equiv_standarizer(expression* a) {
 		mathCore::trans_or(a);
 	}
 }
+
+
+
+// The idempodent_laws are
+// A * A = A
+// A * ~A = 0
+// A + A = A
+// A + ~A = 1
+// This takes linear time and applys them!
+void mathCore::idempotent_law(expression* a) {
+	unsigned int previous_uuid = 0;
+	bool found_true = 0;
+	bool found_false = 0;
+	
+	if (mathCore::is_and(a)) {
+		// AND things
+		auto iter = a->contents.lower_bound(mathCore::global_variable);
+		// LowerBound forces this to at be the lowest valid!
+		while (iter != a->contents.end()) {
+			if ((*iter)->uuid == previous_uuid){
+
+				// We have a new match
+				if (mathCore::is_negated(*iter)) {
+					if (found_false) {
+						// We already have a false
+						delete *iter;
+						iter = a->contents.erase(iter);
+					}
+					else {
+						found_false = true;				
+					}
+				}
+				// New true match!
+				else {
+					if (found_true) {
+						// We already have a true!
+						delete *iter;
+						iter = a->contents.erase(iter);
+					}
+					else {
+						found_true = true;
+					}
+				}
+
+				// Now we have the fancy case!
+				if (found_false && found_true) {
+					// Fancy case
+					mathCore::trans_false(a);
+					for (auto child : a->contents) {
+						delete child;
+					}
+					a->contents.clear();
+				}
+			}
+			else {
+				previous_uuid = (*iter)->uuid;
+				found_true = found_false = false;
+				
+			}
+		}
+	}
+	else if (mathCore::is_or(a)) {
+		// OR things
+		auto iter = a->contents.lower_bound(mathCore::global_variable);
+		// LowerBound forces this to at be the lowest valid!
+		while (iter != a->contents.end()) {
+			if ((*iter)->uuid == previous_uuid) {
+
+				// We have a new match
+				if (mathCore::is_negated(*iter)) {
+					if (found_false) {
+						// We already have a false
+						delete *iter;
+						iter = a->contents.erase(iter);
+					}
+					else {
+						found_false = true;
+					}
+				}
+				// New true match!
+				else {
+					if (found_true) {
+						// We already have a true!
+						delete *iter;
+						iter = a->contents.erase(iter);
+					}
+					else {
+						found_true = true;
+					}
+				}
+
+				// Now we have the fancy case!
+				if (found_false && found_true) {
+					// Fancy case
+					mathCore::trans_true(a);
+					for (auto child : a->contents) {
+						delete child;
+					}
+					a->contents.clear();
+				}
+			}
+			else {
+				previous_uuid = (*iter)->uuid;
+				found_true = found_false = false;
+
+			}
+		}
+	}
+}

@@ -259,3 +259,4 @@ expression* mathCore::copy(expression * a) {
 }
 
 expression* mathCore::global_literal = mathCore::literal_true();
+expression* mathCore::global_variable = mathCore::variable("THEGLOBAL");

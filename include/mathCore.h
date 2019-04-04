@@ -105,6 +105,9 @@ public:
 	static void DeMorgansD(expression* a);
 
 
+	// Idempotent Laws
+	static void idempotent_law(expression* a);
+
 
 	// RECURSIVE VERSIONS!
 	static void recursive_combine_and(expression* a);
@@ -113,6 +116,7 @@ public:
 	static void recursive_combine_equiv(expression* a);
 
 	static void recursive_standardize(expression* a);
+	static void recursive_idempotent(expression * a);
 
 
 private:
@@ -126,6 +130,7 @@ private:
 	static void combine_generics(expression * a, bool(*typeFunction)(expression*));
 
 	static expression* global_literal;
+	static expression* global_variable;
 };
 
 #endif

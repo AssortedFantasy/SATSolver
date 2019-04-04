@@ -15,3 +15,4 @@ void standard_form(expression* a) {
 	mathCore::combine_and(a);
 	mathCore::combine_or(a);
 }
+

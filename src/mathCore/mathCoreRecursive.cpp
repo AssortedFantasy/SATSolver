@@ -42,3 +42,9 @@ void mathCore::recursive_combine_equiv(expression* a) {
 	mathCore::combine_equiv(a);
 }
  
+void mathCore::recursive_idempotent(expression* a) {
+	for (auto child : a->contents) {
+		mathCore::recursive_idempotent(child);
+	}
+	mathCore::combine_equiv;
+}

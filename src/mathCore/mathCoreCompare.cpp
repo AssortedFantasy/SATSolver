@@ -40,7 +40,7 @@ bool mathCore::is_equiv(expression* a) {
 // Check if two variables are the same, they might be negations of each other
 bool mathCore::var_equal(expression* a, expression* b) {
 	if (mathCore::is_var(a) && mathCore::is_var(b)) {
-		return a->uuid == b->uuid;
+		return (a->uuid == b->uuid);
 	}
 	return false;
 }

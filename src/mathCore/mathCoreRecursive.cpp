@@ -49,3 +49,6 @@ void mathCore::recursive_idempotent(expression* a) {
 	}
 	mathCore::universal_bound(a);
 }
+
+
+void mathCore::evaluate(expression*a, )

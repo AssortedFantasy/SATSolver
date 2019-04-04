@@ -32,7 +32,7 @@ void mathCore::string_streamify(std::stringstream& OutStream, expression* a) {
 			OutStream << " (";
 		}
 
-		if (!a->contents.size()) {
+		if (!(a->contents.size())) {
 			// BAD Things are happening
 			throw;
 		}

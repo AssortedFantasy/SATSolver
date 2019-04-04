@@ -25,6 +25,9 @@ struct compareUUID {
 	bool operator()(const expression* const a, const expression* const b) const;
 };
 
+// A type of container for expressions!
+typedef std::multiset<expression*, compareUUID> expSet;
+
 /*
 	Expressions are our main class through which everything interacts.
 
@@ -54,7 +57,7 @@ private:
 	int FLAGS = 0;
 	int uuid = 0;
 
-	std::multiset<expression*, compareUUID>contents;
+	expSet contents;
 	// vectors are too slow for operations we would like to use
 	//std::vector<expression*> contents;
 

@@ -1,7 +1,6 @@
 #include "mathCore.h"
 
-void mergeMultiSet(std::multiset<expression*, compareUUID>& dest,
-	std::multiset<expression*, compareUUID>& src) {
+void mergeMultiSet(expSet& dest, expSet& src) {
 
 	auto hint = dest.begin();
 	// We use hints, this isn't quite as fancy as the .merge which is implement in c++17
@@ -18,7 +17,7 @@ all others call this
 Not recursive method!
 */
 void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*)) {
-	std::multiset<expression*, compareUUID> temp_set; // Temporary Storage for new elements
+	expSet temp_set; // Temporary Storage for new elements
 
 
 													  // If our children are the same typefunction as ourselves
@@ -202,8 +201,8 @@ void mathCore::universal_bound(expression* a) {
 void mathCore::xor_standardizer(expression* a) {
 	if (mathCore::is_xor(a)) {
 		// Just by the number of variables you can grasp how much more complicated this is!
-		std::multiset<expression*, compareUUID>tempStore;
-		std::multiset<expression*, compareUUID>::iterator iter, hintOther;
+		expSet tempStore;
+		expSet::iterator iter, hintOther;
 		expression *first, *second, *firstNew, *secondNew;
 
 		// Keep going until there are at most two things in the tree!
@@ -269,8 +268,8 @@ void mathCore::xor_standardizer(expression* a) {
 void mathCore::equiv_standarizer(expression* a) {
 	if (mathCore::is_equiv(a)) {
 		// Just by the number of variables you can grasp how much more complicated this is!
-		std::multiset<expression*, compareUUID>tempStore;
-		std::multiset<expression*, compareUUID>::iterator iter, hintOther;
+		expSet tempStore;
+		expSet::iterator iter, hintOther;
 		expression *first, *second, *firstNew, *secondNew;
 
 		// Keep going until there are at most two things in the tree!
@@ -346,7 +345,7 @@ void mathCore::idempotent_law(expression* a) {
 	if (mathCore::is_and(a)) {
 		// AND things
 
-		std::multiset<expression*, compareUUID>::iterator iter = a->contents.lower_bound(mathCore::global_variable);
+		expSet::iterator iter = a->contents.lower_bound(mathCore::global_variable);
 
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {
@@ -400,7 +399,7 @@ void mathCore::idempotent_law(expression* a) {
 	}
 	else if (mathCore::is_or(a)) {
 		// OR things
-		std::multiset<expression*, compareUUID>::iterator iter = a->contents.lower_bound(mathCore::global_variable);
+		expSet::iterator iter = a->contents.lower_bound(mathCore::global_variable);
 
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {

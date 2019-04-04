@@ -158,16 +158,14 @@ void mathCore::universal_bound(expression* a) {
 	auto literal_pos = a->contents.lower_bound(global_literal);		// Lower bound for literals in the expression
 	auto literal_bound = a->contents.upper_bound(global_literal); // Upper bound for litterals in the expression
 
-																  // If the expression is an AND
+	// If the expression is an AND
 	if (mathCore::is_and(a)) {
 		// Iterate over all literals
 		while (literal_pos != literal_bound) {
 			// If a literal 0 is found, the entire expression evaluates to 0
 			if (mathCore::is_negated(*literal_pos)) {
 				// Delete all the the children of the expression 
-				for (auto iter : a->contents) {
-					delete iter;
-				}
+				mathCore::delete_children(a);
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, false);
 			}
@@ -191,9 +189,7 @@ void mathCore::universal_bound(expression* a) {
 			// If a literal 1 is found, the entire expression evaluates to 1
 			if (!(mathCore::is_negated(*literal_pos))) {
 				// Delete all the the children of the expression 
-				for (auto iter : a->contents) {
-					delete iter;
-				}
+				mathCore::delete_children(a);
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, true);
 			}
@@ -395,9 +391,7 @@ void mathCore::idempotent_law(expression* a) {
 				if (found_false && found_true) {
 					// Fancy case
 					mathCore::trans_false(a);
-					for (auto child : a->contents) {
-						delete child;
-					}
+					mathCore::delete_children(a);
 					a->contents.clear();
 				}
 			}
@@ -442,9 +436,7 @@ void mathCore::idempotent_law(expression* a) {
 				if (found_false && found_true) {
 					// Fancy case
 					mathCore::trans_true(a);
-					for (auto child : a->contents) {
-						delete child;
-					}
+					mathCore::delete_children(a);
 					a->contents.clear();
 				}
 			}

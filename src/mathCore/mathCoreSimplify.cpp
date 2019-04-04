@@ -44,7 +44,7 @@ void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*)
 				iter++;
 				// Slight Optimization: All variable expressions have 0 uuid, so they must be at the beginning!
 				if (iter != a->contents.end()) {
-					if (mathCore::is_var(*iter) || mathCore::is_literal) {
+					if (mathCore::is_var(*iter) || mathCore::is_literal(*iter)) {
 						iter = a->contents.end();
 					}
 				}
@@ -215,7 +215,7 @@ void mathCore::xor_standardizer(expression* a) {
 		// Just by the number of variables you can grasp how much more complicated this is!
 		std::multiset<expression*, compareUUID>tempStore;
 		std::multiset<expression*, compareUUID>::iterator iter, hintOther;
-		expression *first, *second, *firstNew, *secondNew, *lastFirstNew, *lastSecondNew;
+		expression *first, *second, *firstNew, *secondNew;
 
 		// Keep going until there are at most two things in the tree!
 		while (a->contents.size() > 2) {
@@ -282,7 +282,7 @@ void mathCore::equiv_standarizer(expression* a) {
 		// Just by the number of variables you can grasp how much more complicated this is!
 		std::multiset<expression*, compareUUID>tempStore;
 		std::multiset<expression*, compareUUID>::iterator iter, hintOther;
-		expression *first, *second, *firstNew, *secondNew, *lastFirstNew, *lastSecondNew;
+		expression *first, *second, *firstNew, *secondNew;
 
 		// Keep going until there are at most two things in the tree!
 		while (a->contents.size() > 2) {
@@ -343,7 +343,6 @@ void mathCore::equiv_standarizer(expression* a) {
 }
 
 
-
 // The idempodent_laws are
 // A * A = A
 // A * ~A = 0
@@ -357,7 +356,9 @@ void mathCore::idempotent_law(expression* a) {
 	
 	if (mathCore::is_and(a)) {
 		// AND things
-		auto iter = a->contents.lower_bound(mathCore::global_variable);
+
+		std::multiset<expression*, compareUUID>::iterator iter = a->contents.lower_bound(mathCore::global_variable);
+		
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {
 			if ((*iter)->uuid == previous_uuid){

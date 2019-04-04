@@ -42,4 +42,5 @@ bool mathCore::var_equal(expression* a, expression* b) {
 	if (mathCore::is_var(a) && mathCore::is_var(b)) {
 		return a->uuid == b->uuid;
 	}
+	return false;
 }

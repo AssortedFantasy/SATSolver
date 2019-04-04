@@ -17,6 +17,6 @@ expression::~expression(){
 expression::expression() {};
 
 // Compare UUID
-bool compareUUID::operator()(expression* a, expression* b) {
+bool compareUUID::operator()(expression*  a,  expression*  b) {
 	return (a->uuid) < (b->uuid);
 }

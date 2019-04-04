@@ -123,7 +123,7 @@ public:
 
 private:
 	static void clear_type_flag(expression * a);
-	static expression* varFromUUID(size_t uuid);
+	static expression* varFromUUID(unsigned int uuid);
 
 	// Under the hood we don't copy tons and tons of strings everywhere
 	static void string_streamify(std::stringstream& OutStream, expression* a);

@@ -53,7 +53,7 @@ expression* mathCore::variable(const std::string& identifier) {
 }
 
 // From UUID
-expression* mathCore::varFromUUID(size_t uuid) {
+expression* mathCore::varFromUUID(unsigned int uuid) {
 	expression* exp = new expression;
 	exp->FLAGS = F_VAR;
 
@@ -134,8 +134,8 @@ void mathCore::trans_var(expression* a, unsigned int uuid) {
 
 void mathCore::trans_true(expression* a) {
 	mathCore::clear_type_flag(a);
-	mathCore::un_negate;
-	mathCore::un_dual;
+	mathCore::un_negate(a);
+	mathCore::un_dual(a);
 	a->FLAGS |= F_LIT;
 };
 

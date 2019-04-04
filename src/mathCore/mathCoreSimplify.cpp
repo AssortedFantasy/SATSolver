@@ -452,3 +452,65 @@ void mathCore::idempotent_law(expression* a) {
 	}
 	mathCore::empty_expression(a);
 }
+
+
+// This is distiributitive law!
+// You need to pass the bounding expression *a and two iterators, disTo and dist
+// the second one is distributed over the first!
+// If you pass something that doesn't have a notion of distribution then it just passes!
+void mathCore::distributive_law(expression* a, expSet::iterator& distTo, expSet::iterator& dist) {
+	if (is_and(a)) {
+		if (is_or(*distTo) && !(is_negated(*distTo) || is_dualed(*distTo))) {	// It needs to be a clean OR statement to distribute!
+			
+			expSet tempStore;	// Need temporary storage to not invalidate iterators
+			auto hint = tempStore.begin();
+			auto iter = (*distTo)->contents.begin();
+			auto copyDist = *dist;
+			auto first_element = *iter;
+
+			
+			// For the first element just use the one in dist!
+			hint = tempStore.insert(hint, binary_and(first_element, copyDist));
+			dist = a->contents.erase(dist);	// Advances dist!
+
+			while (iter != (*distTo)->contents.end()) {
+				// Until the end of the iterator keep doing this
+				hint = tempStore.insert(hint, binary_and(*iter, mathCore::copy(copyDist))); // We match these copies with the remaining elements
+				iter = (*distTo)->contents.erase(iter);
+			}
+
+			// Then at the end just merge tempStore into distTo!
+			mergeMultiSet((*distTo)->contents, tempStore);
+
+			// You might have removed the last thing in a!
+			empty_expression(a);
+		}
+	}
+	else if (is_or(a)) {
+		if (is_and(*distTo) && !(is_negated(*distTo) || is_dualed(*distTo))) {	// It needs to be a clean OR statement to distribute!
+
+			expSet tempStore;	// Need temporary storage to not invalidate iterators
+			auto hint = tempStore.begin();
+			auto iter = (*distTo)->contents.begin();
+			auto copyDist = *dist;
+			auto first_element = *iter;
+
+
+			// For the first element just use the one in dist!
+			hint = tempStore.insert(hint, binary_or(first_element, copyDist));
+			dist = a->contents.erase(dist);	// Advances dist!
+
+			while (iter != (*distTo)->contents.end()) {
+				// Until the end of the iterator keep doing this
+				hint = tempStore.insert(hint, binary_or(*iter, mathCore::copy(copyDist))); // We match these copies with the remaining elements
+				iter = (*distTo)->contents.erase(iter);
+			}
+
+			// Then at the end just merge tempStore into distTo!
+			mergeMultiSet((*distTo)->contents, tempStore);
+
+			// You might have removed the last thing in a!
+			empty_expression(a);
+		}
+	}
+}

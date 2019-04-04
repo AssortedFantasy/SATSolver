@@ -78,3 +78,22 @@ void mathCore::evaluate(expression*a, expSet& evaluationSet) {
 };
 
 
+/*
+	A very naieve way of turning into CNF, It doesn't use the actual essential prime implicants!
+	Requires DNF to work!
+*/
+/*
+void mathCore::to_DNF(expression *a) {
+	if (mathCore::is_DNF(a)) { // If we are already a CNF just return!
+		// Normally you need to be a minimized one, we don't bother doing that!
+		return;
+	}
+	else if (mathCore::is_or(a)) {
+		// Easy case
+		for (auto child : a->contents) {
+			mathCore::to_DNF(child);	// Our children need to be DNF's
+		}
+		// Our children are all either Ors or Sums of Ors
+	}
+}
+*/

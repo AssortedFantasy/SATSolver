@@ -121,7 +121,12 @@ public:
 	static void recursive_idempotent(expression * a);
 
 	// Evaluate a Variable
-	void evaluate(expression * a, expSet& evaluationSet);
+	static void evaluate(expression * a, expSet& evaluationSet);
+
+	// Distributive Law
+	static void distributive_law(expression * a, expSet::iterator & distTo, expSet::iterator & dist);
+	static void to_CNF(expression * a);
+	static void to_DNF(expression * a);
 
 
 private:

@@ -31,11 +31,12 @@ std::string help_string =
 "2 : DNF, Transforms to Disjunctive Normal Form\n"
 "3 : Unchanged, Expression just comes as expressed internally\n"
 "4 : Unchanged, But the expressions are flattened to reduce parentheses\n"
-"5 : Negated\n"
-"6 : Dualed\n"
+"5 : Negated, In Reduced Standardized\n"
+"6 : Dualed, In Reduced Standardized\n"
 "7 : Standardized(Comprised Entirely of AND, OR, NOT)\n"
-"8 : NANDIFY(Comprised Entirely of NAND)\n"
-"9 : NORIFY(Comprised Entirely of NOR)\n";
+"8 : Reduced Standardized, Some Basic Simplifications done\n"
+"9 : NANDIFY(Comprised Entirely of NAND)\n"
+"10 : NORIFY(Comprised Entirely of NOR)\n";
 
 /*
 	Command Line Interface implementation for the project
@@ -122,16 +123,24 @@ int main(int argc, char* argv[]){
 		out_exp = in_exp;
 		break;
 	case 5:
+		negated_standard(in_exp);
+		out_exp = in_exp;
 		break;
 	case 6:
+		dual_standard(in_exp);
+		out_exp = in_exp;
 		break;
 	case 7:
-		standard_form(in_exp);
+		standard_form_raw(in_exp);
 		out_exp = in_exp;
 		break;
 	case 8:
+		standard_form(in_exp);
+		out_exp = in_exp;
 		break;
 	case 9:
+		break;
+	case 10:
 		break;
 	default:
 		std::cout << "Invalid Mode! Use -h or --help for more information!\n";

@@ -6,5 +6,8 @@
 
 void reduce_associative(expression* a);
 void standard_form(expression* a);
+void standard_form_raw(expression * a);
+void dual_standard(expression * a);
+void negated_standard(expression* a);
 
 #endif // !_SATFORM_H

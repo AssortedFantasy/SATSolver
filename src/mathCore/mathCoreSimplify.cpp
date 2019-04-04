@@ -154,6 +154,60 @@ void mathCore::DeMorgansD(expression* a) {
 }
 
 
+void mathCore::universal_bound(expression* a) {
+	auto literal_pos = a->contents.lower_bound(global_literal);		// Lower bound for literals in the expression
+	auto literal_bound = a->contents.upper_bound(global_literal); // Upper bound for litterals in the expression
+
+	// If the expression is an AND
+	if(mathCore::is_and(a)) {
+		// Iterate over all literals
+		while(literal_pos != literal_bound) {
+			// If a literal 0 is found, the entire expression evaluates to 0
+			if(mathCore::is_negated(*literal_pos)) {
+				// Delete all the the children of the expression 
+				for (auto iter: a->contents) {
+					delete iter;
+				}
+				// Turn the expression into a false literal
+				mathCore::trans_lit(a, false);
+			} else {
+				// If the literal found was true and there are other expressions in the statement
+				// The literal true can be removed
+				if(a->contents.size() > 1) {
+					delete *literal_pos;	// Delete the expression
+					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
+				} else {
+					literal_pos++;	// Advance the iterator normally
+				}
+			}
+		}
+	// If the expression is an or statement 
+	} else if (mathCore::is_or(a)) {
+		// Iterate over all literals
+		while(literal_pos != literal_bound) {
+			// If a literal 1 is found, the entire expression evaluates to 1
+			if(!(mathCore::is_negated(*literal_pos))) {
+				// Delete all the the children of the expression 
+				for (auto iter: a->contents) {
+					delete iter;
+				}
+				// Turn the expression into a false literal
+				mathCore::trans_lit(a, true);
+			} else {
+				// If the literal found was false and there are other expressions in the statement
+				// The literal false can be removed
+				if(a->contents.size() > 1) {
+					delete *literal_pos;	// Delete the expression
+					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
+				} else {
+					literal_pos++;	// Advance the iterator normally
+				}
+			}
+		}
+	}
+}
+
+
 // a @ b @ c = (~a*b + ~b*a) @ c
 // We do this pairwise till the entire thing is done!
 void mathCore::xor_standardizer(expression* a) {

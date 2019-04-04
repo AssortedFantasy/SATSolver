@@ -104,6 +104,8 @@ public:
 	static void DeMorgans(expression* a);
 	static void DeMorgansD(expression* a);
 
+	// Universal Bound Laws
+	static void universal_bound(expression* a);
 
 	// Idempotent Laws
 	static void idempotent_law(expression* a);

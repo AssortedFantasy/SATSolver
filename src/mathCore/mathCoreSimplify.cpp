@@ -514,3 +514,26 @@ void mathCore::distributive_law(expression* a, expSet::iterator& distTo, expSet:
 		}
 	}
 }
+
+
+/*
+	You are given the parent pointer and an
+	iterator to a term inside.
+
+	A+Z+(A*X) = A+Z (Pows the whole thing if same sign)!
+	A+Z+(~A*X) = A+Z+X (Pows the ~A if opposite sign)
+
+	A*(A+X) = A (Pows the whole and statement!)
+	A*(~A+X) = A*X (Pows the ~A if opposite sign)!
+*/
+void mathCore::absorbtion_law(expression* a, expSet::iterator& pow){
+	if (is_and(a)) {
+		if (is_or(*pow) && !(is_negated(*pow) || is_dualed(*pow))) { // Needs to be a clean OR statement!
+			auto iter = (*pow)->contents.lower_bound(global_variable);
+			
+		}
+	}
+	else if (is_or(a)) {
+
+	}
+}

@@ -1,13 +1,16 @@
 # SATSolver
-A SAT Solver coded up in C++, Final Project for CMPUT 275
+A SAT Solver coded up in C++, Final Project for CMPUT 275 Winter 2019
+
+The program will read in boolean algebra expressions and test to see if the problem is satisfiable.
+There
+
 
 Command Line arguments:
+  - 'h' for help menu
+  - 'm' for mode
   - 'i' for input
   - 'o' for output
   - 't' for terminal output 
-
-The program will have an interpreter program
-  - This will likely use YACC and LEX
 
 An Expression class must be defined
 

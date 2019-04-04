@@ -351,7 +351,6 @@ void mathCore::idempotent_law(expression* a) {
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {
 			if ((*iter)->uuid == previous_uuid) {
-
 				// We have a new match
 				if (mathCore::is_negated(*iter)) {
 					if (found_false) {
@@ -360,6 +359,7 @@ void mathCore::idempotent_law(expression* a) {
 						iter = a->contents.erase(iter);
 					}
 					else {
+						iter++;
 						found_false = true;
 					}
 				}
@@ -371,6 +371,7 @@ void mathCore::idempotent_law(expression* a) {
 						iter = a->contents.erase(iter);
 					}
 					else {
+						iter++;
 						found_true = true;
 					}
 				}
@@ -386,17 +387,24 @@ void mathCore::idempotent_law(expression* a) {
 			else {
 				previous_uuid = (*iter)->uuid;
 				found_true = found_false = false;
-
+				found_true = found_false = false;
+				if (is_negated(a)) {
+					found_false = true;
+				}
+				else {
+					found_true = true;
+				}
+				iter++;
 			}
 		}
 	}
 	else if (mathCore::is_or(a)) {
 		// OR things
-		auto iter = a->contents.lower_bound(mathCore::global_variable);
+		std::multiset<expression*, compareUUID>::iterator iter = a->contents.lower_bound(mathCore::global_variable);
+
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {
 			if ((*iter)->uuid == previous_uuid) {
-
 				// We have a new match
 				if (mathCore::is_negated(*iter)) {
 					if (found_false) {
@@ -405,6 +413,7 @@ void mathCore::idempotent_law(expression* a) {
 						iter = a->contents.erase(iter);
 					}
 					else {
+						iter++;
 						found_false = true;
 					}
 				}
@@ -416,6 +425,7 @@ void mathCore::idempotent_law(expression* a) {
 						iter = a->contents.erase(iter);
 					}
 					else {
+						iter++;
 						found_true = true;
 					}
 				}
@@ -431,7 +441,13 @@ void mathCore::idempotent_law(expression* a) {
 			else {
 				previous_uuid = (*iter)->uuid;
 				found_true = found_false = false;
-
+				if (is_negated(a)) {
+					found_false = true;
+				}
+				else {
+					found_true = true;
+				}
+				iter++;
 			}
 		}
 	}

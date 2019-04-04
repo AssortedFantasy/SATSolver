@@ -14,5 +14,6 @@ void standard_form(expression* a) {
 	// Now you should be able to do this well
 	mathCore::combine_and(a);
 	mathCore::combine_or(a);
+	mathCore::recursive_idempotent(a);
 }
 

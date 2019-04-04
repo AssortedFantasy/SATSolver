@@ -43,6 +43,7 @@ void mathCore::recursive_combine_equiv(expression* a) {
 }
  
 void mathCore::recursive_idempotent(expression* a) {
+	mathCore::idempotent_law(a); // Guarentees either this is a Literal or Has no Literals
 	for (auto child : a->contents) {
 		mathCore::recursive_idempotent(child);
 	}

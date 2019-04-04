@@ -112,6 +112,9 @@ public:
 	// Idempotent Laws
 	static void idempotent_law(expression* a);
 
+	// If you remove everything from an expression, that expression becomes the thing!
+	// WE DON'T HAVE PARANTHEISIS INTERNALLY!
+	static void empty_expression(expression* a);
 
 	// RECURSIVE VERSIONS!
 	static void recursive_combine_and(expression* a);
@@ -121,7 +124,6 @@ public:
 
 	static void recursive_standardize(expression* a);
 	static void recursive_idempotent(expression * a);
-
 
 private:
 	static void clear_type_flag(expression * a);

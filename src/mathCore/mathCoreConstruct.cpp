@@ -273,5 +273,38 @@ expression* mathCore::copy(expression * a) {
 	return exp;
 }
 
+
+/*
+	Super important this property isn't violated!!
+*/
+void mathCore::empty_expression(expression* a) {
+	if (!(mathCore::is_literal(a) || mathCore::is_var(a))) {
+		// Problems!
+		if (a->contents.size() < 2) {
+			if (a->contents.size() == 1) {
+				if (is_and(a) || is_or(a)) {
+					auto child = *(a->contents.begin());
+					a->uuid = child->uuid;
+					a->FLAGS = child->FLAGS;
+					a->contents = child->contents;
+
+					child->contents.clear();
+					delete child;
+				}
+			}
+			else {
+				if (is_and(a)) {
+					trans_true(a); // AND are vacuously true
+				}
+				else if (is_or(a)) {
+					trans_false(a); // Vacuously false
+				}
+				else {
+					throw;	// REALLY BAD THINGS ARE HAPPENING!
+				}
+			}
+		}
+	}
+}
 expression* mathCore::global_literal = mathCore::literal_true();
 expression* mathCore::global_variable = mathCore::construct_global_var();

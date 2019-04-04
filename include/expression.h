@@ -22,7 +22,7 @@ class expression;
 
 // This struct compares UUID's, allowing expressions to exist in multisets 
 struct compareUUID {
-	bool operator()(expression* a, expression* b);
+	bool operator()(const expression* const a, const expression* const b) const;
 };
 
 /*

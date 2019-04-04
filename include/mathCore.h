@@ -9,6 +9,7 @@
 #include <set>
 
 
+
 class mathCore {
 public:
 	// MATH CORE CONSTRUCT METHODS
@@ -130,9 +131,11 @@ private:
 
 	// Simplifcation Generics
 	static void combine_generics(expression * a, bool(*typeFunction)(expression*));
+	static expression* construct_global_var();
 
 	static expression* global_literal;
 	static expression* global_variable;
+
 };
 
 #endif

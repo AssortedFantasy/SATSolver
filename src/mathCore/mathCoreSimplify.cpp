@@ -13,16 +13,16 @@ void mergeMultiSet(std::multiset<expression*, compareUUID>& dest,
 }
 
 /*
-	Associative operations can be combined into a larger version, this is a generic combiner
-	all others call this
-	Not recursive method!
+Associative operations can be combined into a larger version, this is a generic combiner
+all others call this
+Not recursive method!
 */
 void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*)) {
 	std::multiset<expression*, compareUUID> temp_set; // Temporary Storage for new elements
 
 
-	// If our children are the same typefunction as ourselves
-	// we merge them into ourselves, which is a feature from C++17!
+													  // If our children are the same typefunction as ourselves
+													  // we merge them into ourselves, which is a feature from C++17!
 
 	if ((*typeFunction)(a)) {
 		auto iter = a->contents.begin();
@@ -57,9 +57,9 @@ void mathCore::combine_generics(expression * a, bool(*typeFunction)(expression*)
 
 
 /*
-	Using the generic, we construct the combiners of all of the functions which are
-	associative
-	AND, OR, XOR and EQUIV are all associative
+Using the generic, we construct the combiners of all of the functions which are
+associative
+AND, OR, XOR and EQUIV are all associative
 */
 void mathCore::combine_and(expression * a) {
 	mathCore::combine_generics(a, mathCore::is_and);
@@ -124,7 +124,7 @@ void mathCore::DeMorgans(expression* a) {
 		for (auto child : a->contents) {
 			negate(child);
 		}
-	} 
+	}
 	else if (mathCore::is_or(a)) {
 		negate(a);
 		trans_and(a);
@@ -158,48 +158,53 @@ void mathCore::universal_bound(expression* a) {
 	auto literal_pos = a->contents.lower_bound(global_literal);		// Lower bound for literals in the expression
 	auto literal_bound = a->contents.upper_bound(global_literal); // Upper bound for litterals in the expression
 
-	// If the expression is an AND
-	if(mathCore::is_and(a)) {
+																  // If the expression is an AND
+	if (mathCore::is_and(a)) {
 		// Iterate over all literals
-		while(literal_pos != literal_bound) {
+		while (literal_pos != literal_bound) {
 			// If a literal 0 is found, the entire expression evaluates to 0
-			if(mathCore::is_negated(*literal_pos)) {
+			if (mathCore::is_negated(*literal_pos)) {
 				// Delete all the the children of the expression 
-				for (auto iter: a->contents) {
+				for (auto iter : a->contents) {
 					delete iter;
 				}
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, false);
-			} else {
+			}
+			else {
 				// If the literal found was true and there are other expressions in the statement
 				// The literal true can be removed
-				if(a->contents.size() > 1) {
+				if (a->contents.size() > 1) {
 					delete *literal_pos;	// Delete the expression
 					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
-				} else {
+				}
+				else {
 					literal_pos++;	// Advance the iterator normally
 				}
 			}
 		}
-	// If the expression is an or statement 
-	} else if (mathCore::is_or(a)) {
+		// If the expression is an or statement 
+	}
+	else if (mathCore::is_or(a)) {
 		// Iterate over all literals
-		while(literal_pos != literal_bound) {
+		while (literal_pos != literal_bound) {
 			// If a literal 1 is found, the entire expression evaluates to 1
-			if(!(mathCore::is_negated(*literal_pos))) {
+			if (!(mathCore::is_negated(*literal_pos))) {
 				// Delete all the the children of the expression 
-				for (auto iter: a->contents) {
+				for (auto iter : a->contents) {
 					delete iter;
 				}
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, true);
-			} else {
+			}
+			else {
 				// If the literal found was false and there are other expressions in the statement
 				// The literal false can be removed
-				if(a->contents.size() > 1) {
+				if (a->contents.size() > 1) {
 					delete *literal_pos;	// Delete the expression
 					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
-				} else {
+				}
+				else {
 					literal_pos++;	// Advance the iterator normally
 				}
 			}
@@ -224,7 +229,7 @@ void mathCore::xor_standardizer(expression* a) {
 			iter = a->contents.begin();
 			hintOther = tempStore.begin();	// Hints to make this crazy slow thing faster!
 
-			// This runs until we are at the end of the expression!
+											// This runs until we are at the end of the expression!
 			while (iter != a->contents.end()) {
 
 				first = *iter;
@@ -236,7 +241,7 @@ void mathCore::xor_standardizer(expression* a) {
 					second = *iter;		// Pair of first!
 					iter = a->contents.erase(iter);	// Keep moving forward!
 
-					// Construct ~a*b + ~b*a !
+													// Construct ~a*b + ~b*a !
 					firstNew = mathCore::copy(first);
 					secondNew = mathCore::copy(second);
 					mathCore::negate(first);
@@ -245,14 +250,14 @@ void mathCore::xor_standardizer(expression* a) {
 					// Hints keep this faster!
 					hintOther = tempStore.insert(hintOther,
 						// AND OR of AND's!
-						mathCore::binary_or(binary_and(first,secondNew),binary_and(firstNew, second)));
+						mathCore::binary_or(binary_and(first, secondNew), binary_and(firstNew, second)));
 				}
 
 			}
 			// Now Merge tempStore into a, and continue all over again!
 			mergeMultiSet(a->contents, tempStore);
 		}
-		
+
 		// Now the XOR has exactly 2 elements!
 		iter = a->contents.begin();
 		first = *iter;
@@ -353,15 +358,15 @@ void mathCore::idempotent_law(expression* a) {
 	unsigned int previous_uuid = 0;
 	bool found_true = 0;
 	bool found_false = 0;
-	
+
 	if (mathCore::is_and(a)) {
 		// AND things
 
 		std::multiset<expression*, compareUUID>::iterator iter = a->contents.lower_bound(mathCore::global_variable);
-		
+
 		// LowerBound forces this to at be the lowest valid!
 		while (iter != a->contents.end()) {
-			if ((*iter)->uuid == previous_uuid){
+			if ((*iter)->uuid == previous_uuid) {
 
 				// We have a new match
 				if (mathCore::is_negated(*iter)) {
@@ -371,7 +376,7 @@ void mathCore::idempotent_law(expression* a) {
 						iter = a->contents.erase(iter);
 					}
 					else {
-						found_false = true;				
+						found_false = true;
 					}
 				}
 				// New true match!
@@ -399,7 +404,7 @@ void mathCore::idempotent_law(expression* a) {
 			else {
 				previous_uuid = (*iter)->uuid;
 				found_true = found_false = false;
-				
+
 			}
 		}
 	}

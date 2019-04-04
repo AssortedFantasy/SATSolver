@@ -66,6 +66,7 @@ std::string help_string =
 		9 : NORIFY(Comprised Entirely of NOR)
 */
 int main(int argc, char* argv[]){
+
 	GetOpt::GetOpt_pp optparser(argc, argv);
 	std::string input_file_string = "input.txt",
 		output_file_string = "output.txt";

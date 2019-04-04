@@ -52,6 +52,13 @@ expression* mathCore::variable(const std::string& identifier) {
 	return exp;
 }
 
+expression* mathCore::construct_global_var() {
+	expression* exp = new expression;
+	exp->FLAGS = F_VAR;
+	exp->uuid = 2;
+	return exp;
+}
+
 // From UUID
 expression* mathCore::varFromUUID(unsigned int uuid) {
 	expression* exp = new expression;
@@ -259,4 +266,4 @@ expression* mathCore::copy(expression * a) {
 }
 
 expression* mathCore::global_literal = mathCore::literal_true();
-expression* mathCore::global_variable = mathCore::variable("THEGLOBAL");
+expression* mathCore::global_variable = mathCore::construct_global_var();

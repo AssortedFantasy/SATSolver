@@ -168,6 +168,7 @@ void mathCore::universal_bound(expression* a) {
 				mathCore::delete_children(a);
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, false);
+				break;
 			} else {
 				// If the literal found was true, it can be removed
 					delete *literal_pos;	// Delete the expression
@@ -175,8 +176,7 @@ void mathCore::universal_bound(expression* a) {
 			}
 		}
 		// If the expression is an or statement 
-	}
-	else if (mathCore::is_or(a)) {
+	} else if (mathCore::is_or(a)) {
 		// Iterate over all literals
 		while (literal_pos != literal_bound) {
 			// If a literal 1 is found, the entire expression evaluates to 1
@@ -185,8 +185,8 @@ void mathCore::universal_bound(expression* a) {
 				mathCore::delete_children(a);
 				// Turn the expression into a true literal
 				mathCore::trans_lit(a, true);
-			}
-			else {
+				break;
+			} else {
 				// If the literal found was false, it can be removed
 				delete *literal_pos;	// Delete the expression
 				literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely

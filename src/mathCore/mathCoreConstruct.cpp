@@ -2,9 +2,11 @@
 
 // Constructs a literal expression
 // The literal expression is literal true!
+// All literals have uuid 1!
 expression* mathCore::literal_true() {
 	expression* exp = new expression;
 	exp->FLAGS = F_LIT;
+	exp->uuid = 1;
 	return exp;
 }
 
@@ -56,7 +58,7 @@ expression* mathCore::varFromUUID(size_t uuid) {
 	exp->FLAGS = F_VAR;
 
 	// Bad things are happening if this happens, only valid UUIDs can be used
-	if (uuid >= expression::global_uuid) {
+	if (uuid >= expression::global_uuid || uuid < 2) {
 		throw;
 	}
 	exp->uuid = uuid;
@@ -78,6 +80,86 @@ void mathCore::dual(expression* a) {
 		// If its not a varible you flip its dual
 		a->FLAGS ^= F_DUAL;
 	}
+}
+
+// Unduals an Expression, Nothing if its already fine
+void mathCore::un_dual(expression* a) {
+	a->FLAGS &= ~(F_DUAL);
+}
+
+// Unduals an Expression, Nothing if its already fine
+void mathCore::un_negate(expression* a) {
+	a->FLAGS &= ~(F_NEG);
+}
+
+
+// Change to AND OR XOR EQUIV VAR TRUE FALSE
+void mathCore::trans_and(expression* a) {
+	mathCore::clear_type_flag(a);
+	a->FLAGS |= F_AND;
+};
+
+void mathCore::trans_or(expression* a) {
+	mathCore::clear_type_flag(a); 
+	a->FLAGS |= F_OR;
+};
+
+void mathCore::trans_xor(expression* a) {
+	mathCore::clear_type_flag(a); 
+	a->FLAGS |= F_XOR;
+};
+
+void mathCore::trans_equiv(expression* a) {
+	mathCore::clear_type_flag(a); 
+	a->FLAGS |= F_EQUIV;
+};
+
+void mathCore::trans_imply(expression* a) {
+	mathCore::clear_type_flag(a); 
+	a->FLAGS |= F_IMPLY;
+};
+
+
+void mathCore::trans_var(expression* a, unsigned int uuid) {
+	mathCore::clear_type_flag(a);
+	a->FLAGS |= F_VAR;
+	a->uuid = uuid;
+
+	// Invalid Variable, this never happens so it gets branch predicted over
+	if (uuid < 2 || uuid > expression::global_uuid) {
+		throw;
+	}
+};
+
+
+void mathCore::trans_true(expression* a) {
+	mathCore::clear_type_flag(a);
+	mathCore::un_negate;
+	mathCore::un_dual;
+	a->FLAGS |= F_LIT;
+};
+
+
+void mathCore::trans_false(expression* a) {
+	mathCore::trans_true(a);
+	mathCore::negate(a);
+};
+
+
+void mathCore::trans_lit(expression* a, bool val) {
+	if (val) {
+		mathCore::trans_true(a);
+	}
+	else {
+		mathCore::trans_false(a);
+	}
+}
+
+
+// Private Method!
+// Does not change dual or negated state!
+void mathCore::clear_type_flag(expression* a) {
+	a->FLAGS &= F_NEG | F_DUAL;
 }
 
 //AND OR XOR EQUIV all have basially the same code

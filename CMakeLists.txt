@@ -41,6 +41,7 @@ set(MATHCORECODE
 	"${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
 	"${SRC_DIR}/mathCore/mathCoreStream.cpp"
 	"${SRC_DIR}/mathCore/mathCoreSimplify.cpp"
+	"${SRC_DIR}/mathCore/mathCoreRecursive.cpp"
 )
 add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")

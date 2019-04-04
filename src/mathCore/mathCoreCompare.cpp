@@ -36,3 +36,10 @@ bool mathCore::is_imply(expression* a) {
 bool mathCore::is_equiv(expression* a) {
 	return a->FLAGS & F_EQUIV;
 }
+
+// Check if two variables are the same, they might be negations of each other
+bool mathCore::var_equal(expression* a, expression* b) {
+	if (mathCore::is_var(a) && mathCore::is_var(b)) {
+		return a->uuid == b->uuid;
+	}
+}

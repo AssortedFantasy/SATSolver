@@ -168,17 +168,10 @@ void mathCore::universal_bound(expression* a) {
 				mathCore::delete_children(a);
 				// Turn the expression into a false literal
 				mathCore::trans_lit(a, false);
-			}
-			else {
-				// If the literal found was true and there are other expressions in the statement
-				// The literal true can be removed
-				if (a->contents.size() > 1) {
+			} else {
+				// If the literal found was true, it can be removed
 					delete *literal_pos;	// Delete the expression
 					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
-				}
-				else {
-					literal_pos++;	// Advance the iterator normally
-				}
 			}
 		}
 		// If the expression is an or statement 
@@ -190,22 +183,17 @@ void mathCore::universal_bound(expression* a) {
 			if (!(mathCore::is_negated(*literal_pos))) {
 				// Delete all the the children of the expression 
 				mathCore::delete_children(a);
-				// Turn the expression into a false literal
+				// Turn the expression into a true literal
 				mathCore::trans_lit(a, true);
 			}
 			else {
-				// If the literal found was false and there are other expressions in the statement
-				// The literal false can be removed
-				if (a->contents.size() > 1) {
-					delete *literal_pos;	// Delete the expression
-					literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
-				}
-				else {
-					literal_pos++;	// Advance the iterator normally
-				}
+				// If the literal found was false, it can be removed
+				delete *literal_pos;	// Delete the expression
+				literal_pos = a->contents.erase(literal_pos);	// Advance the iterator safely
 			}
 		}
 	}
+	mathCore::empty_expression(a);
 }
 
 

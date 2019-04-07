@@ -133,6 +133,10 @@ public:
 
 	// Distributive Law
 	static void distributive_law(expression * a, expSet::iterator & distTo, expSet::iterator & dist);
+
+	// Absorbtion Law
+	static void absorbtion_law(expression * a, expSet::iterator & iter);
+
 	static void to_CNF(expression * a);
 	static void to_DNF(expression * a);
 

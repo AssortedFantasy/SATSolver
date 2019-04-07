@@ -1,9 +1,50 @@
-# SATSolver
-A SAT Solver coded up in C++, Final Project for CMPUT 275 Winter 2019
-Written By: Jehanzeb Mirza and Tharidu Witharana
+# ---------------------------------------------------
+# Name : Jehanzeb Mirza
+# ID: 1234567
+# Name : Tharidu Witharana
+# ID: 1534351
+# CMPUT 275 , Winter 2019
+#
+# Final Project: SAT Solver
+# ---------------------------------------------------
 
 The program will read in boolean algebra expressions and test to see if the problem is satisfiable.
 There are several components to this program: the SATSolver, the SATSimplifier, and the SAT Parser.
+
+Included Files: 
+  - build/
+  - docs/
+    - grammar.txt
+    - Running Schema.txt
+  - hist/
+  - include/
+    - getopt/
+      - getopt_pp_standalone.h
+      - getopt_pp.h
+      - highlight.css
+    - expression.h
+    - mathCore.h
+    - satform.h
+    - satIO.h 
+  - src/
+    - getopt/
+      - getopt_pp.cpp
+    - mathCore/
+      - mathCoreCompare.cpp
+      - mathCoreConsturct.cpp
+      - mathCoreSimplify.cpp
+      - mathCoreStream.cpp
+    - Parser/
+      - parse.l
+      - parse.y
+      - MakeFile
+    - expression.cpp
+    - satform.cpp
+    - satIO.cpp
+    - satsolver.cpp 
+  - README.MD
+  - LICENSE
+  - CMakeLists.txt
 
 Pre-requities:
   CMake Version 3.12 or higher is required.

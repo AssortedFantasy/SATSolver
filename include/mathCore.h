@@ -8,7 +8,7 @@
 #include <sstream>
 #include <set>
 
-
+void mergeMultiSet(expSet& dest, expSet& src);	// Simple Helper function
 
 class mathCore {
 public:
@@ -28,6 +28,7 @@ public:
 
 	// Change whatever expression something is, into an AND OR XOR EQUIV
 	// doesn't do it with laws, it literally just changes flags
+	// DANGEROUS TRANSMUTING FUNCTION CALLS!
 	static void trans_and(expression* a);
 	static void trans_or(expression* a);
 	static void trans_xor(expression* a);
@@ -40,7 +41,10 @@ public:
 
 	/* The above functions invalidate the tree! So you need to fix it*/
 	/* Returns true if something actually got changed! */
+	/* DEPRECATED - BAD FIX
 	static bool invalidUUID(expression* a);
+	static void fixUUID(expression* a);
+	*/
 
 	// Large Expressions DEPRECATED
 	/*
@@ -106,14 +110,14 @@ public:
 	static void DeMorgansD(expression* a);
 
 	// Universal Bound Laws
-	static void universal_bound(expression* a);
+	static void universal_bound(expression* a);						// Transmuting Call
 
 	// Idempotent Laws
-	static void idempotent_law(expression* a);
+	static void idempotent_law(expression* a);						// Transmuting Call
 
 	// If you remove everything from an expression, that expression becomes the thing!
 	// WE DON'T HAVE PARANTHEISIS INTERNALLY!
-	static void empty_expression(expression* a);
+	static void empty_expression(expression* a);					// Transmuting Call
 
 	// RECURSIVE VERSIONS!
 	static void recursive_combine_and(expression* a);
@@ -122,15 +126,18 @@ public:
 	static void recursive_combine_equiv(expression* a);
 
 	static void recursive_standardize(expression* a);
-	static void recursive_idempotent(expression * a);
+	static void recursive_idempotent(expression * a);				// Transmuting Call
 
 	// Evaluate a Variable
-	static void evaluate(expression * a, expSet& evaluationSet);
+	static void evaluate(expression * a, expSet& evaluationSet);	// Transmuting Call
 
 	// Distributive Law
 	static void distributive_law(expression * a, expSet::iterator & distTo, expSet::iterator & dist);
 	static void to_CNF(expression * a);
 	static void to_DNF(expression * a);
+
+
+
 
 
 private:

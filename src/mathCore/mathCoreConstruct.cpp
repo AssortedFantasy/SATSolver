@@ -78,6 +78,7 @@ void mathCore::delete_children(expression* a) {
 	for (auto child : a->contents) {
 		delete child;
 	}
+	a->contents.clear();
 }
 
 // Negate an Expression
@@ -289,7 +290,7 @@ void mathCore::empty_expression(expression* a) {
 		if (a->contents.size() < 2) {
 			if (a->contents.size() == 1) {
 				if (is_and(a) || is_or(a)) {
-					auto child = *(a->contents.begin());
+					expression* child = *(a->contents.begin());
 					a->uuid = child->uuid;
 					a->FLAGS = child->FLAGS;
 					a->contents = child->contents;
@@ -311,15 +312,45 @@ void mathCore::empty_expression(expression* a) {
 			}
 		}
 	}
-}
-
-/*
-	Fixes the UUID if its wrong, 
-*/
-bool mathCore::invalidUUID(expression* a) {
-	if (mathCore::is_literal()) {
-
+	else {
+		if (a->contents.size() > 0) {
+			mathCore::delete_children(a);
+			a->contents.clear();
+		}
 	}
 }
+
+
+/*
+	Returns true if the UUID is wrong!
+	DEPRECATED
+bool mathCore::invalidUUID(expression* a) {
+	if (mathCore::is_literal(a)) {
+		return a->uuid != global_literal->uuid; // ALL literals are UUID 1
+	}
+	else if (mathCore::is_var(a)) {
+		return a->uuid < global_variable->uuid; // All variables have uuid > global
+	}
+	else {
+		return a->uuid != 0;					// Everything else has UUID 0
+	}
+}
+
+void mathCore::fixUUID(expression* a) {
+	if (mathCore::invalidUUID(a)) {
+		if (mathCore::is_literal(a)) {
+			a->uuid = 1;							// Fix this
+		}
+		else if (mathCore::is_var(a)) {
+			a->uuid = global_variable->uuid;		// Really bad
+		}
+		else {
+			a->uuid = 0;
+		}
+	}
+}
+*/
+
+
 expression* mathCore::global_literal = mathCore::literal_true();
 expression* mathCore::global_variable = mathCore::construct_global_var();

@@ -42,12 +42,36 @@ void mathCore::recursive_combine_equiv(expression* a) {
 	mathCore::combine_equiv(a);
 }
  
+
+#include <iostream>
+
+
+
 void mathCore::recursive_idempotent(expression* a) {
-	mathCore::idempotent_law(a); // Guarentees either this is a Literal or Has no Literals
-	for (auto child : a->contents) {
-		mathCore::recursive_idempotent(child); // All children are simple now!
+	mathCore::idempotent_law(a);
+	mathCore::universal_bound(a);
+
+	// We simplify first, because it might help stop recursion
+
+	expSet tempSet;
+	expression* child;
+	auto iter = a->contents.begin();
+
+	
+	while (iter != a->contents.end()) {
+		child = *iter;
+		iter = a->contents.erase(iter);
+
+		recursive_idempotent(child);
+		tempSet.insert(child);
 	}
-	mathCore::universal_bound(a); // Use universal bounds to simplify ourselves
+
+	mergeMultiSet(a->contents, tempSet);
+
+	mathCore::idempotent_law(a);
+	mathCore::universal_bound(a);
+
+	// We simplify After, because one of our children might have changed!
 }
 
 
@@ -57,13 +81,23 @@ void mathCore::recursive_idempotent(expression* a) {
 */
 void mathCore::evaluate(expression*a, expSet& evaluationSet) {
 	// This is by nature a recursive call!
-	for (auto child : a->contents) {
-		evaluate(child, evaluationSet);
-	}
-	expSet::iterator iter;
+	// This is a transmuting function call though!
+	expSet tempSet;
+	expression* child;
+	auto iter = a->contents.begin();
+	while (iter != a->contents.end()) {
+		child = *iter;
+		iter = a->contents.erase(iter);
 
+		evaluate(child, evaluationSet);
+		tempSet.insert(child);
+	}
+	mergeMultiSet(a->contents, tempSet);
+
+	// Transmutes variables into literals if they are in the evaluation set!
+	expSet::iterator finder;
 	if (mathCore::is_var(a)) {
-		if (evaluationSet.end() == (iter = evaluationSet.find(a))) {
+		if (evaluationSet.end() == (finder = evaluationSet.find(a))) {
 			return;
 		}
 		else {
@@ -81,6 +115,8 @@ void mathCore::evaluate(expression*a, expSet& evaluationSet) {
 /*
 	A very naieve way of turning into CNF, It doesn't use the actual essential prime implicants!
 	Requires DNF to work!
+
+	NOT IMPLEMENTED :(
 */
 /*
 void mathCore::to_DNF(expression *a) {

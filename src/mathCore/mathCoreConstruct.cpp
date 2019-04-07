@@ -112,26 +112,31 @@ void mathCore::un_negate(expression* a) {
 void mathCore::trans_and(expression* a) {
 	mathCore::clear_type_flag(a);
 	a->FLAGS |= F_AND;
+	a->uuid = 0;
 };
 
 void mathCore::trans_or(expression* a) {
 	mathCore::clear_type_flag(a); 
 	a->FLAGS |= F_OR;
+	a->uuid = 0;
 };
 
 void mathCore::trans_xor(expression* a) {
 	mathCore::clear_type_flag(a); 
 	a->FLAGS |= F_XOR;
+	a->uuid = 0;
 };
 
 void mathCore::trans_equiv(expression* a) {
 	mathCore::clear_type_flag(a); 
 	a->FLAGS |= F_EQUIV;
+	a->uuid = 0;
 };
 
 void mathCore::trans_imply(expression* a) {
 	mathCore::clear_type_flag(a); 
 	a->FLAGS |= F_IMPLY;
+	a->uuid = 0;
 };
 
 
@@ -151,6 +156,7 @@ void mathCore::trans_true(expression* a) {
 	mathCore::clear_type_flag(a);
 	mathCore::un_negate(a);
 	mathCore::un_dual(a);
+	a->uuid = 1;	// All literals are UUID 1
 	a->FLAGS |= F_LIT;
 };
 
@@ -304,6 +310,15 @@ void mathCore::empty_expression(expression* a) {
 				}
 			}
 		}
+	}
+}
+
+/*
+	Fixes the UUID if its wrong, 
+*/
+bool mathCore::invalidUUID(expression* a) {
+	if (mathCore::is_literal()) {
+
 	}
 }
 expression* mathCore::global_literal = mathCore::literal_true();

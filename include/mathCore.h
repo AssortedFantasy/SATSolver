@@ -38,6 +38,10 @@ public:
 	static void trans_false(expression* a);
 	static void trans_lit(expression* a, bool val);
 
+	/* The above functions invalidate the tree! So you need to fix it*/
+	/* Returns true if something actually got changed! */
+	static bool invalidUUID(expression* a);
+
 	// Large Expressions DEPRECATED
 	/*
 	static expression* multi_and(const std::vector<expression*>& children);
@@ -74,7 +78,7 @@ public:
 	static bool is_equiv(expression* a);
 	static bool var_equal(expression * a, expression * b);
 	static void delete_children(expression* a); // Delete all children of A
-	
+
 	// Only returns true if an expression is a pure sum or product
 	// of variables and or literals!
 	static bool is_product(expression* a);

@@ -1,5 +1,11 @@
 %{
-
+  /*
+  * This file defines the parsing of expressions.
+  * If this file is modified, run the make file in the Parser Directory
+  * to automatically recompile the lexer. Then entire project will need to be
+  * rebuilt as well.
+  * If the DEBUG_INPUT_PARSE Flag is defined, then debug output will be printed
+  */
   #include <iostream>
   #include <cstdio>
   #include "expression.h"
@@ -11,8 +17,10 @@
   extern FILE* yyin;
   expression* result;
 
+   /* Function used to print error messages if one arises */
+   /* Exits with error code -1 */
   void yyerror(const char* s) {
-      std::cout << "Well that's an error:" << s << std::endl;
+      std::cout << "ERROR FOUND: " << s << std::endl;
       exit(-1);
   }
 
@@ -30,7 +38,7 @@
     }
     int tag = yyparse(); /* Parses the entire input file, returns the exit status */
     std::cout << "Parsed: " << tag << std::endl;
-    return result;  // Returns 
+    return result;  // Returns the final expression
   }
 %}
 
@@ -43,7 +51,7 @@
 
 /* Tokens delcared later will be group first */
 /* Order of operations is: */
-/* Paren -> Negation, Dual, Complement -> AND -> OR, XOR, XNOR -> EQUIV evaluated left to right */
+/* Paren -> Negation, Dual, Complement -> AND -> OR, XOR, XNOR -> IMPLICATION -> EQUIV evaluated left to right */
 
 %left XNOR
 %left FWD_IMPL BCK_IMPL
@@ -51,11 +59,14 @@
 %left AND
 %left POST_NEG DUAL
 %right PRE_NEG
+
+/* These tokens are not operators and have no associative property */
 %token <ival> LITERAL
 %token <sval> VARIABLE
 %token O_BRACE C_BRACE
 %start commands
 
+/* Defines the data type of relevant expression types */
 %type <expr> expression
 %type <expr> and_expression
 %type <expr> or_expression

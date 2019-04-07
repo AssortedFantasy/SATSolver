@@ -155,7 +155,7 @@ void mathCore::DeMorgansD(expression* a) {
 
 void mathCore::universal_bound(expression* a) {
 	auto literal_pos = a->contents.lower_bound(global_literal);		// Lower bound for literals in the expression
-	auto literal_bound = a->contents.upper_bound(global_literal); // Upper bound for litterals in the expression
+	auto literal_bound = a->contents.upper_bound(global_literal); // Upper bound for literals in the expression
 
 	// If the expression is an AND
 	if (mathCore::is_and(a)) {
@@ -380,7 +380,7 @@ void mathCore::idempotent_law(expression* a) {
 					// Fancy case
 					mathCore::trans_false(a);
 					mathCore::delete_children(a);
-					a->contents.clear();
+					iter = a->contents.end();
 				}
 			}
 			else {
@@ -434,7 +434,7 @@ void mathCore::idempotent_law(expression* a) {
 					// Fancy case
 					mathCore::trans_true(a);
 					mathCore::delete_children(a);
-					a->contents.clear();
+					iter = a->contents.end();
 				}
 			}
 			else {

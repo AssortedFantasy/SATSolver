@@ -17,7 +17,7 @@ Included Files:
     - grammar.txt
     - Running Schema.txt
   - hist/
-    - boolean_grammar_specification.txt
+    - boolean_grammar_specification
     - expression_public_versions.h
   - include/
     - getopt/

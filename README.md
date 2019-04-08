@@ -1,10 +1,10 @@
 # ---------------------------------------------------
-# Name : Jehanzeb Mirza
-# ID: 1234567
-# Name : Tharidu Witharana
+# Name: Jehanzeb Mirza
+# ID: 1539833
+# Name: Tharidu Witharana
 # ID: 1534351
-# CMPUT 275 , Winter 2019
 #
+# CMPUT 275, Winter 2019
 # Final Project: SAT Solver
 # ---------------------------------------------------
 
@@ -17,6 +17,8 @@ Included Files:
     - grammar.txt
     - Running Schema.txt
   - hist/
+    - boolean_grammar_specification.txt
+    - expression_public_versions.h
   - include/
     - getopt/
       - getopt_pp_standalone.h
@@ -80,6 +82,7 @@ Notes and Assumptions:
   The user interacts with the program through text files and a terminal.
   The input expression must be written into input.txt, and obey the grammar outlined in grammar.txt
   The output expression will be appended to output.txt
+  The Parser will each step of the tokenizing process if the DEBUG_INPUT_PARSE flag is defined in cmake
 
   The main function is located in satsolver.cpp, which first calls satIO to read and parse the input epxression. Next, if input was read, it determines what operations to do on the expression. All the reduction routines occur in satform.cpp, which calls specific reduction techniques in order to produced the requested output.
   All of these reduction operations use boolean algebra laws that are defined in the various parts of mathCore. These reductions occur recursively to ensure the entire expression is properly reduced. Afterwards, if input was successfully processed, it uses satIO to write the expression to the output.txt file. If the expression was not processed properly, it prints an error.
@@ -104,7 +107,7 @@ Acknowledgements:
     Eric Schmidt
 
   
-                      DESIGN FLOWCHART
+                            DESIGN FLOWCHART
 
               +--------+      +--------+
               |        |      |        |         +--------+
@@ -127,18 +130,18 @@ Acknowledgements:
                                                 +-+---------++
                                                 | EXPRESSION |
                                                 +------------+
-1. User writes to INPUT.TXT 
-2. User communicates commands to main
-3. GetOpt is used to interpret User Commands
+1. USER writes to INPUT.TXT 
+2. USER communicates commands to MAIN
+3. GETOPT is used to interpret User Commands
 4. MAIN calls SATIO, passing in arguments from GETOPT
 5. SATIO Calls the Lexer
 6. The LEXER reads in from INPUT.TXT
-7. The LEXER ouputs tokens to the Parser
+7. The LEXER outputs tokens to the Parser
 8. The PARSER converts the tokens to EXPRESSIONS
 9. The PARSER returns the EXPRESSION to SATIO
 10. SATIO calls the appropriate SATFORM function based upon GETOPT arguments, passing in the EXPRESSION
 11. SATFORM calls MATHCORE functions and passes in the EXPRESSION
 12. MATHCORE does the appropriate reductions on the EXPRESSION and returns it to SATFORM
 13. SATFORM returns the expression to SATIO
-14. SATIO writes the expression to OUTPUT.TXT
-15. The USER reads OUTPUT.TXT
+14. SATIO appends the expression to OUTPUT.TXT
+15. The USER reads result from OUTPUT.TXT

@@ -4,10 +4,10 @@ cmake_minimum_required(VERSION 3.12)
 
 # Project Name and Version Number
 project(
-	"SATSolver"
-	VERSION 0.6
-	LANGUAGES CXX C
-	DESCRIPTION "Solves SAT Problems! What a Beast!"
+  "SATSolver"
+  VERSION 0.6
+  LANGUAGES CXX C
+  DESCRIPTION "Solves SAT Problems! What a Beast!"
 )
 
 # debug ones
@@ -37,19 +37,19 @@ target_include_directories(Expressions PRIVATE "${INCLUDE_DIR}")
 # Math Core
 # Multiple.cpp files
 set(MATHCORECODE 
-	"${SRC_DIR}/mathCore/mathCoreCompare.cpp"
-	"${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
-	"${SRC_DIR}/mathCore/mathCoreStream.cpp"
-	"${SRC_DIR}/mathCore/mathCoreSimplify.cpp"
-	"${SRC_DIR}/mathCore/mathCoreRecursive.cpp"
+  "${SRC_DIR}/mathCore/mathCoreCompare.cpp"
+  "${SRC_DIR}/mathCore/mathCoreConstruct.cpp"
+  "${SRC_DIR}/mathCore/mathCoreStream.cpp"
+  "${SRC_DIR}/mathCore/mathCoreSimplify.cpp"
+  "${SRC_DIR}/mathCore/mathCoreRecursive.cpp"
 )
 add_library(MathCore ${MATHCORECODE})
 target_include_directories(MathCore PRIVATE "${INCLUDE_DIR}")
 
 # Parser
 set(PARSERCODE
-	"${SRC_DIR}/Parser/lex.yy.cc"
-	"${SRC_DIR}/Parser/parse.tab.cc"
+  "${SRC_DIR}/Parser/lex.yy.cc"
+  "${SRC_DIR}/Parser/parse.tab.cc"
 )
 add_library(Parser ${PARSERCODE})
 target_include_directories(Parser PRIVATE "${INCLUDE_DIR}")
@@ -70,14 +70,14 @@ target_include_directories(SATSolver PRIVATE "${INCLUDE_DIR}")
 
 # Final Linking, GCC is very picky so you have to be careful with ordering
 target_link_libraries(
-	SATSolver	# Main Function						ALL
+  SATSolver	# Main Function                     ALL
 
-	SATIO		# File Input OutPut					Parser and MathCore
-	SATFORM		# Modifying the Expression Trees	MathCore
-	
+  SATIO     # File Input OutPut                 Parser and MathCore
+  SATFORM   # Modifying the Expression Trees    MathCore
+  
 
-	Parser		# Lexer and Parser					Both MathCore and Expressions
-	MathCore	# Most Real Expression Methods		Expressions
-	Expressions # Expression Methods				NO DEPENDENCIES
-	Getopt		# Argument Parsing					NO DEPENDENCIES
+  Parser      # Lexer and Parser                Both MathCore and Expressions
+  MathCore    # Most Real Expression Methods    Expressions
+  Expressions # Expression Methods              NO DEPENDENCIES
+  Getopt      # Argument Parsing                NO DEPENDENCIES
 )

@@ -87,6 +87,7 @@ public:
 	// of variables and or literals!
 	static bool is_product(expression* a);
 	static bool is_sum(expression *a);
+	static bool same_sign(expression * a, expression* b);
 
 	static bool is_CNF(expression* a);
 	static bool is_DNF(expression* a);
@@ -132,17 +133,17 @@ public:
 	static void evaluate(expression * a, expSet& evaluationSet);	// Transmuting Call
 
 	// Distributive Law
-	static void distributive_law(expression * a, expSet::iterator & distTo, expSet::iterator & dist);
+	static void distributive_law(expression* a, expression* distTo, expression* dist);	// Transmuting Call, Sorta
 
 	// Absorbtion Law
-	static void absorbtion_law(expression * a, expSet::iterator & iter);
+	static void absorbtion_law(expression* a, expression* pow);	// Transmuting call on pow!
 
-	static void to_CNF(expression * a);
-	static void to_DNF(expression * a);
+	static void to_CNF(expression * a);		// Transmuting Call
+	static void to_DNF(expression * a);		// Transmuting Call by duality
 
-
-
-
+	// Uses these helper functions!
+	static void do_expansion(expression* a, expression* expandTo, expression* expandFrom);
+	static void do_simplification(expression * a);
 
 private:
 	static void clear_type_flag(expression * a);

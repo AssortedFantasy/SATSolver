@@ -458,61 +458,53 @@ void mathCore::idempotent_law(expression* a) {
 // You need to pass the bounding expression *a and two iterators, disTo and dist
 // the second one is distributed over the first!
 // If you pass something that doesn't have a notion of distribution then it just passes!
-void mathCore::distributive_law(expression* a, expSet::iterator& distTo, expSet::iterator& dist) {
+void mathCore::distributive_law(expression* a, expression* distTo, expression* dist) {
 	if (is_and(a)) {
-		if (is_or(*distTo) && !(is_negated(*distTo) || is_dualed(*distTo))) {	// It needs to be a clean OR statement to distribute!
+		if (is_or(distTo) && !(is_negated(distTo) || is_dualed(distTo))) {	// It needs to be a clean OR statement to distribute!
 			
 			expSet tempStore;	// Need temporary storage to not invalidate iterators
+
 			auto hint = tempStore.begin();
-			auto iter = (*distTo)->contents.begin();
-			auto copyDist = *dist;
-			auto first_element = *iter;
+			auto iter = distTo->contents.begin();
 
-			
-			// For the first element just use the one in dist!
-			hint = tempStore.insert(hint, binary_and(first_element, copyDist));
-			dist = a->contents.erase(dist);	// Advances dist!
+			// For the first element just use dist!
+			hint = tempStore.insert(hint, binary_and(*iter, dist));
+			iter = distTo->contents.erase(iter);	// Advances iter
 
-			while (iter != (*distTo)->contents.end()) {
+			while (iter != distTo->contents.end()) {
 				// Until the end of the iterator keep doing this
-				hint = tempStore.insert(hint, binary_and(*iter, mathCore::copy(copyDist))); // We match these copies with the remaining elements
-				iter = (*distTo)->contents.erase(iter);
+				hint = tempStore.insert(hint, binary_and(*iter, mathCore::copy(dist))); // We match these copies with the remaining elements
+				iter = distTo->contents.erase(iter);
 			}
 
 			// Then at the end just merge tempStore into distTo!
-			mergeMultiSet((*distTo)->contents, tempStore);
-
-			// You might have removed the last thing in a!
-			empty_expression(a);
+			mergeMultiSet(distTo->contents, tempStore);
 		}
 	}
 	else if (is_or(a)) {
-		if (is_and(*distTo) && !(is_negated(*distTo) || is_dualed(*distTo))) {	// It needs to be a clean OR statement to distribute!
+		if (is_and(distTo) && !(is_negated(distTo) || is_dualed(distTo))) {	// It needs to be a clean AND statement to distribute!
 
 			expSet tempStore;	// Need temporary storage to not invalidate iterators
+
 			auto hint = tempStore.begin();
-			auto iter = (*distTo)->contents.begin();
-			auto copyDist = *dist;
-			auto first_element = *iter;
+			auto iter = distTo->contents.begin();
 
+			// For the first element just use dist!
+			hint = tempStore.insert(hint, binary_or(*iter, dist));
+			iter = distTo->contents.erase(iter);	// Advances iter
 
-			// For the first element just use the one in dist!
-			hint = tempStore.insert(hint, binary_or(first_element, copyDist));
-			dist = a->contents.erase(dist);	// Advances dist!
-
-			while (iter != (*distTo)->contents.end()) {
+			while (iter != distTo->contents.end()) {
 				// Until the end of the iterator keep doing this
-				hint = tempStore.insert(hint, binary_or(*iter, mathCore::copy(copyDist))); // We match these copies with the remaining elements
-				iter = (*distTo)->contents.erase(iter);
+				hint = tempStore.insert(hint, binary_or(*iter, mathCore::copy(dist))); // We match these copies with the remaining elements
+				iter = distTo->contents.erase(iter);
 			}
 
 			// Then at the end just merge tempStore into distTo!
-			mergeMultiSet((*distTo)->contents, tempStore);
-
-			// You might have removed the last thing in a!
-			empty_expression(a);
+			mergeMultiSet(distTo->contents, tempStore);
 		}
 	}
+	// You might have removed everything except one thing in a!
+	empty_expression(a);
 }
 
 
@@ -526,14 +518,72 @@ void mathCore::distributive_law(expression* a, expSet::iterator& distTo, expSet:
 	A*(A+X) = A (Pows the whole and statement!)
 	A*(~A+X) = A*X (Pows the ~A if opposite sign)!
 */
-void mathCore::absorbtion_law(expression* a, expSet::iterator& pow){
+void mathCore::absorbtion_law(expression* a, expression* pow){
 	if (is_and(a)) {
-		if (is_or(*pow) && !(is_negated(*pow) || is_dualed(*pow))) { // Needs to be a clean OR statement!
-			auto iter = (*pow)->contents.lower_bound(global_variable);
-			
+		if (is_or(pow) && !(is_negated(pow) || is_dualed(pow))) { // Needs to be a clean OR statement to POW things out of it!
+			auto iter = pow->contents.lower_bound(global_variable);	// You can only pow variables
+			expSet::iterator outsiders;
+
+			while (iter != pow->contents.end()) {
+				if (is_var(*iter)) { // Its guarenteed to be a variable anyway
+					outsiders = a->contents.find(*iter);
+					if (outsiders != a->contents.end()) {	// If we find nothing, go to the next variable
+						iter++;
+					}
+					while(outsiders != a->contents.end()) {
+						// We found something outside!
+						if (same_sign(*outsiders, *iter)) {
+							// Same sign, Pow just became a literal 1!
+							delete_children(pow);
+							trans_true(pow);
+							iter = pow->contents.end();
+							break;
+						}
+						else {
+							// Different Signs -> Its irrelevant, so pow loses it!
+							iter = pow->contents.erase(iter);
+							break;
+						}
+						outsiders++;
+					}
+				}
+			}
 		}
 	}
 	else if (is_or(a)) {
+		if (is_and(pow) && !(is_negated(pow) || is_dualed(pow))) { // Needs to be a clean AND statement to POW things out of it!
+			auto iter = pow->contents.lower_bound(global_variable);	// You can only pow variables
+			expSet::iterator outsiders;
+
+			while (iter != pow->contents.end()) {
+				if (is_var(*iter)) { // Its guarenteed to be a variable anyway
+					outsiders = a->contents.find(*iter);
+					if (outsiders != a->contents.end()) {	// If we find nothing, go to the next variable
+						iter++;
+					}
+					while (outsiders != a->contents.end()) {
+						// We found something outside!
+						if (same_sign(*outsiders, *iter)) {
+							// Same sign, Pow just became a literal 0!
+							delete_children(pow);
+							trans_false(pow);
+							iter = pow->contents.end();
+							break;
+						}
+						else {
+							// Different Signs -> Its irrelevant, so pow loses it!
+							iter = pow->contents.erase(iter);
+							break;
+						}
+						outsiders++;
+					}
+				}
+			}
+		}
+	}
+	else if (is_var(a)) {
 
 	}
+	// You could theoretically empty pow!
+	empty_expression(pow);
 }

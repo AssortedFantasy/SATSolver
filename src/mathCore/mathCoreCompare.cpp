@@ -69,7 +69,7 @@ bool mathCore::is_sum(expression* a) {
 	}
 	else if (is_or(a)) { // Sums must be ors
 		for (auto child : a->contents) {
-			if (!(is_sum(child))) { // Products must be ors of sums
+			if (!(is_sum(child))) { // Sums must be ors of sums
 				return false;
 			}
 		}
@@ -115,3 +115,15 @@ bool mathCore::is_DNF(expression* a) {
 		return false;
 	}
 }
+
+bool mathCore::same_sign(expression* a, expression* b) {
+	if (is_var(a) && is_var(b)){
+		if (is_negated(a)) {
+			return is_negated(b);
+		}
+		else {
+			return !is_negated(b);
+		}
+	}
+	return false;
+};

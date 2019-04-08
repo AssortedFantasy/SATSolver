@@ -64,7 +64,13 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parse.y" /* yacc.c:339  */
 
-
+  /*
+  * This file defines the parsing of expressions.
+  * If this file is modified, run the make file in the Parser Directory
+  * to automatically recompile the lexer. Then entire project will need to be
+  * rebuilt as well.
+  * If the DEBUG_INPUT_PARSE Flag is defined, then debug output will be printed
+  */
   #include <iostream>
   #include <cstdio>
   #include "expression.h"
@@ -76,8 +82,10 @@
   extern FILE* yyin;
   expression* result;
 
+   /* Function used to print error messages if one arises */
+   /* Exits with error code -1 */
   void yyerror(const char* s) {
-      std::cout << "Well that's an error:" << s << std::endl;
+      std::cout << "ERROR FOUND: " << s << std::endl;
       exit(-1);
   }
 
@@ -94,11 +102,13 @@
         return NULL;
     }
     int tag = yyparse(); /* Parses the entire input file, returns the exit status */
-    std::cout << "Parsed: " << tag << std::endl;
-    return result;  // Returns 
+    #ifdef DEBUG_INPUT_PARSE
+        std::cout << "Parse exit status: " << tag << std::endl;
+    #endif
+    return result;  // Returns the final expression
   }
 
-#line 102 "parse.tab.c" /* yacc.c:339  */
+#line 112 "parse.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -154,13 +164,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 38 "parse.y" /* yacc.c:355  */
+#line 48 "parse.y" /* yacc.c:355  */
 
     int ival;
     char* sval;
     expression* expr;
 
-#line 164 "parse.tab.c" /* yacc.c:355  */
+#line 174 "parse.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -177,7 +187,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 181 "parse.tab.c" /* yacc.c:358  */
+#line 191 "parse.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -476,9 +486,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    73,    73,    80,    90,    95,   100,   105,   110,   115,
-     120,   127,   134,   141,   147,   154,   161,   171,   177,   186,
-     193,   203,   213,   219,   231,   237,   251,   257,   264,   275
+       0,    86,    86,    93,   103,   108,   113,   118,   123,   128,
+     133,   140,   147,   154,   160,   167,   174,   184,   190,   199,
+     206,   216,   226,   232,   244,   250,   264,   270,   277,   288
 };
 #endif
 
@@ -1275,88 +1285,88 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 80 "parse.y" /* yacc.c:1646  */
+#line 93 "parse.y" /* yacc.c:1646  */
     {
             result = (yyvsp[0].expr); /* Stores the final result */
             #ifdef DEBUG_INPUT_PARSE
             std::cout << "MADE TO THE END" << std::endl;
             #endif
         }
-#line 1286 "parse.tab.c" /* yacc.c:1646  */
+#line 1296 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 90 "parse.y" /* yacc.c:1646  */
+#line 103 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "PAREN_EXPRESSION -> EXPRESSION\n";
         #endif 
     }
-#line 1296 "parse.tab.c" /* yacc.c:1646  */
+#line 1306 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 95 "parse.y" /* yacc.c:1646  */
+#line 108 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "AND -> EXPRESSION\n";
         #endif 
     }
-#line 1306 "parse.tab.c" /* yacc.c:1646  */
+#line 1316 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 100 "parse.y" /* yacc.c:1646  */
+#line 113 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "OR -> EXPRESSION\n";
         #endif
         }
-#line 1316 "parse.tab.c" /* yacc.c:1646  */
+#line 1326 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 105 "parse.y" /* yacc.c:1646  */
+#line 118 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "XOR -> EXPRESSION\n";
         #endif
         }
-#line 1326 "parse.tab.c" /* yacc.c:1646  */
+#line 1336 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 110 "parse.y" /* yacc.c:1646  */
+#line 123 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "NEG -> EXPRESSION\n";
         #endif
         }
-#line 1336 "parse.tab.c" /* yacc.c:1646  */
+#line 1346 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 115 "parse.y" /* yacc.c:1646  */
+#line 128 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "DUAL -> EXPRESSION\n";
         #endif
         }
-#line 1346 "parse.tab.c" /* yacc.c:1646  */
+#line 1356 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 120 "parse.y" /* yacc.c:1646  */
+#line 133 "parse.y" /* yacc.c:1646  */
     {
         #ifdef DEBUG_INPUT_PARSE
         std::cout << "IMPL -> EXPRESSION\n";
         #endif
         }
-#line 1356 "parse.tab.c" /* yacc.c:1646  */
+#line 1366 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 127 "parse.y" /* yacc.c:1646  */
+#line 140 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "VARIABLE(NEG) -> EXPRESSION\n";
@@ -1364,11 +1374,11 @@ yyreduce:
                         (yyval.expr) = mathCore::variable((yyvsp[-1].sval));
                         mathCore::negate((yyval.expr));
                     }
-#line 1368 "parse.tab.c" /* yacc.c:1646  */
+#line 1378 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 134 "parse.y" /* yacc.c:1646  */
+#line 147 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "(NEG)VARIABLE -> EXPRESSION\n";
@@ -1376,22 +1386,22 @@ yyreduce:
                         (yyval.expr) = mathCore::variable((yyvsp[0].sval));
                         mathCore::negate((yyval.expr));
                     }
-#line 1380 "parse.tab.c" /* yacc.c:1646  */
+#line 1390 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 141 "parse.y" /* yacc.c:1646  */
+#line 154 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "VARIABLE -> EXPRESSION\n";
                         #endif
                         (yyval.expr) = mathCore::variable((yyvsp[0].sval));
                     }
-#line 1391 "parse.tab.c" /* yacc.c:1646  */
+#line 1401 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 147 "parse.y" /* yacc.c:1646  */
+#line 160 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "LITERAL(NEG) -> EXPRESSION\n";
@@ -1399,11 +1409,11 @@ yyreduce:
                         (yyval.expr) = mathCore::literal((bool)(yyvsp[-1].ival));
                         mathCore::negate((yyval.expr));
                     }
-#line 1403 "parse.tab.c" /* yacc.c:1646  */
+#line 1413 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 154 "parse.y" /* yacc.c:1646  */
+#line 167 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "(NEG)LITERAL -> EXPRESSION\n";
@@ -1411,109 +1421,109 @@ yyreduce:
                         (yyval.expr) = mathCore::literal((bool)(yyvsp[0].ival));
                         mathCore::negate((yyval.expr));
                     }
-#line 1415 "parse.tab.c" /* yacc.c:1646  */
+#line 1425 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 161 "parse.y" /* yacc.c:1646  */
+#line 174 "parse.y" /* yacc.c:1646  */
     {
                         #ifdef  DEBUG_INPUT_PARSE
                         std::cout << "LITERAL -> EXPRESSION\n";
                         #endif
                         (yyval.expr) = mathCore::literal((bool)(yyvsp[0].ival));
                     }
-#line 1426 "parse.tab.c" /* yacc.c:1646  */
+#line 1436 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 171 "parse.y" /* yacc.c:1646  */
+#line 184 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> PAREN_EXPRESSION\n";
         #endif
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1437 "parse.tab.c" /* yacc.c:1646  */
+#line 1447 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 177 "parse.y" /* yacc.c:1646  */
+#line 190 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EMPTY EXPRESSION\n";
         #endif
     }
-#line 1447 "parse.tab.c" /* yacc.c:1646  */
+#line 1457 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 186 "parse.y" /* yacc.c:1646  */
+#line 199 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> AND\n";
         #endif
         (yyval.expr) = mathCore::binary_and((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1458 "parse.tab.c" /* yacc.c:1646  */
+#line 1468 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 193 "parse.y" /* yacc.c:1646  */
+#line 206 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> AND_T\n";
         #endif
         (yyval.expr) = mathCore::binary_and((yyvsp[-1].expr), (yyvsp[0].expr));
     }
-#line 1469 "parse.tab.c" /* yacc.c:1646  */
+#line 1479 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 203 "parse.y" /* yacc.c:1646  */
+#line 216 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> OR\n";
         #endif
         (yyval.expr) = mathCore::binary_or((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1480 "parse.tab.c" /* yacc.c:1646  */
+#line 1490 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 213 "parse.y" /* yacc.c:1646  */
+#line 226 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> XOR\n";
         #endif
         (yyval.expr) = mathCore::binary_xor((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1491 "parse.tab.c" /* yacc.c:1646  */
+#line 1501 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 219 "parse.y" /* yacc.c:1646  */
+#line 232 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> XNOR\n";
         #endif
         (yyval.expr) = mathCore::binary_equiv((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1502 "parse.tab.c" /* yacc.c:1646  */
+#line 1512 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 231 "parse.y" /* yacc.c:1646  */
+#line 244 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> FWD_IMPL\n";
         #endif
         (yyval.expr) = mathCore::imply((yyvsp[-2].expr),(yyvsp[0].expr));
     }
-#line 1513 "parse.tab.c" /* yacc.c:1646  */
+#line 1523 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 237 "parse.y" /* yacc.c:1646  */
+#line 250 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "EXPRESSION -> BCK_IMPL\n";
@@ -1524,22 +1534,22 @@ yyreduce:
         mathCore::negate((yyval.expr));
         mathCore::dual((yyval.expr));
     }
-#line 1528 "parse.tab.c" /* yacc.c:1646  */
+#line 1538 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 251 "parse.y" /* yacc.c:1646  */
+#line 264 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "DOUBLE_NEG PAREN_EXPRESSION -> PAREN_EXPRESSION\n";
         #endif
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1539 "parse.tab.c" /* yacc.c:1646  */
+#line 1549 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 257 "parse.y" /* yacc.c:1646  */
+#line 270 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "PAREN_EXPRESSION -> POST_NEG\n";
@@ -1547,11 +1557,11 @@ yyreduce:
         mathCore::negate((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1551 "parse.tab.c" /* yacc.c:1646  */
+#line 1561 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 264 "parse.y" /* yacc.c:1646  */
+#line 277 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "PAREN_EXPRESSION -> PRE_NEG\n";
@@ -1559,11 +1569,11 @@ yyreduce:
         mathCore::negate((yyvsp[0].expr));
         (yyval.expr) = (yyvsp[0].expr);
     }
-#line 1563 "parse.tab.c" /* yacc.c:1646  */
+#line 1573 "parse.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 275 "parse.y" /* yacc.c:1646  */
+#line 288 "parse.y" /* yacc.c:1646  */
     {
         #ifdef  DEBUG_INPUT_PARSE
         std::cout << "PAREN_EXPRESSION -> DUAL\n";
@@ -1571,11 +1581,11 @@ yyreduce:
         mathCore::dual((yyvsp[-1].expr));
         (yyval.expr) = (yyvsp[-1].expr);
     }
-#line 1575 "parse.tab.c" /* yacc.c:1646  */
+#line 1585 "parse.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1579 "parse.tab.c" /* yacc.c:1646  */
+#line 1589 "parse.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1803,6 +1813,6 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 284 "parse.y" /* yacc.c:1906  */
+#line 297 "parse.y" /* yacc.c:1906  */
 
 

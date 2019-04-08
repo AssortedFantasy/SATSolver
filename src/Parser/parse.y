@@ -37,7 +37,9 @@
         return NULL;
     }
     int tag = yyparse(); /* Parses the entire input file, returns the exit status */
-    std::cout << "Parsed: " << tag << std::endl;
+    #ifdef DEBUG_INPUT_PARSE
+        std::cout << "Parse exit status: " << tag << std::endl;
+    #endif
     return result;  // Returns the final expression
   }
 %}

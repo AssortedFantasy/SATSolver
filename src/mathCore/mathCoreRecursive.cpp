@@ -150,6 +150,7 @@ void mathCore::to_DNF(expression *a) {
 		Need Quine–McCluskey algorithm or Similar here
 		Currently its dumb!
 		*/
+		empty_expression(a);	// Could have become empty
 	}
 	else if (mathCore::is_and(a) && !(is_dualed(a) || is_negated(a))) {
 		// If we are an and statement
@@ -169,6 +170,7 @@ void mathCore::to_DNF(expression *a) {
 		recursive_combine_and(a);
 		mathCore::idempotent_law(a);
 		mathCore::universal_bound(a);
+		empty_expression(a);
 
 		// If we became a valid DNF return
 		if (is_DNF(a)) {
@@ -186,6 +188,8 @@ void mathCore::to_DNF(expression *a) {
 			iter = a->contents.erase(iter);
 			do_expansion(a, big_term, child);
 		}
+
+		std::cout << "EXPANSION CAME BACK WITH " << as_string(big_term) << "\n";
 
 		// Put only big term back!
 		a->contents.insert(big_term);
@@ -280,12 +284,15 @@ void mathCore::to_CNF(expression *a) {
 
 
 void mathCore::do_expansion(expression* a, expression* expandTo, expression* expandFrom) {
+	std::cout << "DOING EXPANSION OF " << as_string(expandTo)
+		<< "USING " << as_string(expandFrom) << "\n";
 	if (is_and(a)) {
 		// (ABC+DEF)(X+Y)
 		// (ABC(X+Y) + DEF(X+Y))
 		if (is_DNF(expandTo) && is_sum(expandFrom)) {
 			distributive_law(a, expandTo, expandFrom);
 			
+			// (A(C+D) + B(C+D))
 			expSet tempSet;
 			auto iter = expandTo->contents.begin();
 			expression* child;
@@ -299,6 +306,7 @@ void mathCore::do_expansion(expression* a, expression* expandTo, expression* exp
 				tempSet.insert(child);
 			}
 			mergeMultiSet(expandTo->contents, tempSet);
+			combine_or(expandTo);
 			idempotent_law(expandTo);
 			universal_bound(expandTo);
 		}
@@ -329,6 +337,8 @@ void mathCore::do_expansion(expression* a, expression* expandTo, expression* exp
 
 void mathCore::do_simplification(expression* a) {
 	if (is_and(a)) {
+		// A(B+D)
+		// (AB)*(B+D)
 		combine_and(a);
 
 		auto iter = a->contents.begin();
@@ -346,11 +356,13 @@ void mathCore::do_simplification(expression* a) {
 				// we distribute a copy!
 				if (a->contents.size() > 1) {
 					distributive_law(a, child, mathCore::copy(a));
+					// (B*(A*B)+D*(A*B)
 				}
 				else if (a->contents.size() == 1) {
 					distributive_law(a, child, mathCore::copy(*iter));	// Single variables distribute easily
 				}
 
+				recursive_combine_and(child);
 				delete_children(a);	// Remove everything from a
 				a->contents.insert(child);	// Put in us!
 			}
@@ -380,7 +392,7 @@ void mathCore::do_simplification(expression* a) {
 					distributive_law(a, child, mathCore::copy(*iter));	// Single variables distribute easily
 				}
 
-				
+				recursive_combine_or(child);
 				delete_children(a);	// Remove everything from a
 				a->contents.insert(child);
 			}

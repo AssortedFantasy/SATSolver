@@ -113,8 +113,12 @@ int main(int argc, char* argv[]){
 		std::cout << "Satisfyability Not Implemented\n";
 		break;
 	case 1:
+		CNF_FORM(in_exp);
+		out_exp = in_exp;
 		break;
 	case 2:
+		DNF_FORM(in_exp);
+		out_exp = in_exp;
 		break;
 	case 3:
 		reduce_associative(in_exp);

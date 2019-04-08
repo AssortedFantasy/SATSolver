@@ -171,10 +171,9 @@ void mathCore::to_DNF(expression *a) {
 
 		// We aren't a valid DNF, so something needs to be expanded
 		// Iter is definitinitly a sum
-		auto iter = a->contents.begin();
+		iter = a->contents.begin();
 		expression* big_term = *iter;
 		iter = a->contents.erase(iter);
-		expression* child;
 
 		while (iter != a->contents.end()) {
 			child = *iter;
@@ -254,10 +253,9 @@ void mathCore::to_CNF(expression *a) {
 
 		// We aren't a valid CNF, so something needs to be expanded
 		// Iter is definitinitly a product
-		auto iter = a->contents.begin();
+		iter = a->contents.begin();
 		expression* big_term = *iter;
 		iter = a->contents.erase(iter);
-		expression* child;
 
 		while (iter != a->contents.end()) {
 			child = *iter;

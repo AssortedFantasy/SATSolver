@@ -43,3 +43,13 @@ void negated_standard(expression* a) {
 	mathCore::negate(a);
 	standard_form(a);
 }
+
+void CNF_FORM(expression* a) {
+	standard_form(a);
+	mathCore::to_CNF(a);
+}
+
+void DNF_FORM(expression* a) {
+	standard_form(a);
+	mathCore::to_DNF(a);
+}

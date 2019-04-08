@@ -503,8 +503,6 @@ void mathCore::distributive_law(expression* a, expression* distTo, expression* d
 			mergeMultiSet(distTo->contents, tempStore);
 		}
 	}
-	// You might have removed everything except one thing in a!
-	empty_expression(a);
 }
 
 
@@ -527,7 +525,7 @@ void mathCore::absorbtion_law(expression* a, expression* pow){
 			while (iter != pow->contents.end()) {
 				if (is_var(*iter)) { // Its guarenteed to be a variable anyway
 					outsiders = a->contents.find(*iter);
-					if (outsiders != a->contents.end()) {	// If we find nothing, go to the next variable
+					if (outsiders == a->contents.end()) {	// If we find nothing, go to the next variable
 						iter++;
 					}
 					while(outsiders != a->contents.end()) {
@@ -558,7 +556,7 @@ void mathCore::absorbtion_law(expression* a, expression* pow){
 			while (iter != pow->contents.end()) {
 				if (is_var(*iter)) { // Its guarenteed to be a variable anyway
 					outsiders = a->contents.find(*iter);
-					if (outsiders != a->contents.end()) {	// If we find nothing, go to the next variable
+					if (outsiders == a->contents.end()) {	// If we find nothing, go to the next variable
 						iter++;
 					}
 					while (outsiders != a->contents.end()) {

@@ -94,7 +94,7 @@ bool mathCore::is_CNF(expression* a) {
 		return true;	// All Children were sums!
 	}
 	else {
-		return false;
+		return is_sum(a);
 	}
 }
 
@@ -112,7 +112,7 @@ bool mathCore::is_DNF(expression* a) {
 		return true;	// All Children were sums!
 	}
 	else {
-		return false;
+		return is_product(a);
 	}
 }
 

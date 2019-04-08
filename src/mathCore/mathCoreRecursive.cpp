@@ -112,7 +112,13 @@ tempSet.insert(child);
 	A very naieve way of turning into DNF, It doesn't use the actual essential prime implicants!
 	Requires CNF to work!
 */
+
+#include <iostream>
+
 void mathCore::to_DNF(expression *a) {
+	
+	std::cout << "DNF CALLED WITH " << as_string(a) << "\n";
+
 	if (mathCore::is_DNF(a)) { // If we are already a DNF just return!
 		// Normally you need to be a minimized one, we don't bother doing that!
 		recursive_idempotent(a);
@@ -193,6 +199,9 @@ A very naieve way of turning into CNF, It doesn't use the actual essential prime
 Requires DNF to work!
 */
 void mathCore::to_CNF(expression *a) {
+
+	std::cout << "CNF CALLED WITH " << as_string(a) << "\n";
+
 	if (mathCore::is_CNF(a)) { // If we are already a CNF just return!
 							   // Normally you need to be a minimized one, we don't bother doing that!
 		recursive_idempotent(a);
@@ -284,12 +293,14 @@ void mathCore::do_expansion(expression* a, expression* expandTo, expression* exp
 			while (iter != expandTo->contents.end()) {
 				child = *iter;
 				iter = expandTo->contents.erase(iter);
+
+
 				do_simplification(child);
 				tempSet.insert(child);
 			}
 			mergeMultiSet(expandTo->contents, tempSet);
-			idempotent_law(a);
-			universal_bound(a);
+			idempotent_law(expandTo);
+			universal_bound(expandTo);
 		}
 	}
 	else if (is_or(a)) {
@@ -309,8 +320,8 @@ void mathCore::do_expansion(expression* a, expression* expandTo, expression* exp
 				tempSet.insert(child);
 			}
 			mergeMultiSet(expandTo->contents, tempSet);
-			idempotent_law(a);
-			universal_bound(a);
+			idempotent_law(expandTo);
+			universal_bound(expandTo);
 		}
 	}
 }
@@ -333,11 +344,15 @@ void mathCore::do_simplification(expression* a) {
 			else {
 				// a is our original parent and where the answer needs to go, so we can't distribute it
 				// we distribute a copy!
-				distributive_law(a, child, mathCore::copy(a));
-				
-				delete_children(a);
-				a->contents.clear();
-				a->contents.insert(child);
+				if (a->contents.size() > 1) {
+					distributive_law(a, child, mathCore::copy(a));
+				}
+				else if (a->contents.size() == 1) {
+					distributive_law(a, child, mathCore::copy(*iter));	// Single variables distribute easily
+				}
+
+				delete_children(a);	// Remove everything from a
+				a->contents.insert(child);	// Put in us!
 			}
 			empty_expression(a);
 		}
@@ -358,10 +373,15 @@ void mathCore::do_simplification(expression* a) {
 			else {
 				// a is our original parent and where the answer needs to go, so we can't distribute it
 				// we distribute a copy!
-				distributive_law(a, child, mathCore::copy(a));
+				if (a->contents.size() > 1) {
+					distributive_law(a, child, mathCore::copy(a));
+				}
+				else if (a->contents.size() == 1) {
+					distributive_law(a, child, mathCore::copy(*iter));	// Single variables distribute easily
+				}
 
-				delete_children(a);
-				a->contents.clear();
+				
+				delete_children(a);	// Remove everything from a
 				a->contents.insert(child);
 			}
 			empty_expression(a);

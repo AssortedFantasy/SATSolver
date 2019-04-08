@@ -109,7 +109,7 @@ Acknowledgements:
     Mike Lesk
     Eric Schmidt
 
-  
+```
                             DESIGN FLOWCHART
 
               +--------+      +--------+
@@ -133,6 +133,7 @@ Acknowledgements:
                                                 +-+---------++
                                                 | EXPRESSION |
                                                 +------------+
+```
 1. USER writes to INPUT.TXT 
 2. USER communicates commands to MAIN
 3. GETOPT is used to interpret User Commands

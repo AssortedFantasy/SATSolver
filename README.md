@@ -1,13 +1,13 @@
-# ---------------------------------------------------
-# Name: Jehanzeb Mirza
-# ID: 1539833
-# Name: Tharidu Witharana
-# ID: 1534351
+## ---------------------------------------------------
+## Name: Jehanzeb Mirza
+## ID: 1539833
+## Name: Tharidu Witharana
+## ID: 1534351
 #
-# CMPUT 275, Winter 2019
-# Final Project: SAT Solver
-# GitHub: https://github.com/AssortedFantasy/SATSolver
-# ---------------------------------------------------
+## CMPUT 275, Winter 2019
+## Final Project: SAT Solver
+## GitHub: https://github.com/AssortedFantasy/SATSolver
+## ---------------------------------------------------
 
 The program will read in boolean algebra expressions and test to see if the problem is satisfiable.
 There are several components to this program: the SATSolver, the SATSimplifier, and the SAT Parser.

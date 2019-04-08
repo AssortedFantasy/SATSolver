@@ -1,13 +1,13 @@
-# ---------------------------------------------------
-# Name: Jehanzeb Mirza
-# ID: 1539833
-# Name: Tharidu Witharana
-# ID: 1534351
+## ---------------------------------------------------
+## Name: Jehanzeb Mirza
+## ID: 1539833
+## Name: Tharidu Witharana
+## ID: 1534351
 #
-# CMPUT 275, Winter 2019
-# Final Project: SAT Solver
-# GitHub: https://github.com/AssortedFantasy/SATSolver
-# ---------------------------------------------------
+## CMPUT 275, Winter 2019
+## Final Project: SAT Solver
+## GitHub: https://github.com/AssortedFantasy/SATSolver
+## ---------------------------------------------------
 
 The program will read in boolean algebra expressions and test to see if the problem is satisfiable.
 There are several components to this program: the SATSolver, the SATSimplifier, and the SAT Parser.
@@ -71,8 +71,8 @@ Command Line arguments:
 Operation Modes:
   1: Conjuctive Normal Form: Outputs the minterms of a boolean expression			[Doesn't Work (almost works)]
   2: Disjunctive Normal Form: Outputs the maxterms of a boolean expression			[Doesn't Work (almost works)] <= Might work on our GitHub
-  3: Raw Parse: Outputs the expression as it was read in without simplification		
-  4: Flattened Parse: Associativity is used to remove unnecessary brackets
+  3: Flattened Parse: Associativity is used to remove unnecessary brackets
+  4: Raw Parse: Outputs the expression as it was read in without simplification		
   5: Negated: Outputs the negation of the expression that was read in
   6: Dualed: Outputs the dualed expression of the one read in
   7: Standardized: Converts expression to use only AND, OR, and NOT

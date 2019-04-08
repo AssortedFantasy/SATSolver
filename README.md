@@ -68,14 +68,15 @@ Command Line arguments:
   - 't' for terminal output 
 
 Operation Modes:
-  3: Raw Parse, Outputs the expression as it was read in without simplification
+  2: Disjunctive Normal Form: Outputs the maxterms of a boolean expression
+  3: Raw Parse: Outputs the expression as it was read in without simplification
   4: Flattened Parse: Associativity is used to remove unnecessary brackets
   5: Negated: Outputs the negation of the expression that was read in
   6: Dualed: Outputs the dualed expression of the one read in
   7: Standardized: Converts expression to use only AND, OR, and NOT
   8: Standardized Reduced: Reduces the standardized expression to a simpler form
 
-  Invalid output modes will print an error message to the user
+  Invalid modes will print an error message to the user
 
 
 Notes and Assumptions:

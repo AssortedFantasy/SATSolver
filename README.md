@@ -12,7 +12,7 @@ The program will read in boolean algebra expressions and test to see if the prob
 There are several components to this program: the SATSolver, the SATSimplifier, and the SAT Parser.
 
 Included Files: 
-  - build/
+  - SatSolver.exe // This is a pre-compiled Windowsx64 binary
   - docs/
     - grammar.txt
     - Running Schema.txt
@@ -68,6 +68,7 @@ Command Line arguments:
   - 't' for terminal output 
 
 Operation Modes:
+  1: Conjuctive Normal Form: Outputs the minterms of a boolean expression
   2: Disjunctive Normal Form: Outputs the maxterms of a boolean expression
   3: Raw Parse: Outputs the expression as it was read in without simplification
   4: Flattened Parse: Associativity is used to remove unnecessary brackets

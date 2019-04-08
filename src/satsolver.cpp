@@ -55,7 +55,7 @@ std::string help_string =
 			Flag to terminal
 		-m --mode <integer between 0 and 2>:
 			One of a few modes!
-			"0 : Satisfiability[Default]
+	  0 : Satisfiability[Default]
 		1 : CNF, Transforms to Conjunctive Normal Form
 		2 : DNF, Transforms to Disjunctive Normal Form
 		3 : Unchanged, Expression just comes as expressed internally
@@ -110,6 +110,7 @@ int main(int argc, char* argv[]){
 	*/
 	switch (mode) {
 	case 0:
+		std::cout << "Satisfyability Not Implemented\n";
 		break;
 	case 1:
 		break;
@@ -139,8 +140,10 @@ int main(int argc, char* argv[]){
 		out_exp = in_exp;
 		break;
 	case 9:
+		std::cout << "NANDIFY Not Implemented\n";
 		break;
 	case 10:
+		std::cout << "NORIFY Not Implemented\n"; 
 		break;
 	default:
 		std::cout << "Invalid Mode! Use -h or --help for more information!\n";

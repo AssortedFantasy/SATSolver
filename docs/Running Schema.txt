@@ -3,3 +3,43 @@ Perhaps the most important question of them all!
 
 Current Idea:
 Its a command line application, using command line arguments to define usage
+
+
+                            DESIGN FLOWCHART
+
+              +--------+      +--------+
+              |        |      |        |         +--------+
+      +------>+  USER  +----->+  MAIN  +<------->+ GETOPT |
+      |       |        |      |        |         +--------+
+      |       +------+-+      +-----+--+
+      |              |              |
+      |              v              v
++-----+------+   +---+-------+  +---+---+         +---------+
+| OUTPUT.TXT |   | INPUT.TXT |  | SATIO +<------->+ SATFORM +<----+
++------+-----+   +-----+-----+  ++-+--+-+         +---------+     |
+       ^               |         | |  ^                           |
+       |               |         | |  +---------+                 |
+       +<------------------------+ v            |                 |
+                       |        +--+----+    +--+-----+   +-------v--+
+                       +------->+ LEXER +----> PARSER |   | MATHCORE |
+                                +-------+    +----+---+   +-+--------+
+                                                  ^         ^
+                                                  |         |
+                                                +-+---------++
+                                                | EXPRESSION |
+                                                +------------+
+1. USER writes to INPUT.TXT 
+2. USER communicates commands to MAIN
+3. GETOPT is used to interpret User Commands
+4. MAIN calls SATIO, passing in arguments from GETOPT
+5. SATIO Calls the Lexer
+6. The LEXER reads in from INPUT.TXT
+7. The LEXER outputs tokens to the Parser
+8. The PARSER converts the tokens to EXPRESSIONS
+9. The PARSER returns the EXPRESSION to SATIO
+10. SATIO calls the appropriate SATFORM function based upon GETOPT arguments, passing in the EXPRESSION
+11. SATFORM calls MATHCORE functions and passes in the EXPRESSION
+12. MATHCORE does the appropriate reductions on the EXPRESSION and returns it to SATFORM
+13. SATFORM returns the expression to SATIO
+14. SATIO appends the expression to OUTPUT.TXT
+15. The USER reads result from OUTPUT.TXT

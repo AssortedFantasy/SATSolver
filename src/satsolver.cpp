@@ -58,8 +58,8 @@ std::string help_string =
 	  0 : Satisfiability[Default]
 		1 : CNF, Transforms to Conjunctive Normal Form
 		2 : DNF, Transforms to Disjunctive Normal Form
-		3 : Unchanged, Expression just comes as expressed internally
-		4 : Unchanged, But the expressions are flattened to reduce parentheses
+		3 : Unchanged, But the expressions are flattened to reduce parentheses
+		4 : Unchanged, Expression just comes as expressed internally
 		5 : Negated
 		6 : Dualed
 		7 : Standardized(Comprised Entirely of AND, OR, NOT)

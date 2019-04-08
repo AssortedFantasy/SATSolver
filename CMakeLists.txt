@@ -11,7 +11,7 @@ project(
 )
 
 # debug ones
-add_compile_definitions(DEBUG_INPUT_PARSE)
+#add_compile_definitions(DEBUG_INPUT_PARSE)
 
 
 # We are going to use 11 features!

@@ -113,11 +113,13 @@ int main(int argc, char* argv[]){
 		std::cout << "Satisfyability Not Implemented\n";
 		break;
 	case 1:
-		CNF_FORM(in_exp);
+		std::cout << "Conjunctive Normal Form Not Implemented\n";
+		//CNF_FORM(in_exp);
 		out_exp = in_exp;
 		break;
 	case 2:
-		DNF_FORM(in_exp);
+		std::cout << "Disjunctive Normal Form Not Implemented\n";
+		//DNF_FORM(in_exp);
 		out_exp = in_exp;
 		break;
 	case 3:

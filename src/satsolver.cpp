@@ -163,6 +163,6 @@ int main(int argc, char* argv[]){
 
 	write_exp_to_file(out_exp, output_file_string, terminal_flag);
 
-	std::cin.get();
+	//std::cin.get();
 	return 0;
 }
